@@ -1,0 +1,125 @@
+\section{Anexo de trazabilidad técnica y financiera (D1--D11)}
+
+Este anexo conserva el detalle operativo que fundamenta las secciones D1--D11. Distingue entre decisiones del equipo, supuestos de planificación, evidencia externa y elementos que requieren validación posterior. No reemplaza los documentos fuente de Lucas Moncada e Ignacio Silva, que permanecen como respaldo documental \parencite{ignacio-financiero}.
+
+\subsection{Alcance, actores y criterios de D1}
+
+El alcance incluye una plataforma interna de apoyo analítico a la prevención cardiovascular, preparación de datos, análisis descriptivo, modelos candidatos, explicabilidad, servicio de inferencia, monitoreo y revisión humana. Quedan fuera de alcance el diagnóstico autónomo, decisiones clínicas automáticas, acceso público de pacientes, integración productiva sin validación, uso de datos identificables fuera de los controles definidos y promesas de precisión clínica no verificadas.
+
+\begin{table}[H]
+  \centering
+  \caption{Actores, responsabilidades y acceso esperado}
+  \label{tab:anexo-actores}
+  \small
+  \begin{tabular}{lll}
+    \toprule
+    Perfil & Rol esperado & Acceso \\
+    \midrule
+    Profesional clínico & Consulta resultados y explicaciones & Solo pacientes autorizados \\
+    Coordinación clínica & Revisa indicadores agregados & Información agregada \\
+    Equipo de datos & Prepara, valida y monitorea & Datos pseudonimizados \\
+    TI y seguridad & Opera controles y continuidad & Administración con mínimo privilegio \\
+    Dirección / gobierno & Aprueba alcance y gates & Reportes consolidados \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Los criterios de éxito incluyen trazabilidad de datos y decisiones, funcionamiento bajo supervisión humana, explicabilidad adecuada para revisión clínica, continuidad operacional, seguridad de información y evaluación por subgrupos antes de cualquier publicación de un modelo.
+
+\subsection{Arquitecturas, componentes y trade-offs (D2--D4)}
+
+\begin{table}[H]
+  \centering
+  \caption{Matriz consolidada de alternativas de arquitectura}
+  \label{tab:anexo-arquitecturas}
+  \small
+  \resizebox{\textwidth}{!}{%
+  \begin{tabular}{llll}
+    \toprule
+    Criterio & Cloud (GCP) & Local & Híbrida \\
+    \midrule
+    Datos e identidad & Servicios gestionados con controles & Hospital & Identidad y registro maestro local \\
+    Procesamiento e inferencia & Cloud Run y cómputo temporal & Infraestructura hospitalaria & GCP con datos minimizados \\
+    Persistencia & Cloud SQL y Cloud Storage & PostgreSQL y almacenamiento local & Local más servicios GCP reducidos \\
+    Escalabilidad & Alta, pago por uso & Limitada por hardware comprado & Alta para analítica \\
+    Riesgo dominante & Proveedor y datos sensibles & Falla, parches y renovación & Sincronización y operación dual \\
+    \bottomrule
+  \end{tabular}}
+\end{table}
+
+Cloud usa GCP como proveedor de referencia por su región en Santiago, servicios gestionados y portabilidad. Incluye Cloud Run, Cloud SQL, Cloud Storage, IAM, Secret Manager y Logging/Monitoring. Vertex AI no es obligatorio en el piloto. Local conserva datos, procesamiento, inferencia y aplicación en infraestructura del hospital; no se considera seguro por definición, pues depende de controles, mantenimiento y capacidad operacional. Híbrida mantiene identidad, registro maestro e interfaz clínica localmente y ejecuta analítica, entrenamiento e inferencia en GCP después de minimización y pseudonimización. En las tres alternativas se exige la misma funcionalidad base para evitar comparaciones de costo entre productos distintos.
+
+\subsection{Herramientas, metodología y supuestos comunes (D5--D6)}
+
+\begin{table}[H]
+  \centering
+  \caption{Stack tecnológico base y criterio de uso}
+  \label{tab:anexo-stack}
+  \small
+  \begin{tabular}{ll}
+    \toprule
+    Tecnología & Función \\
+    \midrule
+    Python, Pandas y NumPy & Preparación y análisis tabular \\
+    Scikit-learn & Modelos candidatos de clasificación \\
+    PostgreSQL & Persistencia estructurada \\
+    SHAP & Explicabilidad local y global \\
+    FastAPI y Streamlit & Servicio e interfaz de referencia \\
+    Docker y Git & Empaquetado, versionado y trazabilidad \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+La gestión es adaptativa: conserva alcance y objetivos, pero incorpora ciclos de planificación, análisis, evaluación y ajuste. Frente a una modalidad predictiva, el caso presenta mayor incertidumbre en datos, riesgos, requisitos y solución, por lo que requiere retroalimentación frecuente y revisión continua de sesgos, privacidad y factibilidad.
+
+\begin{table}[H]
+  \centering
+  \caption{Supuestos comunes cerrados para la evaluación}
+  \label{tab:anexo-supuestos-lucas}
+  \small
+  \begin{tabular}{ll}
+    \toprule
+    Parámetro & Decisión \\
+    \midrule
+    Horizonte & 36 meses \\
+    Etapa & Piloto institucional controlado \\
+    Usuarios iniciales & 20 autorizados; hasta 5 concurrentes \\
+    Crecimiento & 25 y 30 autorizados en años 2 y 3 \\
+    Volumen & 10.000 iniciales; 5.000 nuevos en año 1; 10\% anual \\
+    Actualización & Batch incremental diario \\
+    Monitoreo y modelo & Revisión mensual y seis ventanas semestrales \\
+    Continuidad & 99\% operacional; RTO 8 h; RPO 24 h \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{Handoffs, aceptación y elementos abiertos}
+
+Los handoffs de Lucas entregan a Finanzas la fórmula TCO a 36 meses y las partidas por alternativa; a Planificación, componentes, ciclos, recursos y gates; a Riesgos, semillas de riesgo de proveedor, continuidad, seguridad, datos y operación; y a Ética, supuestos, limitaciones de representatividad, supervisión humana y mitigaciones. La aceptación D1--D6 exige que las tres alternativas compartan alcance funcional, que los componentes costables sean trazables y que los supuestos estén explícitos.
+
+Los elementos deliberadamente abiertos son: cotizaciones y precios finales, definición de población objetivo, umbrales de desempeño, autorización ética/legal, elección definitiva de arquitectura, responsables finales de operación y riesgo residual. Ninguno puede declararse cerrado sin evidencia posterior.
+
+\subsection{Desglose financiero reproducible}
+
+El costo Cloud neto a 36 meses se compone de Cloud SQL (\$768.024), Cloud Run (\$96.720), Storage y respaldo (\$111.600), observabilidad, secretos y red (\$279.000) y cómputo temporal (\$55.800), antes de IVA. La base GCP de \$1.311.144 recibe IVA de 19\% (\$249.117). Los costos Local consideran servidor \$1.922.010, SSD empresarial \$697.450, UPS \$334.350, medios de respaldo \$277.720, red/hardening \$350.000 y energía, mantención y repuestos \$1.823.755. Híbrida considera equipo local mínimo \$1.241.850, UPS y respaldo \$473.210, servicios GCP \$910.000, conectividad/logs/doble monitoreo \$640.000 e IVA GCP \$172.900.
+
+\begin{table}[H]
+  \centering
+  \caption{Tarifas y horas de planificación por alternativa}
+  \label{tab:anexo-rrhh-alternativas}
+  \small
+  \resizebox{\textwidth}{!}{%
+  \begin{tabular}{lrrr}
+    \toprule
+    Rol & Cloud & Local & Híbrida \\
+    \midrule
+    Data Scientist / ML (\$16.000/h) & 220 h & 220 h & 220 h \\
+    Desarrollo / Data Engineering (\$14.000/h) & 120 h & 120 h & 120 h \\
+    Seguridad y Gobierno (\$16.000/h) & 72 h & 72 h & 72 h \\
+    Operación específica & 120 h Cloud/DevOps & 300 h SysAdmin & 280 h Integración/DevOps \\
+    Total y costo RRHH & 532 h; \$8.272.000 & 712 h; \$9.952.000 & 692 h; \$10.832.000 \\
+    \bottomrule
+  \end{tabular}}
+\end{table}
+
+La evidencia de precios de hardware debe completarse con proveedor, enlace o cotización, fecha, especificación comparable y precio con/sin IVA. Hasta entonces, los montos son referencias de planificación y no cotizaciones vinculantes.

@@ -1,0 +1,98 @@
+\section{Anexo de planificación detallada (D12--D14)}
+
+Este anexo completa la trazabilidad de planificación de Fabián Leal para la EDT, la Carta Gantt, los gates, dependencias, recursos y riesgos \parencite{fabian-planificacion}.
+
+\subsection{Operación recurrente a 36 meses}
+
+\begin{table}[H]
+  \centering
+  \caption{Plan de operación, mantenimiento y evidencia a 36 meses}
+  \label{tab:anexo-operacion-36}
+  \small
+  \begin{tabular}{lll}
+    \toprule
+    Entregable recurrente & Frecuencia & Evidencia \\
+    \midrule
+    Pipeline batch incremental & Diaria & Registro de cargas \\
+    Observabilidad y control de costos & Continua & Logs y alertas \\
+    Backups diario y semanal & Continua & Bitácora de respaldos \\
+    Pruebas de restauración & Mensual & Resultado RTO y RPO \\
+    Auditoría de calidad, equidad y gobierno & Semestral & Informe semestral \\
+    Evaluación y eventual reentrenamiento & Meses 6, 12, 18, 24, 30 y 36 & Acta H7 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{Hitos y criterios de salida}
+
+\begin{table}[H]
+  \centering
+  \caption{Gates verificables del proyecto}
+  \label{tab:anexo-gates}
+  \small
+  \begin{tabular}{lll}
+    \toprule
+    Hito & Momento & Evidencia de aprobación \\
+    \midrule
+    H1: Alcance y TCO base & Semana 2 & Acta con TCO Cloud y 532 h validados \\
+    H2: Dataset validado & Semana 4 & Dataset pseudonimizado y pipeline verificado \\
+    H3: Baseline y SHAP & Semana 5 & Reporte de desempeño y explicabilidad \\
+    H4: Ética, SLA y DRP & Semana 6 & Auditoría por subgrupos y restauración \\
+    H5: Piloto controlado & Semana 8 & Servicios GCP y 20 usuarios habilitados \\
+    H6: Cierre del piloto & Semana 10 & Informe de cierre y decisiones \\
+    H7: Evaluación semestral & Meses 6--36 & Acta de comité médico \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+H2 requiere identificadores directos eliminados o pseudonimizados y controles de acceso. H3 exige comparación con el baseline y criterios técnicos acordados durante la validación. H4 exige riesgos documentados, mitigados o aceptados, además de continuidad verificada. En H7 se evalúan deriva, desempeño, equidad y explicabilidad; una nueva versión de modelo solo se publica después de validación y aprobación clínica.
+
+\subsection{Dependencias, recursos y riesgos de planificación}
+
+\begin{table}[H]
+  \centering
+  \caption{Dependencias de fin a inicio relevantes}
+  \label{tab:anexo-dependencias}
+  \small
+  \begin{tabular}{ll}
+    \toprule
+    Sucesor & Predecesor que lo habilita \\
+    \midrule
+    Plan de equipo y recursos & Alcance aprobado \\
+    Dataset inicial y pipeline & Alcance aprobado \\
+    Dataset analítico & Dataset inicial y controles aplicados \\
+    Modelos candidatos & Dataset analítico preparado \\
+    Servicio de inferencia & Modelo candidato disponible \\
+    Validación técnica & Modelos y pruebas del servicio \\
+    Human in the Loop & Validación técnica y auditoría por subgrupos \\
+    Piloto controlado & Gate ético, secretos, observabilidad y continuidad \\
+    Informe de cierre & Piloto controlado \\
+    Ventanas de evaluación & Operación con datos nuevos \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \caption{Recursos y costo de RRHH base Cloud}
+  \label{tab:anexo-recursos-costos}
+  \small
+  \begin{tabular}{lrrr}
+    \toprule
+    Rol & Tarifa & Horas totales & Costo CLP \\
+    \midrule
+    Data Scientist & \$16.000/h & 220 h & \$3.520.000 \\
+    Desarrollo / Data Engineering & \$14.000/h & 120 h & \$1.680.000 \\
+    Seguridad y Gobierno & \$16.000/h & 72 h & \$1.152.000 \\
+    DevOps / Cloud Ops & \$16.000/h & 120 h & \$1.920.000 \\
+    \midrule
+    Total Cloud & -- & 532 h & \$8.272.000 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Los riesgos de planificación candidatos son: desviación de horas de RRHH (probabilidad media, impacto alto); retraso ético/legal por uso de GCP y datos de salud (media, alto); fallas de ingesta batch (baja, medio); y volatilidad USD/CLP y sobrecosto Cloud (alta, medio). Estos riesgos deben consolidarse en la matriz integral con causa, consecuencia, responsable, mitigación y riesgo residual.
+
+\subsection{Criterios de aceptación y cierre}
+
+El piloto requiere que el modelo candidato se compare con el baseline y satisfaga criterios de sensibilidad, especificidad, estabilidad y utilidad acordados con la contraparte clínica. Las predicciones deben incluir explicación y revisión humana. La continuidad requiere RTO $\leq$ 8 h y RPO $\leq$ 24 h comprobados mediante restauración. La seguridad exige pseudonimización, datos de salud tratados como sensibles, Secret Manager e IAM de mínimo privilegio. El control presupuestario se mide contra TCO Cloud de \$10.815.487, 532 h de RRHH y contingencia de 10\% (\$983.226).
