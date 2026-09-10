@@ -16,4 +16,26 @@ Los registros nuevos o modificados se incorporarán mediante un proceso batch in
   \item[Siempre] La sustitución del modelo requiere validación y aprobación; nunca es automática.
 \end{description}
 
-En 36 meses se consideran seis ventanas planificadas de evaluación o reentrenamiento. Un evento significativo puede exigir una revisión extraordinaria, pero una nueva versión no reemplaza automáticamente al modelo vigente: debe superar validación técnica, revisión por subgrupos, explicabilidad y aprobación.
+\subsection{Validación de duplicados}
+
+La revisión reproducible confirma que los 723 duplicados son coincidencias exactas al considerar las 14 columnas. El \tabref{tab:duplicados} muestra la frecuencia de repetición de las 302 observaciones distintas: no hay observaciones con una o dos apariciones, 187 se repiten tres veces, 114 cuatro veces y una observación aparece ocho veces. Esta evidencia no permite atribuir la causa a fraude, error de captura o sesgo; sí exige definir y documentar su tratamiento antes de cualquier modelamiento.
+
+\begin{table}[H]
+  \centering
+  \caption{Frecuencia de repetición de observaciones exactas en el dataset original}
+  \label{tab:duplicados}
+  \begin{tabular}{lrrr}
+    \toprule
+    Repeticiones & Observaciones distintas & Filas asociadas & \% del original \\
+    \midrule
+    1 vez & 0 & 0 & 0,00\% \\
+    2 veces & 0 & 0 & 0,00\% \\
+    3 veces & 187 & 561 & 54,73\% \\
+    Más de 3 veces (4 u 8) & 115 & 464 & 45,27\% \\
+    \midrule
+    Total & 302 & 1.025 & 100,00\% \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Para garantizar trazabilidad, \texttt{data/raw/heart.csv} se conserva como fuente primaria inmutable. La versión \texttt{data/processed/heart\_unique.csv} se deriva exclusivamente mediante \texttt{drop\_duplicates()} y se utiliza como análisis de sensibilidad; no reemplaza al archivo original.
