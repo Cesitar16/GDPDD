@@ -17,19 +17,21 @@
 - Referencias internas de finanzas, ética y planificación actualizadas a su estado vigente.
 - Codificación UTF-8 corregida en las referencias internas afectadas.
 
-## Conflictos pendientes
+## Condiciones de ejecución pendientes
 
-- Conciliación formal del TCO Cloud entre Finanzas y Riesgos.
 - Precios/cotizaciones de hardware y sizing final.
-- Análisis legal/autorización y riesgo residual.
-- Selección integral de arquitectura y validación clínica/local.
+- Análisis legal/autorización y gobierno de datos aplicables; no se declara cumplimiento legal definitivo.
+- Riesgo residual de R10, si el equipo decide definirlo.
+- Cumplimiento verificable de CA-E01 a CA-E10 y validación clínica/local antes del piloto.
 - El archivo `Informe_Maestro_Lucas_D1_D6_Heart_Disease.docx` estaba bloqueado por otro proceso durante esta revisión. Se utilizó su transcripción ya integrada en LaTeX; cuando quede disponible, corresponde repetir la comparación documental sin modificarlo.
 - El cuaderno de resultados puede conservar salidas almacenadas de ejecuciones anteriores. Se actualizó su texto fuente de interpretación, sin reejecutar el EDA para preservar la línea base analítica vigente.
 
-## Decisiones actualizadas
+## Decisiones de cierre
 
-- Cloud es la preferencia financiera condicionada; la alternativa integral sigue pendiente.
-- La documentación ética y los criterios CA-E01--CA-E10 están completos como línea base; las validaciones futuras no están cerradas.
+- TCO oficial Cloud: CLP 10.815.487 a 36 meses; CLP 11.866.338 queda sólo como trazabilidad histórica.
+- El proyecto es viable condicionado. Cloud/GCP queda recomendada para el piloto; Híbrida es contingencia y Local no se recomienda para este piloto.
+- R10 adopta P×I = 2×3 = 6 (Crítico); el riesgo residual no está definido.
+- La documentación ética y los criterios CA-E01--CA-E10 son condiciones formales de aceptación; las validaciones futuras no están cerradas.
 
 ## Archivos modificados
 
@@ -37,15 +39,15 @@ Incluye portada, resumen, discusión, conclusiones, recomendaciones, planificaci
 
 ## Elementos que requieren confirmación del equipo
 
-TCO de riesgos, autorización legal, aceptación de riesgos, responsables/residual y alternativa integral.
+Autorización legal y gobierno de datos, cumplimiento de gates, aceptación de riesgos, riesgo residual de R10, cotizaciones/sizing y validación local.
 
 ## Estado por bloque
 
 | Bloque | Responsable | Estado | Pendiente |
 |---|---|---|---|
-| D1--D6 | Lucas Moncada | Línea base técnica vigente | Sizing y arquitectura integral final |
-| D7--D11 | Ignacio Silva | Evaluación financiera vigente | Cotizaciones y conciliación de TCO en riesgos |
-| D12--D14 | Fabián Leal | Planificación vigente como escenario Cloud base | Cobertura ética detallada y decisión integral |
-| Riesgos | Vicente Hormazábal | Matriz vigente con ajuste conceptual R10 | P/I, residual y conciliación TCO |
+| D1--D6 | Lucas Moncada | Línea base técnica vigente | Sizing antes de contratación |
+| D7--D11 | Ignacio Silva | TCO Cloud oficial CLP 10.815.487 | Cotizaciones/sizing antes de contratación |
+| D12--D14 | Fabián Leal | Cloud/GCP seleccionado para piloto condicionado | Ejecución sólo tras gates previos |
+| Riesgos | Vicente Hormazábal | R10 formulado con P×I = 2×3 = 6 | Riesgo residual, si corresponde |
 | Ética/dataset | César Rojas | Evidencia y criterios vigentes | Validación local y desempeño futuro por subgrupos |
-| Integración | Equipo | Línea base maestra preparada | Decisiones humanas pendientes |
+| Integración | Equipo | Informe maestro cerrado como viable condicionado | Auditoría de rúbrica y síntesis posterior |

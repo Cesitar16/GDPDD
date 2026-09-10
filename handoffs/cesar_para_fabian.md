@@ -1,6 +1,8 @@
 # Handoff de César para Fabián
 
-Este handoff propone actividades de planificación derivadas de evidencia de datos y del análisis ético. Fabián conserva la decisión de incorporarlas, desglosarlas en EDT y calendarizarlas. “Cobertura actual” indica únicamente si la EDT/Gantt existente las menciona; no certifica su ejecución.
+> **Estado de cierre:** insumo ejecutado y conservado como trazabilidad histórica. Las actividades propuestas se reflejan en la matriz de cobertura CA-E01--CA-E10 y en los gates del informe maestro; no constituyen tareas abiertas de este handoff.
+
+Este handoff documenta las actividades de planificación que se propusieron a partir de evidencia de datos y análisis ético. Su resultado fue incorporado como trazabilidad en la EDT/Gantt y en la matriz de cobertura; no representa una asignación activa de tareas.
 
 | ID | Hallazgo | Mitigación | Actividad candidata para EDT/Gantt | Criterio de aceptación | Cobertura actual |
 |---|---|---|---|---|---|

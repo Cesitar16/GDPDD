@@ -31,17 +31,17 @@ La matriz consolidada identifica riesgos técnicos, legales, financieros, de pro
     R07 & Técnico & 2$\times$3 = 6 (Crítico) & \parbox[t]{0.31\textwidth}{Si no se aprueba nube pura, la sincronización entre entorno local y GCP puede fallar.} & \parbox[t]{0.29\textwidth}{Probar sincronización tempranamente y asignar un responsable técnico único. \textit{Lucas.}} \\
     R08 & Legal & 1$\times$3 = 3 (Medio) & \parbox[t]{0.31\textwidth}{Una brecha de seguridad podría exponer registros clínicos identificables.} & \parbox[t]{0.29\textwidth}{Aplicar IAM de mínimo privilegio, Secret Manager y pseudonimización previa. \textit{Vicente.}} \\
     R09 & Técnico / ético & 2$\times$2 = 4 (Medio) & \parbox[t]{0.31\textwidth}{La deriva de datos puede degradar la precisión durante los 36 meses de operación.} & \parbox[t]{0.29\textwidth}{Realizar seis ventanas semestrales de reentrenamiento y aprobación médica obligatoria. \textit{César / Lucas.}} \\
-    R10 & Ético & 2$\times$3 = 6* (Crítico) & \parbox[t]{0.31\textwidth}{La cobertura del dataset académico deduplicado es desigual por sexo y limitada en edades extremas e intersecciones; además, su generalización a un hospital chileno es incierta.} & \parbox[t]{0.29\textwidth}{Evaluar desempeño por subgrupos con N suficiente, validar localmente, monitorear deriva y mantener supervisión humana. SHAP apoya explicabilidad, no prueba equidad. \textit{César; P/I y residual: Vicente.}} \\
+    R10 & Ético & 2$\times$3 = 6 (Crítico) & \parbox[t]{0.31\textwidth}{La cobertura del dataset académico deduplicado es desigual por sexo y limitada en edades extremas e intersecciones; además, su generalización a un hospital chileno es incierta.} & \parbox[t]{0.29\textwidth}{Evaluar desempeño por subgrupos con N suficiente, validar localmente, monitorear deriva y mantener supervisión humana. SHAP apoya explicabilidad, no prueba equidad. \textit{César; riesgo residual por definir.}} \\
     \bottomrule
   \end{tabular}
 \end{table}
 
-\noindent\textit{Nota:} el valor P$\times$I de R10 se conserva desde la matriz fuente y requiere validación de Vicente; esta integración no determina su nivel ni riesgo residual.
+\noindent\textit{Nota:} el informe adopta P$\times$I = 2$\times$3 = 6 (Crítico) como nivel propuesto/final de R10. El riesgo residual no está definido y no se infiere en esta integración.
 
 \subsection{Criterios de aceptación de riesgos}
 
-La matriz satisface los criterios definidos por su fuente: diferencia riesgos técnicos, legales, financieros y éticos; mantiene una escala consistente de probabilidad e impacto; y vincula cada riesgo con una mitigación y un responsable. Cloud es escenario base de planificación y preferencia financiera, no una arquitectura integral ya aprobada. Los riesgos críticos R01, R02, R03, R07 y R10 deben revisarse en los gates correspondientes antes de avanzar al piloto o a una nueva versión del modelo. La probabilidad, impacto, nivel y riesgo residual de R10 requieren validación de Vicente.
+La matriz satisface los criterios definidos por su fuente: diferencia riesgos técnicos, legales, financieros y éticos; mantiene una escala consistente de probabilidad e impacto; y vincula cada riesgo con una mitigación y un responsable. Cloud/GCP es la arquitectura seleccionada para el piloto, condicionada a los gates éticos, legales, técnicos, de seguridad, de riesgos y de validación local. Los riesgos críticos R01, R02, R03, R07 y R10 deben revisarse en los gates correspondientes antes de avanzar al piloto o a una nueva versión del modelo. El riesgo residual de R10 permanece sin definir.
 
-\subsection{Consistencia financiera pendiente de validación}
+\subsection{Trazabilidad financiera histórica}
 
-La fuente de riesgos menciona un TCO base Cloud de \$11.866.338, mientras que el anexo financiero documenta un TCO Cloud de \$10.815.487. Esta diferencia se conserva explícitamente como elemento abierto: antes de la aprobación financiera se debe conciliar la base de cálculo, el IVA, la contingencia y las partidas de RRHH para que la matriz de riesgos y el presupuesto usen la misma línea base.
+El TCO oficial Cloud para este informe es \$10.815.487 CLP a 36 meses, según la evaluación financiera D7--D11. El valor de \$11.866.338 presente en una versión previa de la matriz de riesgos se conserva únicamente como antecedente histórico de alineación; no es un valor vigente ni condiciona el presupuesto del piloto.

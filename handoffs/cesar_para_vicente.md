@@ -1,6 +1,8 @@
 # Handoff de César para Vicente
 
-Los riesgos siguientes son candidatos basados en evidencia descriptiva y en el alcance declarado. No se asignan probabilidad, impacto, nivel, riesgo residual ni responsable definitivo: esas decisiones corresponden a Vicente y al proceso de riesgos.
+> **Estado de cierre:** insumo ejecutado y conservado como trazabilidad histórica. La formulación de R10 y su nivel P×I = 2×3 = 6 (Crítico) fueron adoptados por el informe maestro; el riesgo residual no se infiere aquí.
+
+Los riesgos siguientes fueron candidatos basados en evidencia descriptiva y en el alcance declarado. Se conservan como antecedente de la matriz integrada; el informe de cierre adopta para R10 P×I = 2×3 = 6 (Crítico) y no define riesgo residual.
 
 | ID candidato | Riesgo candidato | Evidencia | Consecuencia potencial | Tratamiento/mitigación sugerida |
 |---|---|---|---|---|
@@ -14,8 +16,8 @@ Los riesgos siguientes son candidatos basados en evidencia descriptiva y en el a
 | E08 | Expansión indebida del alcance clínico. | El alcance excluye diagnóstico autónomo y decisiones clínicas automáticas. | Uso fuera del propósito preventivo y pérdida de responsabilidad humana. | Gate de alcance, mensajes de limitación y aprobación clínica antes de cualquier cambio. |
 | E09 | Privacidad/gobierno insuficientes para datos de salud. | Las opciones Cloud, Local e Híbrida presentan exposiciones operacionales distintas. | Acceso indebido, uso secundario o retención sin justificación. | Minimización, pseudonimización, mínimo privilegio, propósito, retención y auditoría. |
 
-## Alerta específica sobre R10
+## Alerta histórica sobre R10
 
-La redacción actual de R10 menciona “10.000 registros iniciales”. Ese número es un supuesto futuro de planificación de volumen, no el dataset analizado. La evidencia observada es **1.025 filas originales y 302 registros únicos**. Se propone que Vicente reemplace la evidencia de R10 por una formulación como: “La cobertura del dataset analítico deduplicado es desigual por sexo y limitada en edades extremas e intersecciones (302 registros únicos); si se desarrolla un modelo sin validación por subgrupos y datos locales, podrían aparecer resultados no generalizables”.
+La redacción histórica de R10 mencionaba “10.000 registros iniciales”. Ese número es un supuesto futuro de planificación de volumen, no el dataset analizado. La evidencia observada es **1.025 filas originales y 302 registros únicos**. El informe maestro adoptó la formulación basada en cobertura desigual por sexo, edades extremas, intersecciones pequeñas y generalización local incierta.
 
-Vicente debe decidir si lo conserva, descompone en riesgos separados o lo reemplaza; también define P/I, nivel, responsables, mitigación definitiva y riesgo residual. Esta propuesta no modifica la matriz integrada de riesgos directamente.
+La propuesta histórica no modificaba la matriz integrada directamente. En el cierre, la formulación y el nivel P×I de R10 se incorporaron al informe; el riesgo residual permanece sin definir.

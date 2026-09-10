@@ -17,7 +17,8 @@
 - **Cloud (GCP):** Cloud Run, Cloud SQL, Cloud Storage, IAM y Secret Manager como escenario técnico de referencia.
 - **Local:** datos, procesamiento e inferencia en infraestructura hospitalaria.
 - **Híbrida:** identidad y registro maestro locales; analítica controlada en GCP.
-- **Fuente responsable:** Lucas. **Estado:** alternativas comparables; la selección integral sigue pendiente de decisión de equipo.
+- **Decisión de cierre:** Cloud/GCP es la arquitectura integral recomendada para el piloto; Híbrida es contingencia si Cloud no supera la aprobación legal, institucional o de gobierno de datos; Local es técnicamente viable, pero no recomendado por mayor TCO y carga operacional.
+- **Estado:** seleccionado de forma condicionada. **Condiciones:** CA-E01 a CA-E10, autorización y gobierno de datos aplicables, controles técnicos y de seguridad, aceptación de riesgos y validación local.
 
 ## 4. Herramientas
 
@@ -37,8 +38,8 @@
 ## 7. Finanzas
 
 - **Resultado vigente de Ignacio:** TCO 36 meses Cloud CLP 10.815.487, Local CLP 16.893.013 e Híbrida CLP 15.696.956; montos de planificación con contingencia de 10%.
-- **Decisión vigente:** Cloud es la alternativa financieramente preferida, condicionada a ética, legalidad y riesgos.
-- **Pendiente:** conciliar con la fuente de riesgos que conserva CLP 11.866.338; respaldo documental de hardware y precios finales.
+- **Decisión de cierre:** Cloud/GCP es la alternativa integral recomendada para el piloto. El TCO oficial Cloud es CLP 10.815.487 a 36 meses.
+- **Trazabilidad histórica:** CLP 11.866.338 corresponde a una versión previa de Riesgos y no es un valor vigente. Las cotizaciones y el sizing final se confirman antes de contratación, sin alterar la línea base TCO del informe.
 
 ## 8. Ética
 
@@ -47,18 +48,17 @@
 
 ## 9. Riesgos
 
-- La matriz de Vicente mantiene la escala P×I y responsables. R10 debe basarse en la evidencia real de cobertura y generalización, no en los 10.000 registros de planificación.
-- **Pendiente:** Vicente valida P/I, nivel y riesgo residual; Ignacio y Vicente concilian la línea base TCO.
+- R10 se basa en evidencia real de cobertura y generalización, no en los 10.000 registros de planificación. **Nivel adoptado en el informe:** P×I = 2×3 = 6 (Crítico).
+- **Pendiente:** el riesgo residual no está definido y no se infiere en este informe.
 
 ## 10. EDT y Gantt
 
-- Fabián usa Cloud como escenario base de planificación por la preferencia financiera. Esto no determina la recomendación integral definitiva.
+- Fabián usa Cloud/GCP como arquitectura seleccionada del piloto. Su ejecución está condicionada a los gates de cierre definidos.
 - La cobertura de CA-E01--CA-E10 está documentada en `outputs/tables/cobertura_criterios_eticos_edt.csv`.
 
 ## 11. Decisiones pendientes
 
-1. Recomendación integral de arquitectura.
-2. Autorización/análisis legal y gobierno de datos aplicable.
-3. Conciliación TCO entre Finanzas y Riesgos.
-4. Cotizaciones y sizing final.
-5. Validación clínica y local antes de cualquier uso.
+1. Autorización/análisis legal y gobierno de datos aplicables, sin declarar cumplimiento legal definitivo.
+2. Cumplimiento verificable de CA-E01 a CA-E10, controles técnicos, de seguridad y aceptación de riesgos.
+3. Cotizaciones y sizing final antes de contratación.
+4. Validación clínica y local antes de cualquier uso; los umbrales clínicos no se inventan en este informe.

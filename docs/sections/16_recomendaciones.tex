@@ -2,7 +2,7 @@
 
 \subsection{Evaluación financiera consolidada}
 
-La evaluación financiera realizada compara Cloud, Local e Híbrida con los mismos supuestos de horizonte, piloto, usuarios, volumen, actualización, mantenimiento de modelo y continuidad. Cloud incorpora configuración, seguridad, despliegue, Cloud Run, Cloud SQL, Storage, red, monitoreo, soporte, RRHH y cómputo temporal; no supone entrenamiento 24/7 ni Vertex AI obligatorio. Local incorpora CAPEX de infraestructura, hardening, electricidad, mantenimiento, seguridad, respaldo, soporte y RRHH. Híbrida suma infraestructura local mínima, costos Cloud e integración, conectividad, monitoreo de ambos ambientes y operación dual. Cloud es la preferencia financiera condicionada, no la alternativa integral ya aprobada.
+La evaluación financiera realizada compara Cloud, Local e Híbrida con los mismos supuestos de horizonte, piloto, usuarios, volumen, actualización, mantenimiento de modelo y continuidad. Cloud incorpora configuración, seguridad, despliegue, Cloud Run, Cloud SQL, Storage, red, monitoreo, soporte, RRHH y cómputo temporal; no supone entrenamiento 24/7 ni Vertex AI obligatorio. Local incorpora CAPEX de infraestructura, hardening, electricidad, mantenimiento, seguridad, respaldo, soporte y RRHH. Híbrida suma infraestructura local mínima, costos Cloud e integración, conectividad, monitoreo de ambos ambientes y operación dual. El TCO oficial Cloud es \$10.815.487 CLP a 36 meses y Cloud/GCP es la arquitectura integral recomendada para el piloto, bajo las condiciones de aceptación definidas.
 
 La sensibilidad mínima debe variar registros anuales (2.500 y 10.000 frente al escenario base de 5.000), reentrenamientos (4 frente a 2 por año), usuarios cuando corresponda y el componente dominante de costo de cada arquitectura.
 
@@ -14,13 +14,13 @@ Cloud debe dimensionarse para 20, 25 y 30 usuarios; 5, 6 y 8 usuarios concurrent
 
 \subsection{Integración con planificación, riesgos y ética}
 
-La EDT y carta Gantt ya se orientan a entregables: inicio y alcance, datos, preparación, análisis y modelo, validación técnica y ética, infraestructura o piloto, documentación y cierre. Deben conservar respaldo, monitoreo, recuperación y mantenimiento como trabajo gestionable, y separar la duración de implementación de los 36 meses financieros. El escenario Cloud usado para esta planificación responde a la preferencia financiera y no reemplaza la decisión integral del equipo.
+La EDT y carta Gantt ya se orientan a entregables: inicio y alcance, datos, preparación, análisis y modelo, validación técnica y ética, infraestructura o piloto, documentación y cierre. Deben conservar respaldo, monitoreo, recuperación y mantenimiento como trabajo gestionable, y separar la duración de implementación de los 36 meses financieros. Cloud/GCP es la arquitectura seleccionada para el piloto, pero su ejecución no comienza sin los gates éticos CA-E01 a CA-E10, legales, técnicos, de seguridad, de riesgos y de validación local.
 
-La matriz de riesgos debe consolidar los riesgos técnicos expuestos en la Sección~\ref{sec:discusion} con los riesgos financieros, éticos, legales y de planificación. Para la integración ética, debe mantenerse que el sistema no reemplaza al profesional, que el dataset actual es un prototipo y que Cloud e Híbrida tratan datos sensibles fuera del entorno local. La recomendación final no debe decidirse solo por precio.
+La matriz de riesgos debe consolidar los riesgos técnicos expuestos en la Sección~\ref{sec:discusion} con los riesgos financieros, éticos, legales y de planificación. Para la integración ética, debe mantenerse que el sistema no reemplaza al profesional, que el dataset actual es un prototipo y que Cloud e Híbrida tratan datos sensibles fuera del entorno local. Cloud/GCP se recomienda por la evaluación integral documentada, no sólo por precio; Híbrida es la contingencia si Cloud no obtiene la aprobación legal, institucional o de gobierno de datos, y Local no se recomienda para este piloto por mayor TCO y carga operacional.
 
 \subsection{Trazabilidad de responsabilidades y matriz de riesgos}
 
-Ignacio consolidó la evaluación financiera; Fabián incorporó la planificación EDT/Gantt; Vicente mantiene la consolidación y aceptación de riesgos; y César documentó la evidencia de dataset y ética. Los handoffs se conservan como trazabilidad. La matriz de riesgos aún requiere la conciliación del TCO y la validación de P/I y riesgo residual de R10 por parte de Vicente.
+Ignacio consolidó la evaluación financiera; Fabián incorporó la planificación EDT/Gantt; Vicente mantiene la consolidación y aceptación de riesgos; y César documentó la evidencia de dataset y ética. Los handoffs ya ejecutados se conservan exclusivamente como trazabilidad histórica. El TCO oficial quedó establecido en \$10.815.487 CLP y R10 adopta P$\times$I = 2$\times$3 = 6 (Crítico); el riesgo residual no está definido.
 
 \begin{description}[style=nextline]
   \item[Transversal] Calidad de datos, duplicados, cambios de esquema, datos retrasados, fallos del pipeline, drift, degradación del modelo, baja explicabilidad y fallo de backup.
@@ -50,17 +50,17 @@ Ignacio consolidó la evaluación financiera; Fabián incorporó la planificaci�
 
 \subsection{Auditoría de aceptación D1 a D6}
 
-La línea base cumple con que las tres alternativas resuelven el mismo problema y alcance; cada herramienta tiene una función y motivo; y la metodología está argumentada, no solo nombrada. La evaluación financiera, la EDT/Gantt y la matriz ética ya están integradas, aunque aún faltan precios y sizing exactos, conciliación de riesgos, autorización legal y validación local. El informe distingue proyecto conceptual de ejecución real, mantiene fuentes y supuestos trazables y prohíbe declarar una alternativa integral ganadora antes de resolver esas condiciones.
+La línea base cumple con que las tres alternativas resuelven el mismo problema y alcance; cada herramienta tiene una función y motivo; y la metodología está argumentada, no solo nombrada. La evaluación financiera, la EDT/Gantt y la matriz ética están integradas y sustentan la selección condicionada de Cloud/GCP para el piloto. El informe distingue proyecto conceptual de ejecución real, mantiene fuentes y supuestos trazables y exige autorización legal, gates éticos, controles de seguridad, aceptación de riesgos y validación local antes de ejecutar el piloto.
 
 \subsection{Checklist de integración}
 
 \begin{itemize}
   \item Mantener D1 a D6 como línea base y comunicar cualquier cambio a finanzas, planificación, riesgos e integración.
-  \item Distinguir la preferencia financiera Cloud de la decisión integral de arquitectura, que sigue pendiente.
+  \item Mantener Cloud/GCP como arquitectura integral recomendada y ejecutar el piloto sólo después de superar los gates éticos CA-E01 a CA-E10, legales, técnicos, de seguridad, de riesgos y de validación local.
   \item Usar los mismos supuestos para Cloud, Local e Híbrida.
   \item Distinguir datos reales, referencias externas y supuestos de planificación.
   \item Respaldar cada cifra de costos con tarifario, cotización o supuesto reproducible.
   \item Conservar el carácter de apoyo preventivo y no diagnóstico autónomo.
   \item Sintetizar el informe final EP1 a 4--6 páginas, con letra 11, interlineado simple y estilo APA; este documento maestro puede ser más extenso.
-  \item Corregir la consistencia del responsable de EDT o Gantt antes de la entrega final, si existen nombres distintos en los documentos del equipo.
+  \item Mantener Híbrida como contingencia si Cloud no supera la aprobación legal, institucional o de gobierno de datos; no recomendar Local para este piloto por mayor TCO y carga operacional.
 \end{itemize}

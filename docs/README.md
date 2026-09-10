@@ -17,4 +17,4 @@ El PDF resultante queda en `build/main.pdf`. Las figuras se organizan por análi
 
 ## Alcance del documento
 
-El informe contiene la línea base técnica, evaluación financiera, planificación, riesgos, ética/dataset, alternativas Cloud, Local e Híbrida, trazabilidad y referencias. La documentación de consistencia se encuentra en `integracion/`; las tablas de alineación reutilizables se encuentran en `../outputs/tables/`.
+El informe contiene la línea base técnica, evaluación financiera, planificación, riesgos, ética/dataset, alternativas Cloud, Local e Híbrida, trazabilidad y referencias. La documentación de consistencia y cierre se encuentra en `integracion/`; las tablas de alineación reutilizables se encuentran en `../outputs/tables/`.
