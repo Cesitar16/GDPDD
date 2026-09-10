@@ -60,6 +60,26 @@ Cloud utiliza GCP en la región de Santiago, con Cloud Run, Cloud SQL para Postg
 
 El componente predominante es RRHH: \$8.272.000, equivalente al 76,5\% del TCO Cloud corregido. Por ello, una discusión centrada solamente en Cloud Run u hosting no representa el principal impulsor de costo.
 
+\begin{table}[H]
+  \centering
+  \caption{Base mensual de planificación para servicios GCP}
+  \label{tab:gcp-base-mensual}
+  \scriptsize
+  \begin{tabular}{lrrrr}
+    \toprule
+    Servicio & USD/mes & Meses & CLP/USD & Total 36 meses CLP \\
+    \midrule
+    Cloud SQL & 22,9398 & 36 & 930 & \$768.024 \\
+    Cloud Run & 2,8889 & 36 & 930 & \$96.720 \\
+    Cloud Storage y respaldo & 3,3333 & 36 & 930 & \$111.600 \\
+    Observabilidad, secretos y red & 8,3333 & 36 & 930 & \$279.000 \\
+    Cómputo temporal & 1,6667 & 36 & 930 & \$55.800 \\
+    \midrule
+    \textbf{Cloud neto} & \textbf{39,1613} & \textbf{36} & \textbf{930} & \textbf{\$1.311.144} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
 \subsection{Alternativas Local e Híbrida (D9--D10)}
 
 Local conserva aplicación, procesamiento y PostgreSQL dentro del hospital. Aporta control directo del entorno, pero transfiere al hospital la responsabilidad de parches, respaldos, recuperación, monitoreo, energía y renovación de componentes. Híbrida conserva registro maestro, identidad, interfaz e integración en el hospital, mientras entrenamiento e inferencia se realizan en GCP con datos necesarios y pseudonimizados. Reduce infraestructura local, pero exige integración, seguridad y soporte en dos ambientes.
@@ -81,6 +101,53 @@ Local conserva aplicación, procesamiento y PostgreSQL dentro del hospital. Apor
 \end{table}
 
 Los valores de hardware Local e Híbrido son referencias pendientes de respaldo documental: proveedor, URL o cotización, fecha, especificación comparable y precio con o sin IVA. Por ello se mantienen para comparación, pero deben actualizarse antes de una contratación. En Híbrida, el mayor esfuerzo de RRHH responde a sincronización, seguridad y soporte de dos entornos.
+
+\begin{table}[H]
+  \centering
+  \caption{Desglose reproducible del TCO Local a 36 meses}
+  \label{tab:tco-local-detalle}
+  \small
+  \begin{tabular}{lr}
+    \toprule
+    Partida & CLP \\
+    \midrule
+    Servidor Dell PowerEdge T160 & \$1.922.010 \\
+    SSD empresarial & \$697.450 \\
+    UPS & \$334.350 \\
+    Medios de respaldo & \$277.720 \\
+    Red, hardening y accesorios & \$350.000 \\
+    Energía, mantención y repuestos & \$1.823.755 \\
+    RRHH Local & \$9.952.000 \\
+    \midrule
+    Subtotal Local & \$15.357.285 \\
+    Contingencia 10\% & \$1.535.728 \\
+    \textbf{TCO Local 36 meses} & \textbf{\$16.893.013} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \caption{Desglose reproducible del TCO Híbrido a 36 meses}
+  \label{tab:tco-hibrido-detalle}
+  \small
+  \begin{tabular}{lr}
+    \toprule
+    Partida & CLP \\
+    \midrule
+    Equipo local mínimo & \$1.241.850 \\
+    UPS y respaldo local & \$473.210 \\
+    Servicios GCP & \$910.000 \\
+    Conectividad, logs y doble monitoreo & \$640.000 \\
+    IVA de servicios GCP & \$172.900 \\
+    RRHH Híbrido & \$10.832.000 \\
+    \midrule
+    Subtotal Híbrido & \$14.269.960 \\
+    Contingencia 10\% & \$1.426.996 \\
+    \textbf{TCO Híbrido 36 meses} & \textbf{\$15.696.956} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
 
 \subsection{Costo-beneficio, sensibilidad y recomendación (D11)}
 
