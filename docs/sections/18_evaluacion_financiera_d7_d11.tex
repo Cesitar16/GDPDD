@@ -1,0 +1,106 @@
+\section{Evaluación financiera Cloud, Local e Híbrida (D7--D11)}
+
+Esta sección incorpora la evaluación financiera preparada por Ignacio Silva para el piloto institucional de apoyo a la prevención cardiovascular. Se comparan las alternativas Cloud, Local e Híbrida bajo las mismas condiciones operacionales durante 36 meses. Los montos están expresados en pesos chilenos (CLP), incluyen una contingencia de 10\% y corresponden a estimaciones de planificación, no a cotizaciones vinculantes \parencite{ignacio-financiero}.
+
+\subsection{Modelo de costos y supuestos comunes (D7)}
+
+Se utiliza el Costo Total de Propiedad (TCO) a 36 meses: CAPEX, implementación y RRHH, OPEX recurrente, mantención y contingencia. El horizonte permite comparar alternativas con inversión inicial y alternativas de pago mensual sin extender la proyección a un plazo excesivamente incierto. El \tabref{tab:fin-supuestos} resume los supuestos comunes que aseguran comparabilidad.
+
+\begin{table}[H]
+  \centering
+  \caption{Supuestos financieros comunes para las tres alternativas}
+  \label{tab:fin-supuestos}
+  \small
+  \begin{tabular}{ll}
+    \toprule
+    Supuesto & Valor utilizado \\
+    \midrule
+    Horizonte & 36 meses \\
+    Escenario & Piloto institucional controlado \\
+    Usuarios y concurrencia & A1: 20/5; A2: 25/6; A3: 30/8 \\
+    Datos de planificación & 10.000 iniciales; 5.000 nuevos en A1; crecimiento 10\% anual \\
+    Mantenimiento del modelo & Seis ventanas en 36 meses \\
+    Continuidad & 99\% horario operacional; RTO 8 h; RPO 24 h \\
+    Moneda y tipo de cambio & CLP; \$930 por USD \\
+    Licencias base & \$0; stack open source \\
+    Contingencia & 10\% del subtotal \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+El modelo de RRHH considera 220 h de Data/ML, 120 h de Desarrollo/Data Engineering y 72 h de Seguridad y Gobierno. La operación específica agrega 120 h de Cloud/DevOps, 300 h de SysAdmin Local o 280 h de Integración/DevOps Híbrida. En consecuencia, los totales son 532 h para Cloud, 712 h para Local y 692 h para Híbrida. Las tarifas y horas son supuestos de planificación y cualquier variación debe recalcular el TCO.
+
+\subsection{Alternativa Cloud (D8)}
+
+Cloud utiliza GCP en la región de Santiago, con Cloud Run, Cloud SQL para PostgreSQL, Cloud Storage, respaldo, monitoreo y gestión de secretos. Se excluyen Vertex AI, BigQuery, GKE, Dataflow, Dataproc y GPU dedicada porque el volumen y la frecuencia de reentrenamiento del piloto no los justifican. La fórmula de reproducción de las partidas GCP es: USD/mes $\times$ 36 meses $\times$ \$930 CLP/USD. Los consumos son bolsas de planificación y deben contrastarse con una exportación fechada de Google Cloud Pricing Calculator antes de contratar.
+
+\begin{table}[H]
+  \centering
+  \caption{TCO Cloud a 36 meses}
+  \label{tab:tco-cloud}
+  \small
+  \begin{tabular}{lr}
+    \toprule
+    Partida & CLP \\
+    \midrule
+    Cloud SQL & \$768.024 \\
+    Cloud Run & \$96.720 \\
+    Storage y respaldo & \$111.600 \\
+    Logging, monitoreo, secretos y red & \$279.000 \\
+    Cómputo temporal de reentrenamiento & \$55.800 \\
+    IVA GCP & \$249.117 \\
+    RRHH Cloud & \$8.272.000 \\
+    \midrule
+    Subtotal Cloud & \$9.832.261 \\
+    Contingencia 10\% & \$983.226 \\
+    \textbf{TCO Cloud 36 meses} & \textbf{\$10.815.487} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+El componente predominante es RRHH: \$8.272.000, equivalente al 76,5\% del TCO Cloud corregido. Por ello, una discusión centrada solamente en Cloud Run u hosting no representa el principal impulsor de costo.
+
+\subsection{Alternativas Local e Híbrida (D9--D10)}
+
+Local conserva aplicación, procesamiento y PostgreSQL dentro del hospital. Aporta control directo del entorno, pero transfiere al hospital la responsabilidad de parches, respaldos, recuperación, monitoreo, energía y renovación de componentes. Híbrida conserva registro maestro, identidad, interfaz e integración en el hospital, mientras entrenamiento e inferencia se realizan en GCP con datos necesarios y pseudonimizados. Reduce infraestructura local, pero exige integración, seguridad y soporte en dos ambientes.
+
+\begin{table}[H]
+  \centering
+  \caption{Resumen de TCO por alternativa a 36 meses}
+  \label{tab:tco-comparacion}
+  \small
+  \begin{tabular}{lrrr}
+    \toprule
+    Alternativa & CAPEX estimado & RRHH & TCO 36 meses \\
+    \midrule
+    Cloud & Muy bajo & \$8.272.000 & \$10.815.487 \\
+    Local & Alto & \$9.952.000 & \$16.893.013 \\
+    Híbrida & Medio & \$10.832.000 & \$15.696.956 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Los valores de hardware Local e Híbrido son referencias pendientes de respaldo documental: proveedor, URL o cotización, fecha, especificación comparable y precio con o sin IVA. Por ello se mantienen para comparación, pero deben actualizarse antes de una contratación. En Híbrida, el mayor esfuerzo de RRHH responde a sincronización, seguridad y soporte de dos entornos.
+
+\subsection{Costo-beneficio, sensibilidad y recomendación (D11)}
+
+Cloud presenta el menor TCO: ahorra \$6.077.526 frente a Local (36,0\% del TCO Local) y \$4.881.469 frente a Híbrida (31,1\% del TCO Híbrido). Esta recomendación es exclusivamente financiera. Solo se mantiene si la evaluación ética, legal y de riesgos autoriza el tratamiento de datos sensibles en GCP Chile bajo las medidas definidas; si no se satisface esa condición, Híbrida se mantiene como alternativa de respaldo para evaluación integral.
+
+\begin{table}[H]
+  \centering
+  \caption{Escenarios de sensibilidad financiera}
+  \label{tab:sensibilidad-financiera}
+  \small
+  \begin{tabular}{lrrr}
+    \toprule
+    Escenario & Cloud & Local & Híbrida \\
+    \midrule
+    Tipo de cambio +15\% & +\$234 mil & Sin efecto relevante & +\$162 mil \\
+    Cuatro reentrenamientos/año & +\$434 mil & +\$384 mil & +\$530 mil \\
+    Usuarios 50\% sobre el plan & +\$291 mil & +\$180 mil & +\$350 mil \\
+    Falla de hardware local & Sin efecto directo & +\$1,2 a \$2,0 millones & +\$500 a \$900 mil \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Los riesgos financieros a integrar en la matriz de riesgos son variación USD/CLP y consumo cloud, servicios no previstos, falla o renovación de hardware, subestimación de horas, tratamiento tributario distinto e integración más compleja en Híbrida. Las medidas propuestas incluyen contingencia, alertas y límites de gasto, etiquetado por servicio, inventario y garantía de hardware, control de horas en la Gantt y validación tributaria previa a contratación.

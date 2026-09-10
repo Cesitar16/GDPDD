@@ -1,0 +1,66 @@
+\section{Planificación integrada, Gantt y recursos (D12--D14)}
+
+Esta sección incorpora la planificación integrada elaborada por Fabián Leal. Traduce la línea base técnica D1--D6 y el TCO D7--D11 en un plan ejecutable y trazable \parencite{fabian-planificacion}. Distingue dos horizontes: un piloto de implementación de 10 semanas y una operación financiera y de gobierno de 36 meses. El piloto de 10 semanas es un supuesto de planificación; el horizonte de 36 meses incluye ingesta batch diaria, RTO de 8 h, RPO de 24 h y seis ventanas semestrales de evaluación y eventual reentrenamiento.
+
+\subsection{Estructura de Desglose del Trabajo (D12)}
+
+La EDT se organiza en seis paquetes de trabajo: (1) gobierno, alcance y línea base; (2) dataset gobernado y pipeline batch; (3) modelos candidatos, explicabilidad y servicio de inferencia; (4) validación técnica, ética y de sesgos; (5) plataforma Cloud segura y piloto; y (6) continuidad operacional y seis ventanas de evaluación. Los entregables de segundo nivel incluyen alcance aprobado, recursos y control TCO, dataset pseudonimizado, almacenamiento seguro, modelos y explicabilidad, auditoría por subgrupos, protocolo Human in the Loop, monitoreo de deriva, entorno GCP, continuidad y reportes semestrales.
+
+\subsection{Carta Gantt del piloto (D13)}
+
+El \tabref{tab:gantt-piloto} muestra la planificación de 10 semanas. Los solapamientos corresponden a actividades preparatorias compatibles con un enfoque adaptativo; ningún entregable atraviesa su punto de control sin evidencia del predecesor.
+
+\begin{table}[H]
+  \centering
+  \caption{Carta Gantt resumida del piloto de 10 semanas}
+  \label{tab:gantt-piloto}
+  \scriptsize
+  \resizebox{\textwidth}{!}{%
+  \begin{tabular}{llcccccccccc}
+    \toprule
+    EDT & Entregable & S1 & S2 & S3 & S4 & S5 & S6 & S7 & S8 & S9 & S10 \\
+    \midrule
+    1.1 & Alcance y requerimientos aprobados & $\bullet$ & $\bullet$ & & & & & & & & \\
+    1.2--1.4 & Recursos y control TCO & & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ \\
+    2.1--2.3 & Dataset inicial, gobierno e ingesta batch & & $\bullet$ & $\bullet$ & $\bullet$ & & & & & & \\
+    2.4--2.5 & Dataset analítico y almacenamiento seguro & & & $\bullet$ & $\bullet$ & & & & & & \\
+    3.1--3.2 & Modelos candidatos y explicabilidad & & & & $\bullet$ & $\bullet$ & & & & & \\
+    3.3--3.4 & Servicio de inferencia y pruebas & & & & & $\bullet$ & $\bullet$ & & & & \\
+    4.1--4.2 & Validación técnica y por subgrupos & & & & & $\bullet$ & $\bullet$ & & & & \\
+    4.3--4.4 & Human in the Loop y deriva & & & & & & $\bullet$ & & & & \\
+    5.1--5.2 & Cloud, IAM y secretos & & & & & & $\bullet$ & $\bullet$ & & & \\
+    5.3--5.4 & Observabilidad, costos, backups y RTO/RPO & & & & & & & $\bullet$ & $\bullet$ & & \\
+    5.5 & Piloto controlado & & & & & & & & $\bullet$ & & \\
+    1.5 & Cierre del piloto & & & & & & & & & $\bullet$ & $\bullet$ \\
+    \bottomrule
+  \end{tabular}}
+\end{table}
+
+La ruta crítica es: alcance aprobado $\rightarrow$ dataset analítico $\rightarrow$ modelo candidato $\rightarrow$ servicio de inferencia $\rightarrow$ validación técnica y por subgrupos $\rightarrow$ gate Human in the Loop $\rightarrow$ piloto $\rightarrow$ cierre.
+
+\subsection{Hitos, dependencias y continuidad (D14)}
+
+Los hitos H1 a H6 ocurren en las semanas 2, 4, 5, 6, 8 y 10, respectivamente: aprobación de alcance y TCO; dataset limpio y pseudonimizado; baseline y explicabilidad; certificación ética, SLA y continuidad; puesta en marcha; y cierre del piloto. H7 se repite en los meses 6, 12, 18, 24, 30 y 36. En cada H7 se evalúan deriva, desempeño, equidad y explicabilidad; un nuevo modelo solo se publica con validación y aprobación clínica.
+
+\begin{table}[H]
+  \centering
+  \caption{Asignación de recursos de RRHH para la alternativa Cloud}
+  \label{tab:rrhh-cloud}
+  \small
+  \begin{tabular}{lrrr}
+    \toprule
+    Rol & Implementación & Mantención & Total \\
+    \midrule
+    Data Scientist & 100 h & 120 h & 220 h \\
+    Desarrollo / Data Engineering & 80 h & 40 h & 120 h \\
+    Seguridad y Gobierno & 32 h & 40 h & 72 h \\
+    DevOps / Cloud Ops & 60 h & 60 h & 120 h \\
+    \midrule
+    \textbf{Total Cloud} & \textbf{272 h} & \textbf{260 h} & \textbf{532 h} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Las dependencias principales son de fin a inicio: los modelos requieren el dataset analítico; el servicio requiere un modelo candidato; la validación requiere resultados y pruebas; el piloto exige el gate ético, seguridad, observabilidad y continuidad; y el cierre depende del piloto. Los riesgos de planificación entregados para consolidación incluyen desviación de horas de RRHH, retraso ético/legal, fallas de ingesta batch y volatilidad cambiaria.
+
+Los criterios de aceptación establecen: comparación del modelo candidato con el baseline usando criterios acordados con la contraparte clínica; explicabilidad y supervisión humana; RTO $\leq$ 8 h y RPO $\leq$ 24 h verificados mediante restauración; pseudonimización, Secret Manager e IAM de mínimo privilegio; y control contra TCO Cloud de \$10.815.487, 532 h de RRHH y contingencia de \$983.226.
