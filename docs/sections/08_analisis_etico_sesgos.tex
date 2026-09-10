@@ -1,0 +1,29 @@
+\section{Análisis ético y de sesgos}\label{sec:etica-sesgos}
+
+Este apartado convierte la evidencia de calidad y representatividad del análisis exploratorio en controles para un eventual piloto. No entrena modelos, no estima desempeño ni atribuye discriminación algorítmica: esos resultados no existen todavía. La orientación es coherente con la necesidad de autonomía humana, transparencia, responsabilidad, inclusión y evaluación continua en sistemas de IA para salud \parencite{who-ai-health,fda-transparency-mlmd}.
+
+\subsection{Evidencia, interpretación y límites}
+
+La fuente original contiene 1.025 filas, de las cuales 723 son duplicados exactos (70,54\%); la versión analítica deduplicada conserva 302 registros. Esto constituye un problema de calidad y de trazabilidad del muestreo: la coincidencia exacta no permite conocer su causa. Si más adelante se entrenara o evaluara un modelo sin controlar este punto, las observaciones repetidas podrían sobreponderar patrones e incluso contaminar una separación de entrenamiento y prueba. No se afirma que dicha contaminación haya ocurrido. La mitigación exigible es conservar el original, declarar el criterio de deduplicación y verificar que registros equivalentes no queden repartidos entre particiones; el criterio CA-E01 formaliza su aceptación.
+
+En los 302 registros únicos hay 96 mujeres (\texttt{sex}=0; 31,79\%) y 206 hombres (\texttt{sex}=1; 68,21\%). La codificación está respaldada por la fuente UCI \parencite{uci-heart-disease}. Esta diferencia describe cobertura desigual, no discriminación ni desempeño diferente. Su impacto técnico posible es que un modelo futuro disponga de menor evidencia para el grupo menos representado; por ello el eventual desempeño debe evaluarse por sexo con tamaño muestral suficiente y no se debe aprobar uso donde la evidencia no respalde la población objetivo.
+
+La cobertura también es reducida en edades extremas: $<40$ aporta 15 registros únicos (4,97\%), 50--59 concentra 125 (41,39\%) y 70+ sólo 10 (3,31\%). Las intersecciones mujeres $\times <40$ y mujeres $\times 70+$ contienen cinco registros cada una. Estos tamaños hacen inestables los porcentajes descriptivos de \texttt{target}; no revelan prevalencia poblacional, causalidad ni discriminación. Las diferencias de \texttt{target} por sexo y edad ya registradas en \texttt{representatividad\_subgrupos.csv} deben leerse sólo con esa cautela y con el N correspondiente.
+
+\subsection{Impacto ético y técnico del uso futuro}
+
+El dataset de Kaggle sirve como evidencia académica inicial, pero no valida por sí mismo un uso en un hospital chileno. Pueden cambiar población, práctica clínica, medición y prevalencia; por ello la transferencia directa sería un riesgo de cambio de dominio. Cualquier paso hacia uso local requiere validación con datos y flujo clínico locales, además de monitoreo de deriva. Las guías para tecnologías clínicas de aprendizaje automático recomiendan comunicar límites de datos y poblaciones poco representadas, realizar validación específica del sitio y monitoreo continuo \parencite{fda-transparency-mlmd}.
+
+Un resultado automatizado no puede operar como diagnóstico ni decisión autónoma. Falsos negativos podrían omitir una revisión preventiva y falsos positivos podrían generar alertas o carga innecesarias; ambos efectos requieren un profesional que interprete el contexto, pueda discrepar y deje trazabilidad de la decisión. El esquema \emph{Human in the Loop} es, por tanto, un requisito de control y no una característica opcional. SHAP puede apoyar explicaciones locales o globales, pero no prueba equidad ni reemplaza métricas por subgrupo, validación externa o supervisión clínica.
+
+Privacidad y gobierno son igualmente éticos: antes de cualquier dato clínico deben definirse propósito, minimización, pseudonimización, control de acceso de mínimo privilegio, retención, auditoría y responsables. Cloud, Local e Híbrida presentan superficies operacionales distintas: la nube puede añadir transferencia y dependencia de proveedor; lo local concentra el control y la carga de operación; lo híbrido agrega sincronización y doble administración. Ninguna alternativa es intrínsecamente más ética; la aceptación depende de controles verificables y de la autorización que corresponda.
+
+\subsection{Matriz de controles y criterios de aceptación}
+
+La \tabref{tab:matriz-etica} sintetiza la cadena evidencia--impacto--mitigación--aceptación. La versión completa y reutilizable se encuentra en \texttt{outputs/tables/matriz\_etica.csv}; su generación desde los archivos original y deduplicado es reproducible mediante el script documentado en \texttt{src/}.
+
+\input{tables/matriz_etica}
+
+\subsection{Gates propuestos antes de un piloto}
+
+Los criterios de aceptación no fijan umbrales inventados ni autorizan un modelo inexistente. Se proponen como condiciones de avance: CA-E01, tratamiento documentado de duplicados; CA-E02, desempeño por sexo cuando exista N suficiente; CA-E03, desempeño por rango etario cuando exista N suficiente; CA-E04, no aprobar uso en grupos sin cobertura respaldada; CA-E05, validación con datos locales; CA-E06, supervisión humana obligatoria; CA-E07, explicabilidad documentada; CA-E08, pseudonimización y control de acceso; CA-E09, monitoreo de deriva; y CA-E10, alcance limitado a apoyo preventivo, sin diagnóstico ni decisión automática. La aceptación final debe ser resuelta por la contraparte clínica y el gobierno del proyecto, con evidencia posterior.

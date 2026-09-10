@@ -1,0 +1,38 @@
+\begin{table}[H]
+  \centering
+  \caption{Matriz ética consolidada}
+  \label{tab:matriz-etica}
+  \scriptsize
+  \resizebox{\textwidth}{!}{%
+  \begin{tabular}{llll}
+    \toprule
+    ID & Hallazgo y evidencia & Impactos potenciales & Mitigación y aceptación \\
+    \midrule
+    E01 & \parbox[t]{0.27\textwidth}{Duplicación masiva y trazabilidad del tratamiento de datos. 1025 filas originales; 723 duplicadas exactas (70,54 \%); 302 únicas.} & \parbox[t]{0.29\textwidth}{Técnico: Sobreponderación de patrones y posible contaminación entre particiones si se modela sin control. Ético: Decisiones basadas en evidencia de calidad incierta.} & \parbox[t]{0.30\textwidth}{Conservar el original, documentar deduplicación y verificar separación por registro único antes de modelar. CA-E01: tratamiento de duplicados documentado y verificable.} \\
+    E02 & \parbox[t]{0.27\textwidth}{Cobertura desigual por sexo. Únicos: mujeres (sex=0) 96 (31,79 \%); hombres (sex=1) 206 (68,21 \%).} & \parbox[t]{0.29\textwidth}{Técnico: Menor evidencia para estimar desempeño futuro en el grupo menos representado. Ético: Riesgo de uso inequitativo si no se evalúa la cobertura y el desempeño posterior.} & \parbox[t]{0.30\textwidth}{Reportar métricas por sexo sólo al existir modelo y tamaño suficiente; no extrapolar cobertura a población. CA-E02 y CA-E04.} \\
+    E03 & \parbox[t]{0.27\textwidth}{Cobertura limitada en extremos etarios. Únicos: <40=15 (4,97 \%); 50--59=125 (41,39 \%); 70+=10 (3,31 \%).} & \parbox[t]{0.29\textwidth}{Técnico: Estimaciones inestables y generalización incierta en grupos con N reducido. Ético: Posible inequidad si se usa fuera de los grupos respaldados.} & \parbox[t]{0.30\textwidth}{Definir mínimo N, evaluar por edad cuando corresponda y restringir uso no respaldado. CA-E03 y CA-E04.} \\
+    E04 & \parbox[t]{0.27\textwidth}{Evidencia interseccional insuficiente. Mujeres <40=5; mujeres 70+=5 registros únicos.} & \parbox[t]{0.29\textwidth}{Técnico: Porcentajes y métricas por intersección serían altamente inestables. Ético: Conclusiones aparentes podrían invisibilizar incertidumbre de grupos pequeños.} & \parbox[t]{0.30\textwidth}{Informar N junto con porcentajes; no aprobar uso en combinaciones sin evidencia suficiente. CA-E03 y CA-E04.} \\
+    E05 & \parbox[t]{0.27\textwidth}{Diferencias descriptivas de target entre subgrupos. Las proporciones de target por sexo y edad están exportadas con N en representatividad\_subgrupos.csv.} & \parbox[t]{0.29\textwidth}{Técnico: No permiten inferir desempeño, prevalencia ni causalidad. Ético: Interpretación indebida como diferencia poblacional o discriminación.} & \parbox[t]{0.30\textwidth}{Tratar resultados como descriptivos; contrastar con validación clínica/local posterior. CA-E05: validación con datos locales antes de uso.} \\
+    \bottomrule
+  \end{tabular}%
+  }
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \caption{Matriz ética consolidada (continuación)}
+  \label{tab:matriz-etica-cont}
+  \scriptsize
+  \resizebox{\textwidth}{!}{%
+  \begin{tabular}{llll}
+    \toprule
+    ID & Hallazgo y evidencia & Impactos potenciales & Mitigación y aceptación \\
+    \midrule
+    E06 & \parbox[t]{0.27\textwidth}{Cambio de dominio Kaggle hacia hospital chileno. Dataset académico externo; no representa por sí mismo la población ni el flujo clínico local.} & \parbox[t]{0.29\textwidth}{Técnico: Deriva de población, medición o práctica clínica; desempeño no transferible. Ético: Riesgo de daños o acceso inequitativo por generalización injustificada.} & \parbox[t]{0.30\textwidth}{Validación local prospectiva, documentación de población objetivo y monitoreo de deriva. CA-E05 y CA-E09.} \\
+    E07 & \parbox[t]{0.27\textwidth}{Automatización y posibles falsos negativos o positivos. El alcance define apoyo preventivo y revisión humana; no existe modelo ni métrica clínica validada.} & \parbox[t]{0.29\textwidth}{Técnico: Alertas erróneas u omisiones si un resultado se interpreta como decisión clínica. Ético: Daño potencial, sesgo de automatización y dilución de responsabilidad.} & \parbox[t]{0.30\textwidth}{Human in the Loop, protocolo de revisión, registro de decisión y uso exclusivamente preventivo. CA-E06 y CA-E10.} \\
+    E08 & \parbox[t]{0.27\textwidth}{Privacidad y gobierno del dato sensible. Las alternativas Cloud, Local e Híbrida procesan datos de salud con exposiciones operacionales distintas.} & \parbox[t]{0.29\textwidth}{Técnico: Acceso indebido, retención excesiva o trazabilidad insuficiente. Ético: Afectación de confidencialidad y autonomía de las personas.} & \parbox[t]{0.30\textwidth}{Minimización, pseudonimización, mínimos privilegios, propósito definido, retención y auditoría. CA-E08.} \\
+    E09 & \parbox[t]{0.27\textwidth}{Transparencia y explicabilidad insuficientes. SHAP está contemplado como apoyo explicativo; no hay modelo entrenado ni auditoría de desempeño.} & \parbox[t]{0.29\textwidth}{Técnico: No detectar límites o errores por subgrupo mediante explicaciones aisladas. Ético: Confianza injustificada y falta de rendición de cuentas.} & \parbox[t]{0.30\textwidth}{Documentar datos, límites, versiones y auditorías; SHAP complementa, no sustituye, pruebas de equidad. CA-E07 y CA-E09.} \\
+    \bottomrule
+  \end{tabular}%
+  }
+\end{table}

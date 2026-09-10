@@ -55,7 +55,7 @@ Se comparó el archivo original con la versión deduplicada de 302 registros. El
 
 \subsection{Representación y subgrupos}
 
-En la versión deduplicada, \texttt{sex}=0 concentra 96 registros (31,79\%) y \texttt{sex}=1 concentra 206 (68,21\%). Los rangos $<40$ (15 registros; 4,97\%) y 70+ (10; 3,31\%) disponen de menos evidencia que los rangos centrales. La \figref{fig:subgrupos-sex-edad} presenta los tamaños de las combinaciones \texttt{sex}$\times$rango etario. Los subgrupos \texttt{sex}=0 con $<40$ y con 70+ tienen cinco registros únicos cada uno; por ello, sus porcentajes de \texttt{target} son descriptivos y no constituyen evidencia de diferencias ni de sesgo demostrado.
+En la versión deduplicada, \texttt{sex}=0 (mujer) concentra 96 registros (31,79\%) y \texttt{sex}=1 (hombre) concentra 206 (68,21\%); esta codificación está documentada por UCI \parencite{uci-heart-disease}. La diferencia de representación es una limitación de cobertura de la muestra, no evidencia de discriminación ni de desempeño de un modelo, que todavía no existe. Los rangos $<40$ (15 registros; 4,97\%) y 70+ (10; 3,31\%) disponen de menos evidencia que los rangos centrales. La \figref{fig:subgrupos-sex-edad} presenta los tamaños de las combinaciones \texttt{sex}$\times$rango etario. Los subgrupos \texttt{sex}=0 con $<40$ y con 70+ tienen cinco registros únicos cada uno; por ello, sus porcentajes de \texttt{target} son descriptivos y no constituyen evidencia de diferencias ni de sesgo demostrado.
 
 \begin{figure}[H]
   \centering
@@ -64,4 +64,4 @@ En la versión deduplicada, \texttt{sex}=0 concentra 96 registros (31,79\%) y \t
   \label{fig:subgrupos-sex-edad}
 \end{figure}
 
-La evidencia sugiere posibles limitaciones de cobertura y generalización que deben validarse frente a la población objetivo. No permite afirmar discriminación, ni interpretar los códigos de \texttt{sex} sin confirmar su definición en la fuente oficial.
+La evidencia sugiere posibles limitaciones de cobertura y generalización que deben validarse frente a la población objetivo. No permite afirmar discriminación ni extraer conclusiones sobre desempeño futuro por subgrupo.
