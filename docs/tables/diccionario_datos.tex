@@ -1,0 +1,43 @@
+\begin{table}[H]
+  \centering
+  \caption{Diccionario resumido de variables}
+  \label{tab:diccionario-datos}
+  \scriptsize
+  \resizebox{\textwidth}{!}{%
+  \begin{tabular}{lllll}
+    \toprule
+    Variable & Descripción & Tipo & Unidad / codificación & Dominio observado \\
+    \midrule
+    age & Edad del paciente. & Numérica discreta & años & 29--77 \\
+    sex & Sexo del paciente. & Binaria & 0=mujer; 1=hombre & 0|1 \\
+    cp & Tipo de dolor torácico. & Categórica & No verificada; ver CSV & 0|1|2|3 \\
+    trestbps & Presión arterial en reposo al ingreso. & Numérica discreta & mmHg & 94--200 \\
+    chol & Colesterol sérico. & Numérica discreta & mg/dL & 126--564 \\
+    fbs & Indicador de glucosa en ayunas superior a 120 mg/dL. & Binaria & 0=no; 1=sí (>120 mg/dL) & 0|1 \\
+    restecg & Resultado del electrocardiograma en reposo. & Categórica & 0=normal; 1=ST-T; 2=HVI & 0|1|2 \\
+    \bottomrule
+  \end{tabular}%
+  }
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \caption{Diccionario resumido de variables (continuación)}
+  \label{tab:diccionario-datos-cont}
+  \scriptsize
+  \resizebox{\textwidth}{!}{%
+  \begin{tabular}{lllll}
+    \toprule
+    Variable & Descripción & Tipo & Unidad / codificación & Dominio observado \\
+    \midrule
+    thalach & Frecuencia cardíaca máxima alcanzada. & Numérica discreta & bpm & 71--202 \\
+    exang & Angina inducida por ejercicio. & Binaria & 0=no; 1=sí & 0|1 \\
+    oldpeak & Depresión del segmento ST inducida por ejercicio respecto del reposo. & Numérica continua & desviación ST & 0--6.2 \\
+    slope & Pendiente del segmento ST durante ejercicio. & Categórica & No verificada; ver CSV & 0|1|2 \\
+    ca & Número de vasos principales coloreados por fluoroscopia. & Numérica discreta & UCI: 0--3; CSV: 0--4 & 0--4 \\
+    thal & Resultado de la prueba de talio. & Categórica & No verificada; ver CSV & 0|1|2|3 \\
+    target & Variable objetivo binaria de la versión Kaggle, asociada a la presencia de enfermedad cardíaca. & Binaria & Binaria 0/1; ver CSV & 0|1 \\
+    \bottomrule
+  \end{tabular}%
+  }
+\end{table}

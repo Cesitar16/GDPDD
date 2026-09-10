@@ -22,7 +22,15 @@ El archivo \texttt{heart.csv} utilizado en el caso contiene 1.025 registros y 14
   \end{tabular}
 \end{table}
 
-Estas características orientan la factibilidad inicial, pero no validan por sí mismas la representatividad del dataset ni la pertinencia de un uso clínico. El dataset de Kaggle se utiliza como referencia académica y de prototipo; no se asume que sea la base productiva definitiva del hospital. Los códigos de \texttt{sex} se mantienen sin asignarles una categoría demográfica, ya que la documentación local disponible no define formalmente su significado.
+Estas características orientan la factibilidad inicial, pero no validan por sí mismas la representatividad del dataset ni la pertinencia de un uso clínico. El dataset de Kaggle se utiliza como referencia académica y de prototipo; no se asume que sea la base productiva definitiva del hospital. La codificación \texttt{sex}=0 como mujer y \texttt{sex}=1 como hombre está documentada para el conjunto original de UCI; la coincidencia de valores se registra con trazabilidad externa \parencite{uci-heart-disease}.
+
+\subsection{Diccionario de datos}
+
+El archivo \texttt{heart.csv} contiene 14 variables: 13 predictores y la variable objetivo \texttt{target}. El diccionario documenta el significado, tipo, unidad o codificación y dominio observado de cada variable. Las definiciones conceptuales proceden de la documentación del repositorio UCI y de la versión publicada en Kaggle, mientras que dtype, rangos, nulos, valores únicos y categorías observadas se calculan directamente desde \texttt{heart.csv} \parencite{uci-heart-disease,kaggle-heart}.
+
+Cuando la codificación original de UCI difiere del dominio presente en esta versión, se conservan los valores observados y se deja una advertencia explícita en el diccionario técnico. Esto afecta particularmente a \texttt{cp}, \texttt{slope}, \texttt{ca} y \texttt{thal}; no se asume una equivalencia que no esté documentada de forma concluyente.
+
+\input{tables/diccionario_datos}
 
 \subsection{Alcance de los datos}
 
