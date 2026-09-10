@@ -1,0 +1,8 @@
+﻿variable,categorias_observadas_original,categoria_mayoritaria_original,porcentaje_categoria_mayoritaria_original,maxima_diferencia_pp_original_vs_unicos,observacion
+cp,4,0,48.49,1.14,Revisión descriptiva: requiere contraste con documentación de variables antes de cualquier interpretación clínica.
+fbs,2,0,85.07,0.03,Revisión descriptiva: requiere contraste con documentación de variables antes de cualquier interpretación clínica.
+restecg,3,1,50.05,0.19,Revisión descriptiva: requiere contraste con documentación de variables antes de cualquier interpretación clínica.
+exang,2,0,66.34,0.88,Revisión descriptiva: requiere contraste con documentación de variables antes de cualquier interpretación clínica.
+slope,3,1,47.02,0.93,Revisión descriptiva: requiere contraste con documentación de variables antes de cualquier interpretación clínica.
+ca,5,0,56.39,1.56,Revisión descriptiva: requiere contraste con documentación de variables antes de cualquier interpretación clínica.
+thal,4,2,53.07,1.56,Revisión descriptiva: requiere contraste con documentación de variables antes de cualquier interpretación clínica.

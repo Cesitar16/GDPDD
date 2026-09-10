@@ -1,0 +1,6 @@
+variable,rango_revisado,valores_fuera_rango,requiere_revision
+age,0 a 120,0,No
+trestbps,0 a 300,0,No
+chol,0 a 1000,0,No
+thalach,0 a 250,0,No
+oldpeak,0 a 20,0,No

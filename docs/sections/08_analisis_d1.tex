@@ -1,0 +1,15 @@
+\section{Análisis D1}
+
+\subsection{Alcance funcional}
+
+La solución incluye: ingesta controlada de datasets cardiovasculares; validación de calidad; preparación para análisis y modelamiento; análisis exploratorio orientado al problema; comparación conceptual de modelos candidatos; métricas técnicas, estabilidad y evaluación por subgrupos; explicabilidad; una interfaz interna de referencia; versionado y trazabilidad del modelo; monitoreo de degradación, drift y fallos operacionales; y documentación de arquitectura, supuestos, riesgos, procedimientos y operación.
+
+\subsection{Fuera de alcance}
+
+Quedan expresamente fuera de alcance el diagnóstico médico automático, las recomendaciones automáticas de tratamiento, la negación o asignación automática de atención, la sustitución de personal sanitario, la integración productiva completa con HIS/EHR, el despliegue clínico definitivo y una plataforma nacional o multihospital desde el inicio. Estas exclusiones reducen el riesgo clínico y ético, respetan la información disponible y mantienen el proyecto dentro de un piloto institucional controlado.
+
+\subsection{Arquitectura lógica común}
+
+Para comparar las tres alternativas de manera justa, todas resuelven el mismo problema y mantienen el mismo alcance funcional. La cadena lógica es: fuente de datos hospitalaria, validación y control de calidad, almacenamiento estructurado o analítico, preparación y procesamiento, modelo o servicio de inferencia, API de aplicación, interfaz de usuario, y monitoreo, trazabilidad y respaldo.
+
+Las diferencias de costo no deben provenir de comparar productos con funcionalidades distintas. Cambia dónde se ejecutan los componentes, quién los administra y cómo se distribuyen los costos y riesgos.

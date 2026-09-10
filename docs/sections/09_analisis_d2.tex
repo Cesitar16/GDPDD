@@ -1,0 +1,17 @@
+\section{Análisis D2}
+
+\subsection{Alternativa Cloud}
+
+La alternativa Cloud utiliza Google Cloud Platform (GCP) como proveedor de referencia. Esta elección no implica que GCP sea un ganador universal frente a AWS o Azure: la pauta exige evaluar infraestructura, almacenamiento, cómputo, redes, costos, escalabilidad y riesgos. GCP se selecciona para contar con un escenario reproducible, por su región en Santiago (\texttt{southamerica-west1}), la posibilidad de restringir ubicaciones de recursos, y la simplicidad de una arquitectura gestionada y portable \parencite{gcp-location,gcp-cloudrun}.
+
+La aplicación se ejecuta en Cloud Run mediante contenedores Docker; Cloud SQL for PostgreSQL mantiene la persistencia estructurada; Cloud Storage almacena datasets, respaldos y artefactos; IAM, Secret Manager y Cloud Logging/Monitoring administran permisos, secretos y observabilidad. Python, Scikit-learn y SHAP conservan un stack portable y evitan una dependencia obligatoria de servicios propietarios de ML.
+
+\subsection{Decisión sobre Vertex AI}
+
+Vertex AI queda como capacidad futura y no como componente obligatorio del piloto. Una plataforma gestionada no sustituye la definición del problema, la validación de datos, la evaluación de sesgos, las métricas ni la operación. Su incorporación se evaluará si aumentan el volumen de datos, la cantidad de modelos, la frecuencia de reentrenamiento, la necesidad de pipelines administrados o el número de equipos trabajando sobre modelos.
+
+\subsection{Beneficios, riesgos y componentes costables}
+
+Los beneficios principales son elasticidad y pago por uso, menor inversión física inicial, servicios gestionados, escalamiento sin compra de hardware y una ruta de evolución hacia MLOps. Los trade-offs son dependencia de proveedor y conectividad, costos variables si no se controla el consumo, exposición por configuraciones IAM incorrectas, lock-in parcial y la necesidad de gobierno de datos y revisión legal.
+
+Para la evaluación financiera deben considerarse la configuración inicial de GCP, seguridad y despliegue; Cloud Run; Cloud SQL; Cloud Storage y respaldos; red o egress cuando corresponda; monitoreo y logging; Secret Manager e IAM si tienen costo aplicable; RRHH de operación y seguridad; y seis ventanas de evaluación o reentrenamiento durante los 36 meses.

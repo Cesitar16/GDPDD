@@ -1,0 +1,8 @@
+﻿grupo,categoria,n_original,target_0_n_original,target_0_pct_original,target_1_n_original,target_1_pct_original,n_unicos,target_0_n_unicos,target_0_pct_unicos,target_1_n_unicos,target_1_pct_unicos
+sex,0,312,86,27.56,226,72.44,96,24,25.0,72,75.0
+sex,1,713,413,57.92,300,42.08,206,114,55.34,92,44.66
+age_group,40-49,237,80,33.76,157,66.24,72,22,30.56,50,69.44
+age_group,50-59,422,216,51.18,206,48.82,125,60,48.0,65,52.0
+age_group,60-69,275,174,63.27,101,36.73,80,48,60.0,32,40.0
+age_group,70+,34,14,41.18,20,58.82,10,4,40.0,6,60.0
+age_group,<40,57,15,26.32,42,73.68,15,4,26.67,11,73.33

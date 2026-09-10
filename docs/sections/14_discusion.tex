@@ -1,0 +1,35 @@
+\section{Discusión}\label{sec:discusion}
+
+\subsection{Supuestos comunes para las tres alternativas}
+
+Las tres alternativas se evalúan durante 36 meses. El horizonte permite comparar CAPEX y OPEX sin castigar artificialmente la inversión inicial de la alternativa Local ni proyectar precios y tecnología a un plazo excesivamente incierto. El TCO debe incluir costos iniciales, implementación, OPEX recurrente, costos periódicos, RRHH y contingencia, respetando la periodicidad de cada partida y evitando doble conteo.
+
+La etapa evaluada es un piloto institucional funcional y mantenible. Incluye infraestructura, aplicación, datos, seguridad, respaldo, monitoreo, RRHH y operación; no incluye integración total con los sistemas del hospital, disponibilidad crítica 24/7 ni despliegue nacional. El cronograma de implementación es independiente del horizonte financiero.
+
+Se consideran 20 usuarios autorizados y hasta 5 concurrentes en el año 1; 25 y 6 en el año 2; y 30 y 8 en el año 3. La curva representa adopción gradual del área cardiovascular y preventiva, no crecimiento de la dotación hospitalaria. Se asume una carga histórica de 10.000 registros, 5.000 nuevos o actualizados durante el primer año, crecimiento de 10\% anual y un acumulado aproximado de 15.000, 20.500 y 26.550 registros en los años 1, 2 y 3. Para sensibilidad se proponen escenarios de 2.500, 5.000 y 10.000 registros anuales iniciales. La referencia de demanda de cardiología en hospitales públicos de Santiago se utiliza solo como orden de magnitud, no como dato del hospital ficticio \parencite{lagos2024,sotero-about,sotero-cardiology}.
+
+La continuidad común exige disponibilidad objetivo de 99\% en horario operacional, RTO máximo de 8 horas, RPO máximo de 24 horas, backup operativo diario, backup completo semanal, retención mínima de 30 días y prueba mensual de restauración. La atención debe continuar si la plataforma no está disponible.
+
+\subsection{Detalle de supuestos y sensibilidad}
+
+La estimación de 20 usuarios autorizados se distribuye aproximadamente entre 15 profesionales del proceso cardiovascular o preventivo, 3 personas de coordinación o gestión y 2 perfiles técnicos. Es un supuesto de dimensionamiento, no una estadística del hospital ficticio. La referencia histórica de una unidad de cardiología infantil con 14 integrantes y el dato institucional de más de 5.000 funcionarios se usan solo para contextualizar el orden de magnitud \parencite{sotero-about,sotero-cardiology}.
+
+El escenario de volumen utiliza 10.000 registros históricos al inicio; 5.000 registros nuevos o actualizados en el año 1; 5.500 en el año 2; y 6.050 en el año 3. Los acumulados estimados son 10.000 al inicio, 15.000, 20.500 y 26.550 respectivamente. Los escenarios de sensibilidad son bajo, con 2.500 registros anuales iniciales; base, con 5.000; y alto, con 10.000.
+
+Para la sensibilidad financiera también puede analizarse un escenario de cuatro ciclos de reentrenamiento por año, frente a los dos ciclos semestrales de la línea base. Las alternativas deben costearse para el mismo nivel de continuidad; ninguna puede parecer más barata por ofrecer menor respaldo o recuperación.
+
+\subsection{Comparación consolidada}
+
+\begin{description}[style=nextline]
+  \item[Cloud GCP] Los datos, entrenamiento e inferencia se ejecutan en GCP y Cloud Run; la interfaz es cloud autenticada. Tiene CAPEX bajo, OPEX variable y RRHH, escalabilidad alta y rápida, alta dependencia de Internet, menor control físico y complejidad media. El MLOps avanzado queda para una etapa futura si se justifica.
+  \item[Local] Los datos, entrenamiento e inferencia permanecen en el hospital y la interfaz opera en la red interna. Tiene CAPEX mayor y costos de operación y mantenimiento local, escalabilidad posible pero menos elástica, baja dependencia de Internet, mayor control físico y complejidad media. El MLOps avanzado es posible, con mayor esfuerzo local.
+  \item[Híbrida] La identidad, el registro maestro y la interfaz permanecen locales; el dataset analítico controlado, el entrenamiento y la inferencia se ejecutan en GCP. Tiene CAPEX intermedio, operación dual, costos cloud y RRHH, alta escalabilidad analítica, dependencia media o alta de Internet para inferencia, mayor control de identidad y complejidad alta. El MLOps avanzado queda para cloud si se justifica.
+\end{description}
+
+\subsection{Riesgos y elementos pendientes}
+
+Los riesgos transversales incluyen calidad de datos, duplicados, cambios de esquema, retrasos, fallos de pipeline, drift, degradación del modelo, baja explicabilidad y fallos de respaldo. Cloud agrega dependencia de GCP, conectividad, costos variables, errores IAM, exposición y lock-in; Local incorpora ransomware, software desactualizado, fallos de servidor o UPS, respaldo comprometido, falta de personal especializado y segmentación deficiente; Híbrida añade fallos de sincronización, inconsistencias, exposición durante transferencia y doble operación.
+
+No se cierran aún el precio y sizing final de GCP, el hardware local exacto, las horas por rol y duración de implementación, la alternativa financiera preferida, la matriz de riesgos residual, el análisis legal vigente, los sesgos e impactos éticos finales ni la alternativa recomendada. Estas decisiones requieren la integración de los responsables correspondientes.
+
+La auditoría de aceptación concluye que las alternativas comparten problema y alcance, las herramientas tienen función justificada y la metodología está argumentada. Finanzas y planificación pueden trabajar con los supuestos y handoffs definidos, aunque los precios, dimensionamientos y análisis integrales quedan pendientes.

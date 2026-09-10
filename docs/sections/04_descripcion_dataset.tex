@@ -1,0 +1,9 @@
+\section{Descripción del dataset}
+
+El archivo \texttt{heart.csv} utilizado en el caso contiene 1.025 registros y 14 variables, incluida la variable objetivo \texttt{target}. De acuerdo con el informe maestro, no presenta valores nulos y contiene 723 filas duplicadas exactas. La clase objetivo está relativamente equilibrada, con 526 registros cuyo \texttt{target} es 1 y 499 cuyo \texttt{target} es 0. La variable \texttt{sex} presenta 713 registros con valor 1 y 312 con valor 0; la edad observada se encuentra entre 29 y 77 años.
+
+Estas características orientan la factibilidad inicial, pero no validan por sí mismas la representatividad del dataset ni la pertinencia de un uso clínico. El dataset de Kaggle se utiliza como referencia académica y de prototipo; no se asume que sea la base productiva definitiva del hospital. Por esa razón, las decisiones de capacidad, gobierno y seguridad se fundamentan en el escenario de piloto definido, no solo en el tamaño actual del archivo.
+
+\subsection{Alcance de los datos}
+
+La preparación debe detectar faltantes, duplicados, valores inválidos y cambios de esquema. El análisis posterior debe evaluar calidad, estabilidad, representatividad, privacidad y posibles sesgos por subgrupos antes de que un modelo pueda considerarse para apoyo operativo.

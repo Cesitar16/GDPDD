@@ -1,0 +1,11 @@
+﻿sex,age_group,n_original,porcentaje_original,n_unicos,porcentaje_unicos,target_0_n,target_1_n,target_0_pct,target_1_pct,target_0_n_original,target_1_n_original,observacion
+0,<40,17,1.66,5,1.66,0,5,0.0,100.0,0,17,Subgrupo con N deduplicado reducido; los porcentajes de target son descriptivos y requieren cautela.
+0,40-49,59,5.76,19,6.29,1,18,5.26,94.74,4,55,Tamaño disponible para descripción; no demuestra representatividad poblacional.
+0,50-59,109,10.63,34,11.26,10,24,29.41,70.59,35,74,Tamaño disponible para descripción; no demuestra representatividad poblacional.
+0,60-69,110,10.73,33,10.93,13,20,39.39,60.61,47,63,Tamaño disponible para descripción; no demuestra representatividad poblacional.
+0,70+,17,1.66,5,1.66,0,5,0.0,100.0,0,17,Subgrupo con N deduplicado reducido; los porcentajes de target son descriptivos y requieren cautela.
+1,<40,40,3.9,10,3.31,4,6,40.0,60.0,15,25,Tamaño disponible para descripción; no demuestra representatividad poblacional.
+1,40-49,178,17.37,53,17.55,21,32,39.62,60.38,76,102,Tamaño disponible para descripción; no demuestra representatividad poblacional.
+1,50-59,313,30.54,91,30.13,50,41,54.95,45.05,181,132,Tamaño disponible para descripción; no demuestra representatividad poblacional.
+1,60-69,165,16.1,47,15.56,35,12,74.47,25.53,127,38,Tamaño disponible para descripción; no demuestra representatividad poblacional.
+1,70+,17,1.66,5,1.66,4,1,80.0,20.0,14,3,Subgrupo con N deduplicado reducido; los porcentajes de target son descriptivos y requieren cautela.

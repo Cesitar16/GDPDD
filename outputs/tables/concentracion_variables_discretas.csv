@@ -1,0 +1,8 @@
+variable,categoria_mayoritaria,porcentaje_mayoritario,categorias_menos_5pct
+cp,0,48.49,0
+fbs,0,85.07,0
+restecg,1,50.05,1
+exang,0,66.34,0
+slope,1,47.02,0
+ca,0,56.39,1
+thal,2,53.07,1

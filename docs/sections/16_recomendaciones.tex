@@ -1,0 +1,66 @@
+\section{Recomendaciones}
+
+\subsection{Handoff para evaluación financiera}
+
+La evaluación financiera debe costear Cloud, Local e Híbrida con los mismos supuestos de horizonte, piloto, usuarios, volumen, actualización, mantenimiento de modelo y continuidad. Cloud debe considerar configuración, seguridad, despliegue, Cloud Run, Cloud SQL, Storage, red, monitoreo, soporte, RRHH y cómputo temporal; no debe suponer entrenamiento 24/7 ni Vertex AI obligatorio. Local debe incluir CAPEX de infraestructura, hardening, electricidad, mantenimiento, seguridad, backup, soporte y RRHH, dimensionado al menos para el escenario del año 3. Híbrida debe sumar infraestructura local mínima, costos cloud e integración, conectividad, monitoreo de ambos ambientes y el esfuerzo de operación dual.
+
+La sensibilidad mínima debe variar registros anuales (2.500 y 10.000 frente al escenario base de 5.000), reentrenamientos (4 frente a 2 por año), usuarios cuando corresponda y el componente dominante de costo de cada arquitectura.
+
+\subsection{Fórmula y reglas de costeo}
+
+La estructura común es \(\mathrm{TCO}_{36\,meses}=\) CAPEX o costos iniciales + implementación + suma de OPEX recurrente del horizonte + costos periódicos + RRHH + contingencia justificada. Cada partida debe respetar su periodicidad real para evitar multiplicaciones incorrectas o doble conteo.
+
+Cloud debe dimensionarse para 20, 25 y 30 usuarios; 5, 6 y 8 usuarios concurrentes; 10.000 registros históricos más el crecimiento definido; batch diario; y los RTO/RPO comunes. Local debe soportar al menos el escenario del año 3 sin una sustitución completa por el crecimiento base. Híbrida debe incluir el costo y el impacto de seguridad y sincronización entre ambos ambientes.
+
+\subsection{Handoff para planificación, riesgos e integración}
+
+La EDT y carta Gantt deben orientarse a entregables: inicio y alcance, datos, preparación, análisis y modelo, validación técnica y ética, infraestructura o piloto, documentación y cierre. Deben incluir backup, monitoreo, recuperación y mantenimiento como trabajo gestionable, y separar la duración de implementación de los 36 meses financieros.
+
+La matriz de riesgos debe consolidar los riesgos técnicos expuestos en la Sección~\ref{sec:discusion} con los riesgos financieros, éticos, legales y de planificación. Para la integración ética, debe mantenerse que el sistema no reemplaza al profesional, que el dataset actual es un prototipo y que Cloud e Híbrida tratan datos sensibles fuera del entorno local. La recomendación final no debe decidirse solo por precio.
+
+\subsection{Handoffs nominales y matriz de riesgos semilla}
+
+Ignacio recibe los componentes, supuestos y fórmulas para la evaluación financiera. El responsable de EDT o Carta Gantt recibe D1 como línea base de alcance, usuarios y límites, junto con la necesidad de una EDT orientada a entregables. Vicente recibe los riesgos técnicos preliminares para consolidarlos con riesgos financieros, éticos, legales y de planificación. César recibe las restricciones para la integración ética y la recomendación final.
+
+\begin{description}[style=nextline]
+  \item[Transversal] Calidad de datos, duplicados, cambios de esquema, datos retrasados, fallos del pipeline, drift, degradación del modelo, baja explicabilidad y fallo de backup.
+  \item[Cloud] Dependencia de GCP, pérdida de conectividad, costos variables, error IAM, exposición de datos, indisponibilidad del proveedor y lock-in.
+  \item[Local] Ransomware, software desactualizado, fallo de servidor o UPS, backup comprometido, falta de personal especializado, escalabilidad lenta y mala segmentación.
+  \item[Híbrida] Fallo de sincronización, inconsistencia entre entornos, exposición durante transferencia, mayor complejidad, dependencia de Internet para inferencia y doble operación.
+  \item[Continuidad] RTO superior a 8 horas, RPO superior a 24 horas, restauración fallida y pérdida de datos analíticos.
+  \item[Mantenimiento ML] Reentrenar con datos defectuosos, nueva versión peor, incremento de sesgos, pérdida de trazabilidad o publicación sin aprobación.
+\end{description}
+
+\subsection{Matriz de trazabilidad de decisiones}
+
+\begin{description}[style=nextline]
+  \item[Apoyo preventivo] Se fundamenta en el caso y EA1; se usa para ética y para delimitar el alcance de planificación.
+  \item[Tres alternativas con mismo alcance] Se fundamenta en el Plan Maestro; permite comparación financiera y análisis de riesgos equivalentes.
+  \item[GCP como referencia Cloud] Se fundamenta en la decisión de diseño, región de Santiago y simplicidad; permite tarifar Cloud y revisar sus riesgos.
+  \item[Stack portable y open source] Se fundamenta en costo-beneficio y comparabilidad; sirve para licencias y planificación de recursos.
+  \item[Sin Vertex AI inicial] Evita sobrearquitectura a la escala actual; define el costo base y los gatillos de escalamiento futuro.
+  \item[Local con seguridad reforzada] Se fundamenta en EA1 y contexto MINSAL; alimenta ciberseguridad, costos de seguridad y continuidad.
+  \item[Híbrida con minimización y pseudonimización] Se fundamenta en privacidad y diseño del caso; alimenta ética, legalidad, riesgos e integración.
+  \item[Metodología adaptativa] Se fundamenta en incertidumbre; define ciclos, hitos y revisiones de EDT o Gantt.
+  \item[Horizonte de 36 meses] Hace comparables CAPEX y OPEX para el TCO.
+  \item[Piloto controlado] Evita comparar un notebook trivial con una producción ficticia y delimita el alcance de todos los análisis.
+  \item[Crecimiento de usuarios, volumen, batch y reentrenamiento] Entregan bases comunes para sizing, costos, operación, riesgos y validación.
+  \item[99\%, RTO 8 h y RPO 24 h] Definen respaldo, pruebas, planificación y riesgos de continuidad.
+\end{description}
+
+\subsection{Auditoría de aceptación D1 a D6}
+
+La línea base cumple con que las tres alternativas resuelven el mismo problema y alcance; cada herramienta tiene una función y motivo; y la metodología está argumentada, no solo nombrada. También permite a Ignacio costear sin inventar componentes mediante los supuestos y el handoff, aunque aún faltan precios y sizing exactos. Permite construir EDT y Gantt sin reinterpretar el alcance; distingue proyecto conceptual de ejecución real; mantiene fuentes y supuestos trazables; y prohíbe declarar una alternativa ganadora antes de integrar finanzas, riesgos y ética.
+
+\subsection{Checklist de integración}
+
+\begin{itemize}
+  \item Mantener D1 a D6 como línea base y comunicar cualquier cambio a finanzas, planificación, riesgos e integración.
+  \item No declarar una alternativa ganadora antes de terminar los análisis financiero, de riesgos y ético.
+  \item Usar los mismos supuestos para Cloud, Local e Híbrida.
+  \item Distinguir datos reales, referencias externas y supuestos de planificación.
+  \item Respaldar cada cifra de costos con tarifario, cotización o supuesto reproducible.
+  \item Conservar el carácter de apoyo preventivo y no diagnóstico autónomo.
+  \item Sintetizar el informe final EP1 a 4--6 páginas, con letra 11, interlineado simple y estilo APA; este documento maestro puede ser más extenso.
+  \item Corregir la consistencia del responsable de EDT o Gantt antes de la entrega final, si existen nombres distintos en los documentos del equipo.
+\end{itemize}

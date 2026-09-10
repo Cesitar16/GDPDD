@@ -1,0 +1,19 @@
+\section{Preparación de datos}
+
+La preparación de datos constituye una capacidad permanente de la plataforma. La ingesta debe ser controlada, con validación de faltantes, duplicados, valores inválidos y cambios de esquema antes de actualizar las vistas analíticas o habilitar nuevos datos para análisis y modelamiento.
+
+Los registros nuevos o modificados se incorporarán mediante un proceso batch incremental diario, preferentemente al cierre de la jornada clínica. No se requiere streaming ni ingestión continua para el piloto. La inferencia se ejecuta bajo demanda y se mantiene separada del proceso de incorporación de datos.
+
+\subsection{Frecuencia operacional de datos y modelo}
+
+\begin{description}[style=nextline]
+  \item[Cada jornada operacional] Validación e incorporación de nuevos registros mediante batch diario.
+  \item[Posterior a la carga diaria] Actualización de dashboard y estadísticas.
+  \item[Bajo demanda] Inferencia de riesgo solicitada por el profesional.
+  \item[Mensual] Revisión de cambios de distribución.
+  \item[Trimestral] Revisión formal de desempeño, estabilidad, sesgos y explicabilidad.
+  \item[Semestral] Ventana planificada de reentrenamiento y evaluación, dos veces al año.
+  \item[Siempre] La sustitución del modelo requiere validación y aprobación; nunca es automática.
+\end{description}
+
+En 36 meses se consideran seis ventanas planificadas de evaluación o reentrenamiento. Un evento significativo puede exigir una revisión extraordinaria, pero una nueva versión no reemplaza automáticamente al modelo vigente: debe superar validación técnica, revisión por subgrupos, explicabilidad y aprobación.

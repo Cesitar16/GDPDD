@@ -1,0 +1,15 @@
+\section{Análisis D3}
+
+\subsection{Alternativa Local u on-premise}
+
+En la alternativa Local, los datos, el almacenamiento, el procesamiento, la inferencia y la aplicación permanecen dentro de la infraestructura hospitalaria. Los usuarios acceden por la red institucional a una aplicación interna, compuesta por Streamlit, FastAPI y Docker; PostgreSQL local persiste los datos; y el almacenamiento institucional mantiene los respaldos. El modelo utiliza Scikit-learn y SHAP, sin requerir GPU en la fase inicial.
+
+El dimensionamiento exacto queda para costeo, pero se requiere un servidor físico o virtualizado con CPU multinúcleo, memoria y SSD suficientes; almacenamiento de respaldo segregado; segmentación de red; RBAC; MFA para administración; cifrado; EDR o antimalware; parcheo; logs y monitoreo; UPS; y un procedimiento probado de recuperación.
+
+\subsection{Seguridad y continuidad}
+
+Local no equivale a seguro por definición. Una infraestructura local mal mantenida puede exponerse a ransomware, credenciales comprometidas, software legado, ausencia de segmentación o respaldos inutilizables. El control directo de los datos implica transferir gran parte de la responsabilidad operacional al hospital. El contexto de ciberseguridad sectorial debe evaluarse conforme a los lineamientos del MINSAL \parencite{minsal-security,minsal-cyberplan}.
+
+Sus beneficios son el control directo de datos e infraestructura, menor dependencia de Internet para uso interno e integración natural con la red institucional. Sus riesgos son mayor CAPEX, mantenimiento y parcheo a cargo de TI, costos de electricidad y respaldo, escalamiento menos elástico y una postura de ciberseguridad deficiente que puede anular la ventaja de control.
+
+La evaluación financiera debe incorporar servidor o virtualización, almacenamiento y medios de respaldo, UPS y red cuando corresponda, implementación y hardening, electricidad, mantenimiento, repuestos o renovación, seguridad y licencias si la institución no las posee, RRHH TI y seguridad, pruebas de recuperación y las seis ventanas de evaluación o reentrenamiento.

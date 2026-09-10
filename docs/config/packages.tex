@@ -1,0 +1,50 @@
+% Codificacion e idioma
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-nodecimaldot]{babel}
+\usepackage{lmodern}
+\usepackage{microtype}
+
+% Pagina y tipografia
+\usepackage[a4paper,margin=2.5cm]{geometry}
+\usepackage{setspace}
+\onehalfspacing
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+
+% Tablas, figuras y color
+\usepackage{graphicx}
+\graphicspath{{figures/eda/}{figures/d1/}{figures/d2/}{figures/d3/}{figures/d4/}{figures/d5/}{figures/d6/}}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{float}
+\usepackage[font=small,labelfont=bf,justification=centering]{caption}
+\usepackage{subcaption}
+\usepackage[table]{xcolor}
+
+% Matematica y codigo
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{listings}
+\lstset{basicstyle=\ttfamily\small,breaklines=true,frame=single,language=Python,showstringspaces=false}
+
+% Enlaces, referencias y bibliografia
+\usepackage{csquotes}
+\usepackage[backend=biber,style=apa,sorting=nyt]{biblatex}
+\addbibresource{references.bib}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+\usepackage[nameinlink,capitalise,noabbrev]{cleveref}
+
+% Encabezados y secciones
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\ProyectoTitulo}
+\rhead{EVA1}
+\cfoot{\thepage}
+\setlength{\headheight}{14.5pt}
+\titleformat{\section}{\Large\bfseries}{\thesection.}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries}{\thesubsection.}{0.6em}{}
+\setlist[itemize]{leftmargin=*,noitemsep,topsep=0.4em}
+\renewcommand{\arraystretch}{1.18}

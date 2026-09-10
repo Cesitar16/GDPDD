@@ -1,0 +1,20 @@
+\section{Análisis D4}
+
+\subsection{Alternativa Híbrida}
+
+La alternativa Híbrida conserva localmente la identidad, el registro maestro y la interfaz clínica; GCP concentra la capacidad analítica, el entrenamiento y la inferencia. Antes de transferir información, se aplican validación, minimización y pseudonimización. El resultado retorna a la aplicación clínica local y es utilizado por el profesional de salud.
+
+La minimización restringe la transferencia a las variables necesarias para el propósito analítico. La pseudonimización mantiene el vínculo con la identidad real dentro del hospital. La solución además requiere TLS en tránsito, cifrado en reposo, IAM de mínimo privilegio, MFA, Secret Manager, auditoría en ambos ambientes y segregación de funciones. Pseudonimizar no convierte automáticamente la información clínica en datos no sensibles; se mantienen controles reforzados.
+
+La inferencia se ejecuta en GCP para diferenciar la alternativa de la modalidad Local y reducir la infraestructura ML que debe operar el hospital. Si GCP o la conectividad no están disponibles, la atención clínica debe continuar sin el módulo predictivo, porque la plataforma es de apoyo y no es crítica.
+
+\subsection{Distribución explícita de responsabilidades}
+
+\begin{description}[style=nextline]
+  \item[Permanece local] Identificadores directos del paciente, vínculo con la identidad, registro maestro clínico, aplicación o interfaz clínica interna, controles de acceso e integración interna.
+  \item[Se ejecuta en GCP] Dataset analítico minimizado o pseudonimizado cuando corresponda, procesamiento y entrenamiento seleccionados, servicio de inferencia en Cloud Run, almacenamiento de artefactos y observabilidad cloud.
+\end{description}
+
+Los beneficios son el equilibrio entre control de identidad y elasticidad analítica, menor necesidad de comprar capacidad ML local anticipadamente, escalamiento gradual y una ruta futura hacia MLOps gestionado. Los trade-offs incluyen integración y operación dual, dependencia de conectividad para inferencia, riesgos de sincronización y transferencia, y costos operacionales distribuidos entre ambos entornos.
+
+El costeo debe incluir infraestructura local mínima para registro maestro, interfaz e integración; configuración y seguridad de GCP; Cloud Storage y Cloud Run; cómputo temporal de entrenamiento; conectividad; monitoreo y respaldos en ambos ambientes; RRHH de integración, seguridad y operación; y seis ventanas de evaluación o reentrenamiento.

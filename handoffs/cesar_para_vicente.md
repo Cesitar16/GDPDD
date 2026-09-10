@@ -1,0 +1,10 @@
+# Handoff de César para Vicente
+
+Los siguientes son riesgos candidatos derivados de evidencia descriptiva. No incluyen probabilidad, impacto ni nivel definitivo: esa evaluación corresponde al responsable de riesgos.
+
+| ID | Riesgo candidato | Tipo sugerido | Evidencia | Causa | Consecuencia potencial | Mitigación sugerida |
+|---|---|---|---|---|---|---|
+| S01 | Sobreponderación de observaciones repetidas | Técnico | 723 de 1.025 filas (70,54 %) son duplicados exactos; no hay registros que aparezcan una o dos veces y el máximo de repeticiones es 8. | Procedencia de las repeticiones aún desconocida. | Análisis o entrenamiento futuros podrían reflejar en exceso ciertos patrones. | Conservar el original, usar la versión deduplicada como análisis de sensibilidad y definir/documentar el tratamiento antes de modelar. |
+| S02 | Generalización incierta entre códigos de `sex` | Técnico/ético | `sex=0` representa 30,44 % del original y 31,79 % del deduplicado. | Representación desigual y falta de documentación local que defina `sex=0` y `sex=1`. | Menor evidencia para evaluar un eventual desempeño futuro en el código menos frecuente. | Verificar la codificación oficial y exigir evaluación posterior por ambos grupos. |
+| S03 | Generalización incierta en extremos etarios | Técnico/ético | `<40` suma 15 registros únicos y `70+` 10; equivalen a 4,97 % y 3,31 % de la versión deduplicada. | Cobertura muestral reducida en ambos rangos respecto de grupos centrales. | Mayor incertidumbre al describir o generalizar resultados hacia esos rangos. | Documentar la limitación, contrastar con la población objetivo y evaluar por rangos etarios antes de uso posterior. |
+| S05 | Evidencia insuficiente en subgrupos interseccionales | Técnico/ético | `sex=0 × <40` y `sex=0 × 70+` tienen N=5 cada uno en la versión deduplicada. | Intersección de un código de sex menos frecuente con rangos etarios minoritarios. | Porcentajes y futuras métricas potencialmente inestables para esos subgrupos. | Mostrar N junto a porcentajes, evitar conclusiones fuertes y solicitar datos o validación adicional si el caso de uso los incluye. |

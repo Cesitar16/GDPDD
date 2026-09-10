@@ -1,0 +1,23 @@
+\section{Análisis D5}
+
+\subsection{Herramientas y stack tecnológico}
+
+La tecnología se define para evaluar factibilidad, costos, recursos y riesgos; el proyecto no exige construir todos los componentes. Se evita sobrearquitectura y se prioriza la portabilidad.
+
+\subsection{Stack base común}
+
+\begin{description}[style=nextline]
+  \item[Python] Lenguaje principal por su ecosistema amplio de ciencia de datos, su carácter open source y su portabilidad.
+  \item[Pandas y NumPy] Preparación y transformación de datos tabulares.
+  \item[Scikit-learn] Modelamiento tradicional de clasificación tabular, sin sobredimensionar la plataforma ML.
+  \item[PostgreSQL] Persistencia estructurada open source, disponible localmente o como servicio gestionado en GCP.
+  \item[SHAP] Explicabilidad y análisis de influencia de variables.
+  \item[FastAPI] Capa de servicio que desacopla el modelo de la interfaz.
+  \item[Streamlit] Interfaz y dashboard de referencia para un prototipo interno sin licencias comerciales obligatorias.
+  \item[Docker] Empaquetado consistente entre las tres alternativas.
+  \item[Git] Versionado y trazabilidad de código, configuración y documentación.
+\end{description}
+
+Las tecnologías necesarias son Python, Pandas, Scikit-learn y PostgreSQL. Como capacidades operacionales se incorporan SHAP, FastAPI, Streamlit, Docker y Git cuando el proyecto se materializa como aplicación mantenible. MLflow, Vertex AI, orquestación u otros servicios avanzados quedan para una etapa de mayor volumen, más modelos, reentrenamiento frecuente o complejidad operacional.
+
+Para GCP se consideran como servicios mínimos Cloud Run, Cloud SQL for PostgreSQL, Cloud Storage, IAM, Secret Manager y Cloud Logging/Monitoring. No se incorpora inicialmente Vertex AI, BigQuery, GKE/Kubernetes, Dataflow, Dataproc, GPU dedicada ni Cloud Healthcare API.
