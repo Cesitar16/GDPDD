@@ -1,0 +1,11 @@
+criterio,descripcion,actividad_edt,hito_gantt,estado,accion
+CA-E01,Tratamiento documentado de duplicados,"2.4 Dataset analítico preparado","H2 Dataset validado",parcial,"Agregar regla reproducible de deduplicación y separación antes de modelar."
+CA-E02,Evaluación por sexo cuando exista N suficiente,"4.2 Auditoría por subgrupos","H4 Ética SLA y DRP",parcial,"Precisar reporte de desempeño por sexo y condición de N suficiente."
+CA-E03,Evaluación por edad cuando exista N suficiente,"4.2 Auditoría por subgrupos","H4 Ética SLA y DRP",parcial,"Precisar rangos etarios y condición de N suficiente."
+CA-E04,No aprobar uso en grupos sin cobertura respaldada,"4.2 Auditoría por subgrupos",H4,no cubierto,"Incorporar regla de restricción de uso y evidencia de cobertura."
+CA-E05,Validación con datos locales,"2.1 Dataset histórico inicial; 4.1 Validación técnica",H2/H4,parcial,"Añadir validación del sitio y población local antes del piloto."
+CA-E06,Supervisión Human in the Loop,"4.3 Protocolo Human in the Loop",H4,parcial,"Definir responsables, protocolo de discrepancia y evidencia de prueba."
+CA-E07,Explicabilidad documentada,"3.2 Informe de explicabilidad",H3,cubierto,"Conservar documentación de límites y explicaciones para revisión humana."
+CA-E08,Pseudonimización y control de acceso,"2.3 Dataset pseudonimizado; 5.1 IAM y secretos",H2/H5,parcial,"Evidenciar propósito, retención, auditoría y mínimo privilegio."
+CA-E09,Monitoreo de deriva,"4.4 Protocolo de deriva; 6.2 Evaluación semestral",H7,cubierto,"Mantener criterios de alerta y aprobación de reentrenamiento."
+CA-E10,Apoyo preventivo no autónomo,"4.3 Protocolo Human in the Loop; 5.5 Piloto",H4/H5,parcial,"Formalizar límites de uso, mensajes y revisión clínica obligatoria."

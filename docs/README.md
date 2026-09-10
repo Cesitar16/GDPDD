@@ -1,6 +1,6 @@
 # Documentación LaTeX EVA1
 
-Esta carpeta contiene la documentación LaTeX modular del análisis del dataset Heart Disease. El contenido fue organizado a partir del informe maestro D1 a D6 y no modifica los archivos fuente ubicados en la raíz del proyecto.
+Esta carpeta contiene la documentación LaTeX modular del informe maestro integrado del proyecto Heart Disease. Integra D1--D14, riesgos, ética, dataset y trazabilidad sin modificar los archivos fuente ubicados en la raíz del proyecto.
 
 ## Compilación
 
@@ -17,4 +17,4 @@ El PDF resultante queda en `build/main.pdf`. Las figuras se organizan por análi
 
 ## Alcance del documento
 
-El informe contiene la línea base conceptual D1 a D6, los supuestos comunes, alternativas Cloud, Local e Híbrida, stack tecnológico, metodología adaptativa, handoffs y referencias. Las figuras y tablas futuras pueden incorporarse en `figures/` y `tables/` sin alterar la estructura principal.
+El informe contiene la línea base técnica, evaluación financiera, planificación, riesgos, ética/dataset, alternativas Cloud, Local e Híbrida, trazabilidad y referencias. La documentación de consistencia se encuentra en `integracion/`; las tablas de alineación reutilizables se encuentran en `../outputs/tables/`.

@@ -213,8 +213,8 @@ def findings_matrix(original: pd.DataFrame, unique: pd.DataFrame, subgroups: pd.
             "posible_sesgo": "Posible fuente de sesgo de representación.",
             "impacto_tecnico_potencial": "Un modelo futuro podría disponer de menor evidencia para el grupo menos frecuente.",
             "impacto_etico_potencial": "Requiere evaluar resultados por subgrupo antes de cualquier uso de modelo.",
-            "limitacion_de_la_evidencia": "No existe documentación local que permita asignar significado demográfico formal a sex=0 o sex=1.",
-            "mitigacion_propuesta": "Mantener los códigos, verificar su definición contra la fuente oficial y evaluar métricas futuras por ambos grupos.",
+            "limitacion_de_la_evidencia": "La codificación sex=0 como mujer y sex=1 como hombre está respaldada por UCI; la distribución muestral no representa por sí sola a la población objetivo.",
+            "mitigacion_propuesta": "Mantener la codificación documentada y evaluar métricas futuras por ambos grupos cuando exista modelo y tamaño suficiente.",
             "requiere_revision": "Sí",
         },
     ]
@@ -242,7 +242,7 @@ def findings_matrix(original: pd.DataFrame, unique: pd.DataFrame, subgroups: pd.
             "posible_sesgo": "Posible limitación de representatividad interseccional; no demuestra sesgo.",
             "impacto_tecnico_potencial": "Los porcentajes de target y futuras métricas en este subgrupo serían inestables.",
             "impacto_etico_potencial": "Se requiere cautela al generalizar conclusiones hacia esta combinación de grupos.",
-            "limitacion_de_la_evidencia": "El análisis no establece el tamaño o composición de la población de referencia ni interpreta los códigos de sex.",
+            "limitacion_de_la_evidencia": "El análisis no establece el tamaño o composición de la población de referencia; la codificación de sex está documentada, pero no resuelve la falta de cobertura interseccional.",
             "mitigacion_propuesta": "Reportar N junto a porcentajes y requerir validación adicional de cobertura antes de decisiones posteriores.",
             "requiere_revision": "Sí",
         }

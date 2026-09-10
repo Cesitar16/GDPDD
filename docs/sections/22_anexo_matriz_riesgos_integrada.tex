@@ -31,14 +31,16 @@ La matriz consolidada identifica riesgos técnicos, legales, financieros, de pro
     R07 & Técnico & 2$\times$3 = 6 (Crítico) & \parbox[t]{0.31\textwidth}{Si no se aprueba nube pura, la sincronización entre entorno local y GCP puede fallar.} & \parbox[t]{0.29\textwidth}{Probar sincronización tempranamente y asignar un responsable técnico único. \textit{Lucas.}} \\
     R08 & Legal & 1$\times$3 = 3 (Medio) & \parbox[t]{0.31\textwidth}{Una brecha de seguridad podría exponer registros clínicos identificables.} & \parbox[t]{0.29\textwidth}{Aplicar IAM de mínimo privilegio, Secret Manager y pseudonimización previa. \textit{Vicente.}} \\
     R09 & Técnico / ético & 2$\times$2 = 4 (Medio) & \parbox[t]{0.31\textwidth}{La deriva de datos puede degradar la precisión durante los 36 meses de operación.} & \parbox[t]{0.29\textwidth}{Realizar seis ventanas semestrales de reentrenamiento y aprobación médica obligatoria. \textit{César / Lucas.}} \\
-    R10 & Ético & 2$\times$3 = 6 (Crítico) & \parbox[t]{0.31\textwidth}{El desbalance de los 10.000 registros iniciales puede generar resultados inequitativos por subgrupos.} & \parbox[t]{0.29\textwidth}{Auditar éticamente cada ventana semestral y aplicar explicabilidad local con SHAP. \textit{César.}} \\
+    R10 & Ético & 2$\times$3 = 6* (Crítico) & \parbox[t]{0.31\textwidth}{La cobertura del dataset académico deduplicado es desigual por sexo y limitada en edades extremas e intersecciones; además, su generalización a un hospital chileno es incierta.} & \parbox[t]{0.29\textwidth}{Evaluar desempeño por subgrupos con N suficiente, validar localmente, monitorear deriva y mantener supervisión humana. SHAP apoya explicabilidad, no prueba equidad. \textit{César; P/I y residual: Vicente.}} \\
     \bottomrule
   \end{tabular}
 \end{table}
 
+\noindent\textit{Nota:} el valor P$\times$I de R10 se conserva desde la matriz fuente y requiere validación de Vicente; esta integración no determina su nivel ni riesgo residual.
+
 \subsection{Criterios de aceptación de riesgos}
 
-La matriz satisface los criterios definidos por su fuente: diferencia riesgos técnicos, legales, financieros y éticos; mantiene una escala consistente de probabilidad e impacto; y vincula cada riesgo con una mitigación y un responsable. Las mitigaciones se alinean con la arquitectura Cloud propuesta, el TCO base indicado por la fuente y el plan de RRHH. Los riesgos críticos R01, R02, R03, R07 y R10 deben revisarse en los gates correspondientes antes de avanzar al piloto o a una nueva versión del modelo.
+La matriz satisface los criterios definidos por su fuente: diferencia riesgos técnicos, legales, financieros y éticos; mantiene una escala consistente de probabilidad e impacto; y vincula cada riesgo con una mitigación y un responsable. Cloud es escenario base de planificación y preferencia financiera, no una arquitectura integral ya aprobada. Los riesgos críticos R01, R02, R03, R07 y R10 deben revisarse en los gates correspondientes antes de avanzar al piloto o a una nueva versión del modelo. La probabilidad, impacto, nivel y riesgo residual de R10 requieren validación de Vicente.
 
 \subsection{Consistencia financiera pendiente de validación}
 

@@ -1,0 +1,17 @@
+dimension,Cloud,Local,Híbrida,fuente_y_condición
+Factibilidad técnica,"Servicios gestionados GCP y escalabilidad alta; escenario base de planificación.","Factible con infraestructura y operación hospitalaria sostenidas.","Factible con integración entre dos entornos; mayor complejidad.",D1-D6 y D12-D14
+TCO,"CLP 10815487; menor TCO estimado a 36 meses.","CLP 16893013; mayor CAPEX y operación.","CLP 15696956; operación dual y mayor RRHH.",D7-D11; estimaciones de planificación
+CAPEX,Muy bajo,Alto,Medio,D7-D11
+OPEX,"Variable; servicios GCP y operación Cloud.","Energía mantención repuestos y operación local.","Servicios GCP conectividad logs y doble monitoreo.",D7-D11
+Escalabilidad,Alta y pago por uso,"Limitada por hardware comprado.",Alta para analítica,D1-D6 y D7-D11
+Privacidad,"Requiere controles técnicos contractuales y autorización para datos sensibles.","Mayor control directo del entorno; no es segura por definición.","Identidad y registro maestro locales; datos minimizados hacia GCP.",D1-D6 y ética
+Control institucional,Menor control físico,Mayor control físico,"Mayor control de identidad local; operación distribuida.",D1-D6
+Complejidad,Media,Media,Alta,D1-D6 y D7-D11
+Riesgos técnicos,"Dependencia GCP conectividad IAM lock-in.","Hardware parches ransomware respaldo y personal.","Sincronización conectividad inconsistencias y doble operación.",D1-D6 y matriz de riesgos
+Riesgos legales,"Autorización para datos de salud en GCP pendiente.","Gobierno y seguridad institucionales igualmente exigibles.","Transferencia y operación de dos ambientes requieren autorización.",R02 R08 y sección ética
+Riesgos éticos,"No es intrínsecamente más ética; requiere controles y validación local.","No elimina riesgos de cobertura ni automatización.","No es intrínsecamente más ética; añade complejidad de gobierno.",Matriz ética
+Continuidad,"Backups y RTO/RPO planificados en GCP.","Depende de capacidad local y pruebas de restauración.","Depende de controles en ambos entornos.",D12-D14
+Operación,"120 h Cloud DevOps planificadas.","300 h SysAdmin planificadas.","280 h Integración DevOps planificadas.",D7-D11
+Mantenimiento,"Seis ventanas semestrales sujetas a aprobación.","Seis ventanas semestrales sujetas a aprobación.","Seis ventanas semestrales sujetas a aprobación.",D7-D11 y D12-D14
+Dependencia externa,Proveedor GCP,"Menor dependencia de proveedor cloud; mayor dependencia de capacidad local.",Proveedor GCP e integración local,D1-D6
+Condiciones de aceptación,"Autorización legal/ética controles de datos validación local y riesgos aceptados.","Controles operacionales seguridad continuidad y respaldo verificables.","Autorización controles de transferencia sincronización y operación dual verificables.",Ética riesgos y D12-D14
