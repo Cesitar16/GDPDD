@@ -10,11 +10,11 @@ La matriz consolidada identifica riesgos técnicos, legales, financieros, de pro
     \toprule
     ID & Categoría & P$\times$I & Causa y consecuencia & Mitigación y responsable \\
     \midrule
-    R01 & Proyecto / financiero & 2$\times$3 = 6 & \parbox[t]{0.31\textwidth}{Mayor complejidad técnica incrementa horas de RRHH e impacta el 69,7\% del TCO base.} & \parbox[t]{0.29\textwidth}{Validar horas en EDT/Gantt, registrar cambios de alcance y monitorear semanalmente. \textit{Fabián / Ignacio.}} \\
-    R02 & Legal & 2$\times$3 = 6 & \parbox[t]{0.31\textwidth}{La aprobación para integrar datos de salud en GCP puede retrasar el cronograma de diez semanas.} & \parbox[t]{0.29\textwidth}{Aprobación formal temprana y pseudonimización estricta antes de cargar datos. \textit{Vicente.}} \\
-    R03 & Financiero & 3$\times$2 = 6 & \parbox[t]{0.31\textwidth}{La variación USD/CLP puede desviar el OPEX planificado.} & \parbox[t]{0.29\textwidth}{Contingencia de 10\%, alertas de gasto y revisión mensual. \textit{Ignacio.}} \\
-    R04 & Financiero & 2$\times$2 = 4 & \parbox[t]{0.31\textwidth}{Egress, logs o servicios administrados no previstos pueden producir cobros adicionales.} & \parbox[t]{0.29\textwidth}{Etiquetar costos, asignar presupuesto por servicio y aprobar activaciones. \textit{Ignacio.}} \\
-    R05 & Técnico / proyecto & 1$\times$2 = 2 & \parbox[t]{0.31\textwidth}{Descalces de la ingesta batch pueden generar inconsistencia de datos al cierre de jornada.} & \parbox[t]{0.29\textwidth}{Monitorear pipeline y cumplir RTO menor a 8 horas. \textit{Lucas / Fabián.}} \\
+    R01 & Proyecto / financiero & 2$\times$3 = 6 (Crítico) & \parbox[t]{0.31\textwidth}{Mayor complejidad técnica incrementa horas de RRHH e impacta el 69,7\% del TCO base.} & \parbox[t]{0.29\textwidth}{Validar horas en EDT/Gantt, registrar cambios de alcance y monitorear semanalmente. \textit{Fabián / Ignacio.}} \\
+    R02 & Legal & 2$\times$3 = 6 (Crítico) & \parbox[t]{0.31\textwidth}{La aprobación para integrar datos de salud en GCP puede retrasar el cronograma de diez semanas.} & \parbox[t]{0.29\textwidth}{Aprobación formal temprana y pseudonimización estricta antes de cargar datos. \textit{Vicente.}} \\
+    R03 & Financiero & 3$\times$2 = 6 (Crítico) & \parbox[t]{0.31\textwidth}{La variación USD/CLP puede desviar el OPEX planificado.} & \parbox[t]{0.29\textwidth}{Contingencia de 10\%, alertas de gasto y revisión mensual. \textit{Ignacio.}} \\
+    R04 & Financiero & 2$\times$2 = 4 (Medio) & \parbox[t]{0.31\textwidth}{Egress, logs o servicios administrados no previstos pueden producir cobros adicionales.} & \parbox[t]{0.29\textwidth}{Etiquetar costos, asignar presupuesto por servicio y aprobar activaciones. \textit{Ignacio.}} \\
+    R05 & Técnico / proyecto & 1$\times$2 = 2 (Bajo) & \parbox[t]{0.31\textwidth}{Descalces de la ingesta batch pueden generar inconsistencia de datos al cierre de jornada.} & \parbox[t]{0.29\textwidth}{Monitorear pipeline y cumplir RTO menor a 8 horas. \textit{Lucas / Fabián.}} \\
     \bottomrule
   \end{tabular}
 \end{table}
@@ -27,18 +27,18 @@ La matriz consolidada identifica riesgos técnicos, legales, financieros, de pro
     \toprule
     ID & Categoría & P$\times$I & Causa y consecuencia & Mitigación y responsable \\
     \midrule
-    R06 & Financiero / legal & 2$\times$1 = 2 & \parbox[t]{0.31\textwidth}{El tratamiento tributario de servicios Cloud podría diferir del 19\% estimado.} & \parbox[t]{0.29\textwidth}{Validar el tratamiento con administración institucional antes de contratar. \textit{Ignacio / Vicente.}} \\
-    R07 & Técnico & 2$\times$3 = 6 & \parbox[t]{0.31\textwidth}{Si no se aprueba nube pura, la sincronización entre entorno local y GCP puede fallar.} & \parbox[t]{0.29\textwidth}{Probar sincronización tempranamente y asignar un responsable técnico único. \textit{Lucas.}} \\
-    R08 & Legal & 1$\times$3 = 3 & \parbox[t]{0.31\textwidth}{Una brecha de seguridad podría exponer registros clínicos identificables.} & \parbox[t]{0.29\textwidth}{Aplicar IAM de mínimo privilegio, Secret Manager y pseudonimización previa. \textit{Vicente.}} \\
-    R09 & Técnico / ético & 2$\times$2 = 4 & \parbox[t]{0.31\textwidth}{La deriva de datos puede degradar la precisión durante los 36 meses de operación.} & \parbox[t]{0.29\textwidth}{Realizar seis ventanas semestrales de reentrenamiento y aprobación médica obligatoria. \textit{César / Lucas.}} \\
-    R10 & Ético & 2$\times$3 = 6 & \parbox[t]{0.31\textwidth}{El desbalance de los 10.000 registros iniciales puede generar resultados inequitativos por subgrupos.} & \parbox[t]{0.29\textwidth}{Auditar éticamente cada ventana semestral y aplicar explicabilidad local con SHAP. \textit{César.}} \\
+    R06 & Financiero / legal & 2$\times$1 = 2 (Bajo) & \parbox[t]{0.31\textwidth}{El tratamiento tributario de servicios Cloud podría diferir del 19\% estimado.} & \parbox[t]{0.29\textwidth}{Validar el tratamiento con administración institucional antes de contratar. \textit{Ignacio / Vicente.}} \\
+    R07 & Técnico & 2$\times$3 = 6 (Crítico) & \parbox[t]{0.31\textwidth}{Si no se aprueba nube pura, la sincronización entre entorno local y GCP puede fallar.} & \parbox[t]{0.29\textwidth}{Probar sincronización tempranamente y asignar un responsable técnico único. \textit{Lucas.}} \\
+    R08 & Legal & 1$\times$3 = 3 (Medio) & \parbox[t]{0.31\textwidth}{Una brecha de seguridad podría exponer registros clínicos identificables.} & \parbox[t]{0.29\textwidth}{Aplicar IAM de mínimo privilegio, Secret Manager y pseudonimización previa. \textit{Vicente.}} \\
+    R09 & Técnico / ético & 2$\times$2 = 4 (Medio) & \parbox[t]{0.31\textwidth}{La deriva de datos puede degradar la precisión durante los 36 meses de operación.} & \parbox[t]{0.29\textwidth}{Realizar seis ventanas semestrales de reentrenamiento y aprobación médica obligatoria. \textit{César / Lucas.}} \\
+    R10 & Ético & 2$\times$3 = 6 (Crítico) & \parbox[t]{0.31\textwidth}{El desbalance de los 10.000 registros iniciales puede generar resultados inequitativos por subgrupos.} & \parbox[t]{0.29\textwidth}{Auditar éticamente cada ventana semestral y aplicar explicabilidad local con SHAP. \textit{César.}} \\
     \bottomrule
   \end{tabular}
 \end{table}
 
 \subsection{Criterios de aceptación de riesgos}
 
-La matriz satisface los criterios definidos por su fuente: diferencia riesgos técnicos, legales, financieros y éticos; mantiene una escala consistente de probabilidad e impacto; y vincula cada riesgo con una mitigación y un responsable. Los riesgos críticos R01, R02, R03, R07 y R10 deben revisarse en los gates correspondientes antes de avanzar al piloto o a una nueva versión del modelo.
+La matriz satisface los criterios definidos por su fuente: diferencia riesgos técnicos, legales, financieros y éticos; mantiene una escala consistente de probabilidad e impacto; y vincula cada riesgo con una mitigación y un responsable. Las mitigaciones se alinean con la arquitectura Cloud propuesta, el TCO base indicado por la fuente y el plan de RRHH. Los riesgos críticos R01, R02, R03, R07 y R10 deben revisarse en los gates correspondientes antes de avanzar al piloto o a una nueva versión del modelo.
 
 \subsection{Consistencia financiera pendiente de validación}
 
