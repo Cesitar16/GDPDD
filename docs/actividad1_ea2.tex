@@ -1,0 +1,258 @@
+\documentclass[12pt,a4paper]{article}
+
+\input{config/packages}
+\newcommand{\ProyectoTitulo}{Levantamiento y documentación de requerimientos del proyecto Heart Disease}
+\newcommand{\ProyectoSubtitulo}{Actividad 1 de EA2 --- Gestión de Proyectos de Datos}
+\newcommand{\ProyectoAutor}{Lucas Moncada \quad Ignacio Silva \quad Fabián Leal \\ Vicente Hormazábal \quad César Rojas}
+\newcommand{\ProyectoFecha}{Septiembre de 2026}
+\input{config/commands}
+\rhead{EA2}
+
+\begin{document}
+\hypersetup{pageanchor=false}
+\input{sections/00_portada}
+\hypersetup{pageanchor=true}
+\pagenumbering{roman}
+\tableofcontents
+\clearpage
+\pagenumbering{arabic}
+
+\section{Ficha de la actividad}
+
+\begin{table}[H]
+  \centering
+  \caption{Datos de la actividad formativa}
+  \label{tab:act1-ficha}
+  \small
+  \begin{tabularx}{\textwidth}{@{}lX@{}}
+    \toprule
+    Campo & Descripción \\
+    \midrule
+    Asignatura & SCY1102 Gestión de Proyectos de Datos \\
+    Experiencia de aprendizaje & EA2 Planificación del proyecto de ciencia de datos \\
+    Actividad & 2.1 Levantamiento y documentación de requerimientos del cliente \\
+    Semana de referencia & 17, según la guía 2.1.2 \\
+    Tiempo y modalidad & 2 horas; trabajo en grupo, según la guía 2.1.2 \\
+    Resultado de aprendizaje & RA2: planificar un proyecto de ciencia de datos considerando requerimientos del cliente, procesos organizacionales y estándares de la industria. \\
+    Indicador de logro & IL 2.1: documentar requerimientos claros, completos y priorizados para el proyecto. \\
+    Caso aplicado & Piloto institucional de apoyo analítico a la prevención cardiovascular Heart Disease. \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\subsection{Propósito y estado del trabajo}
+
+Esta actividad aplica el levantamiento de requerimientos al caso semestral Heart Disease. El resultado es una propuesta de preguntas, actores y requerimientos que el grupo puede llevar a una entrevista y validar con la contraparte del proyecto. Las necesidades clínicas, los umbrales de desempeño y el acceso a datos hospitalarios permanecen pendientes de confirmación; el informe EVA1 aporta una línea base académica, no respuestas obtenidas de un cliente real.
+
+La secuencia de trabajo de la guía es: reunirse con el grupo, tener el enunciado del proyecto semestral, investigar cuando haga falta y abrir el proyecto en Jira o Trello; después realizar levantamiento, documentación e infografía. Los ítems del \tabref{tab:act1-backlog} quedan preparados para registrarse en la herramienta del grupo.
+
+\section{Parte 1 --- Levantamiento}
+
+\subsection{Contexto y problema principal}
+
+El caso supone un hospital público que obtiene datos en controles cardiovasculares preventivos, pero carece de una solución analítica que los convierta sistemáticamente en información sobre factores asociados a enfermedad cardíaca y apoyo para priorizar evaluaciones preventivas. La decisión que se busca mejorar es \emph{qué pacientes revisar primero y qué hallazgos explorar}, siempre a criterio del profesional de salud. El sistema propuesto no diagnostica ni asigna o niega atención de forma automática.
+
+El archivo académico \texttt{heart.csv} contiene 1.025 filas y 14 variables. El informe EVA1 documenta 723 filas duplicadas exactas y 302 registros únicos. Es evidencia útil para descubrir problemas de calidad y diseñar un prototipo, pero no representa por sí sola la población del hospital ni permite declarar un modelo listo para uso clínico. El volumen operativo de 10.000 registros iniciales y 5.000 nuevos o actualizados durante el primer año es un supuesto de dimensionamiento, distinto de los datos disponibles.
+
+\subsection{Stakeholders propuestos}
+
+La siguiente identificación deriva de las funciones descritas en el informe. Los cargos concretos, la autoridad de aprobación y los canales de participación deben confirmarse con la contraparte.
+
+\begin{table}[H]
+  \centering
+  \caption{Actores, decisiones e información por validar}
+  \label{tab:act1-stakeholders}
+  \scriptsize
+  \begin{tabularx}{\textwidth}{@{}lXX@{}}
+    \toprule
+    Actor propuesto & Decisión o necesidad en el piloto & Punto que debe validarse \\
+    \midrule
+    Dirección o patrocinio institucional & Aprobar propósito, alcance, recursos y continuidad. & Responsable formal de aprobación y criterio de valor. \\
+    Profesional clínico o preventivo & Interpretar resultados y decidir evaluaciones; puede discrepar del sistema. & Flujo actual, información útil y consecuencias de errores. \\
+    Coordinación cardiovascular & Revisar indicadores agregados y organizar controles preventivos. & Frecuencia, desglose y utilidad de los reportes. \\
+    Equipo de datos & Preparar datos, evaluar modelos, subgrupos y deriva. & Definiciones de variables, calidad y datos disponibles. \\
+    TI y ciberseguridad & Operar accesos, infraestructura, respaldos e incidentes. & Integraciones, permisos, continuidad y capacidad real. \\
+    Gobierno de datos, privacidad y asesoría legal & Autorizar propósito y tratamiento de datos sensibles. & Bases de autorización, retención y condiciones para Cloud. \\
+    Paciente, beneficiario indirecto & Recibir atención preventiva supervisada por profesionales. & Salvaguardas y comunicación institucional; no hay interfaz pública en el piloto. \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\subsection{Ocho preguntas de entrevista}
+
+Las preguntas se orientan a decisiones, procesos, métricas y restricciones. No se presentan respuestas supuestas como hechos del hospital.
+
+\begin{enumerate}
+  \item \textbf{Profesional clínico:} ¿Cómo decide hoy qué pacientes requieren revisión preventiva prioritaria y qué información consulta para tomar esa decisión?
+  \item \textbf{Profesional clínico:} ¿Qué dato o explicación necesitaría ver para usar una estimación como apoyo, y en qué situaciones preferiría descartarla?
+  \item \textbf{Coordinación cardiovascular:} ¿Qué dificultades aparecen al organizar los controles y qué indicadores usa actualmente para evaluar tiempos, cobertura y carga de trabajo?
+  \item \textbf{Patrocinio o dirección:} ¿Qué resultado concreto justificaría el piloto y cómo comprobaría que mejora el proceso sin reemplazar el criterio clínico?
+  \item \textbf{Equipo de datos:} ¿De dónde provienen las variables cardiovasculares, cómo se identifican registros repetidos y qué problemas de calidad observan en los datos locales?
+  \item \textbf{TI y ciberseguridad:} ¿Qué sistemas, permisos, respaldos y restricciones de infraestructura condicionan una carga diaria y una consulta interna bajo demanda?
+  \item \textbf{Gobierno de datos y privacidad:} ¿Qué autorizaciones, reglas de minimización, pseudonimización, retención y auditoría se exigen antes de usar datos hospitalarios o servicios Cloud?
+  \item \textbf{Clínica, datos y dirección:} ¿Qué población y subgrupos debe cubrir el piloto, qué errores serían inaceptables y quién aprobaría los criterios de desempeño y el paso a uso local?
+\end{enumerate}
+
+\subsection{Información pendiente para cerrar el levantamiento}
+
+Se debe confirmar la identidad y autoridad de los actores, el flujo de controles existente, la población objetivo, las fuentes y permisos de datos, las reglas de codificación de variables, los criterios clínicos de utilidad, el tamaño mínimo de subgrupos para evaluación y los responsables de aceptar riesgos. Estas respuestas podrían cambiar la prioridad o redacción de los requerimientos; cada cambio deberá registrarse con fecha, responsable y motivo.
+
+\section{Parte 2 --- Documentación y priorización}
+
+\subsection{Criterio de redacción}
+
+Cada requerimiento describe una capacidad o condición observable y se vincula con el problema. Los criterios de aceptación son verificaciones propuestas, no pruebas ya realizadas. Cuando depende de aprobación clínica, legal o de datos, esa dependencia se declara expresamente. RF identifica una función de la solución y RNF una condición de calidad u operación.
+
+\begin{table}[H]
+  \centering
+  \caption{Tres requerimientos funcionales propuestos}
+  \label{tab:act1-rf}
+  \scriptsize
+  \begin{tabularx}{\textwidth}{@{}lXXl@{}}
+    \toprule
+    ID & Requerimiento & Criterio de aceptación propuesto & Prioridad \\
+    \midrule
+    RF-01 & La plataforma debe importar una carga incremental diaria y verificar campos obligatorios, duplicados, dominios de variables y cambios de esquema antes de incorporar registros a la base analítica. & Una carga de prueba genera un registro de aceptación o rechazo por lote; conserva el origen y no incorpora registros inválidos sin revisión. & Must \\
+    RF-02 & La plataforma debe mostrar a personal autorizado indicadores agregados de calidad y factores cardiovasculares, con filtros aprobados para explorar la población del piloto. & Un usuario clínico o de coordinación autorizado consulta un reporte con período, número de registros, definiciones de variables y advertencias sobre cobertura; un usuario sin permiso no accede. & Must \\
+    RF-03 & Una vez validado localmente un modelo candidato, la plataforma debe permitir que un profesional autorizado solicite una estimación bajo demanda, vea su explicación y registre su decisión de aceptar o discrepar. & En una prueba controlada se observa la estimación, explicación, versión del modelo y registro de revisión humana; no se produce diagnóstico, tratamiento ni asignación automática de atención. & Should \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \caption{Tres requerimientos no funcionales propuestos}
+  \label{tab:act1-rnf}
+  \scriptsize
+  \begin{tabularx}{\textwidth}{@{}lXXl@{}}
+    \toprule
+    ID & Requerimiento & Criterio de aceptación propuesto & Prioridad \\
+    \midrule
+    RNF-01 & El tratamiento de datos de salud debe aplicar minimización y pseudonimización según el diseño aprobado, acceso por roles de mínimo privilegio y trazabilidad de accesos y cambios. & La revisión de un lote analítico confirma ausencia de identificadores directos no autorizados; pruebas de roles y bitácora muestran quién accedió y qué acción realizó. & Must \\
+    RNF-02 & La plataforma debe apuntar a 99\% de disponibilidad en horario operacional, RTO máximo de 8 horas y RPO máximo de 24 horas, con respaldos diarios y prueba mensual de restauración. & La prueba documentada de restauración verifica RTO y RPO; la atención clínica puede continuar si el módulo analítico no está disponible. & Must \\
+    RNF-03 & Antes de utilizar estimaciones con datos locales, se deben documentar explicabilidad, calidad, desempeño y cobertura por sexo y edad cuando exista un tamaño muestral suficiente, con aprobación clínica. & Un acta registra población, tamaños de subgrupo, métricas y límites del modelo; los umbrales son acordados por la contraparte y no se habilita un uso sin evidencia suficiente. & Must para habilitar RF-03 \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\subsection{Priorización MoSCoW y trazabilidad}
+
+Se utiliza MoSCoW para distinguir lo indispensable de lo que puede activarse tras superar condiciones de validación. RF-01 y RF-02 forman la base de datos y análisis del piloto; RNF-01 y RNF-02 protegen su operación; RNF-03 es una condición para cualquier estimación de riesgo. RF-03 queda como \emph{Should} porque el informe sitúa la priorización predictiva en una etapa posterior y exige validación local antes de su uso. La prioridad propuesta debe confirmarse en la entrevista y al aprobar el alcance.
+
+\begin{table}[H]
+  \centering
+  \caption{Relación entre objetivo, requerimientos y evidencia}
+  \label{tab:act1-trazabilidad}
+  \small
+  \begin{tabularx}{\textwidth}{@{}XXX@{}}
+    \toprule
+    Objetivo del proyecto & Requerimientos & Evidencia para revisar con el cliente \\
+    \midrule
+    Preparar datos cardiovasculares confiables & RF-01; RNF-01 & Bitácora de carga, calidad del lote y permisos. \\
+    Comprender factores asociados y apoyar coordinación & RF-02; RNF-01 & Reporte agregado comprensible y prueba de acceso. \\
+    Evaluar progresivamente apoyo a priorización, bajo supervisión & RF-03; RNF-03 & Validación local, métricas y acta clínica; registro de revisión humana. \\
+    Mantener una solución operable y segura & RNF-02; RNF-01 & Prueba de restauración, disponibilidad y auditoría. \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\subsection{Tareas propuestas para Jira o Trello}
+
+\begin{table}[H]
+  \centering
+  \caption{Backlog inicial de la actividad 2.1}
+  \label{tab:act1-backlog}
+  \small
+  \begin{tabularx}{\textwidth}{@{}llXl@{}}
+    \toprule
+    Ítem & Prioridad & Resultado esperado & Responsable propuesto \\
+    \midrule
+    A1-01 & Must & Confirmar actores y realizar las ocho preguntas. & Grupo; enlace clínico \\
+    A1-02 & Must & Registrar problema, decisiones actuales y restricciones. & Grupo; patrocinio \\
+    A1-03 & Must & Validar RF-01, RF-02 y RNF-01 a RNF-03 con los actores. & Grupo; clínica, datos y TI \\
+    A1-04 & Should & Acordar condiciones y criterios para RF-03. & Clínica y datos \\
+    A1-05 & Must & Versionar requerimientos, prioridades y decisiones. & Grupo \\
+    A1-06 & Must & Preparar y ensayar la síntesis visual de tres minutos. & Grupo \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+Los responsables son roles sugeridos para organizar el trabajo, no asignaciones aceptadas por una institución. Tras cada entrevista se debe actualizar el backlog y guardar el acuerdo o desacuerdo que justifica el cambio.
+
+\clearpage
+\section{Parte 3 --- Infografía y presentación}
+
+Esta página condensa el contenido para una infografía. Puede reproducirse en Canva conservando la distinción entre hechos del informe, propuestas del grupo y validaciones pendientes.
+
+\begingroup\small
+\begin{center}
+  {\Large\bfseries Heart Disease: requerimientos del piloto preventivo\par}
+  \vspace{0.4em}
+  {\normalsize Actividad 2.1 --- síntesis para exposición grupal\par}
+\end{center}
+
+\vspace{0.5em}
+\noindent\textbf{Problema.} Los datos de controles cardiovasculares no se transforman sistemáticamente en información para comprender factores asociados a enfermedad cardíaca y apoyar la priorización preventiva.
+
+\vspace{0.5em}
+\begin{table}[H]
+  \centering
+  \small
+  \begin{tabularx}{\textwidth}{@{}XX@{}}
+    \toprule
+    Personas y decisión & Alcance propuesto \\
+    \midrule
+    Clínica: revisa resultados y decide. Coordinación: organiza controles. Datos y TI: preparan y operan. Dirección y gobierno: aprueban. & Carga diaria controlada; reporte agregado para usuarios autorizados; estimación explicable bajo demanda solo tras validación local y revisión humana. \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\noindent\textbf{Prioridad Must}\par
+\begin{itemize}
+  \item Validar la calidad de cada carga y conservar trazabilidad (RF-01).
+  \item Consultar indicadores agregados con permisos (RF-02).
+  \item Proteger datos sensibles, verificar continuidad y evaluar cobertura antes de activar un modelo (RNF-01 a RNF-03).
+\end{itemize}
+
+\noindent\textbf{Prioridad Should}\par
+\begin{itemize}
+  \item Permitir estimaciones explicables con registro de revisión clínica después de validar el modelo localmente (RF-03).
+\end{itemize}
+
+\noindent\textbf{Evidencia y límite.} El dataset académico tiene 1.025 filas, 723 duplicados exactos y 302 registros únicos. No demuestra desempeño clínico ni representa automáticamente a los pacientes del hospital.\par
+
+\vspace{0.5em}
+\noindent\textbf{Por validar con la contraparte:} flujo actual, población objetivo, fuentes y permisos de datos, criterios clínicos de utilidad, tamaños mínimos de subgrupos y responsables de aprobación.
+
+\vspace{0.5em}
+\noindent\textbf{Regla de uso:} apoyo a la prevención cardiovascular con profesional responsable; sin diagnóstico ni decisión automática.
+\endgroup
+
+\clearpage
+\begin{spacing}{1.0}
+\subsection{Guion de exposición, máximo tres minutos}
+
+\textbf{0:00--0:30 --- Ignacio Silva: problema y valor.} Nuestro caso es un hospital público con datos de controles cardiovasculares que aún no se transforman sistemáticamente en información útil. Queremos comprender factores asociados a enfermedad cardíaca y apoyar la priorización de revisiones preventivas. La decisión clínica siempre corresponde al profesional.
+
+\textbf{0:30--1:05 --- Lucas Moncada: levantamiento.} Identificamos a profesionales clínicos, coordinación, dirección, datos, TI y gobierno de datos. Preparamos ocho preguntas sobre el flujo actual, las decisiones que deben mejorar, las fuentes de datos y las restricciones técnicas. Son preguntas para entrevistar a la contraparte; todavía no tenemos sus respuestas.
+
+\textbf{1:05--1:40 --- Fabián Leal: funciones y prioridad.} Proponemos tres funciones: carga diaria con control de calidad, reportes agregados para usuarios autorizados y, después de validar localmente un modelo, estimaciones explicables bajo demanda. Con MoSCoW, las dos primeras son indispensables para el piloto; la tercera queda condicionada a evidencia clínica y revisión humana.
+
+\textbf{1:40--2:20 --- César Rojas: datos y validación.} El conjunto académico tiene 1.025 filas, pero 723 son duplicados exactos y quedan 302 registros únicos. Sirve para analizar calidad y prototipar, no para afirmar que representa a los pacientes del hospital. Antes de utilizar estimaciones debemos evaluar datos locales, desempeño, explicaciones y cobertura por sexo y edad con tamaños de muestra suficientes.
+
+\textbf{2:20--3:00 --- Vicente Hormazábal: controles y cierre.} Los requisitos de privacidad exigen acceso mínimo, pseudonimización y auditoría. La continuidad se plantea con disponibilidad objetivo de 99\% en horario operacional, recuperación máxima de ocho horas y pérdida máxima de 24 horas. Falta confirmar con el cliente el flujo, los permisos, los criterios de utilidad y quién aprueba los riesgos. Esa validación permitirá cerrar requerimientos claros y viables.
+
+\section{Reflexión grupal}
+
+La calidad del levantamiento determina si el equipo resuelve una necesidad real: permite reconocer quién toma cada decisión, qué información falta y qué consecuencias tienen los errores. La documentación convierte esas necesidades en condiciones comprobables y priorizadas. En este caso evita confundir una demostración con datos académicos con una herramienta clínica validada, hace visibles las obligaciones de privacidad y supervisión, y permite ajustar alcance, costos y riesgos antes de comprometer un piloto.
+
+\section*{Fuentes de trabajo}
+\addcontentsline{toc}{section}{Fuentes de trabajo}
+\begin{itemize}
+  \item SCY1102. \emph{Act. 2.1 Levantamiento y documentación de requerimientos del cliente} [presentación de clase].
+  \item SCY1102. \emph{Guía 2.1.2 Levantamientos de Requerimientos para un Proyectos de Ciencia de Datos} [guía de actividad].
+  \item Equipo de proyecto. (2026). \emph{Evaluación de Factibilidad del Proyecto Heart Disease --- EVA1} [informe maestro integrado, repositorio GDPDD].
+\end{itemize}
+\end{spacing}
+
+\end{document}

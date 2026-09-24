@@ -1,0 +1,124 @@
+\subsection{Presupuesto trazable al piloto y a la operación}
+
+El piloto de diez semanas y la evaluación de 36 meses son horizontes distintos: el primero ordena el trabajo de implementación y el segundo incorpora su operación y mantenimiento. Las cifras de esta subsección no agregan presupuesto al TCO; distribuyen las horas y partidas definidas en D7--D14. Las tarifas son supuestos académicos de planificación, no remuneraciones observadas ni cotizaciones. El costo de cada tarea se calcula como horas asignadas por perfil multiplicadas por su tarifa; en cada fila se presupuesta una persona por perfil con horas distintas cuando corresponde.
+
+\begin{table}[H]
+  \centering
+  \caption{Tarifas y separación temporal de RRHH para Cloud}
+  \label{tab:fin-rrhh-fases-cloud}
+  \scriptsize
+  \begin{tabularx}{\textwidth}{@{}Xrrrr@{}}
+    \toprule
+    Perfil & Tarifa CLP/h & Piloto, h & Operación, h & Costo 36 meses CLP \\
+    \midrule
+    Data Scientist / ML (DS) & \$16.000 & 100 & 120 & \$3.520.000 \\
+    Desarrollo / Data Engineering (DE) & \$14.000 & 80 & 40 & \$1.680.000 \\
+    Seguridad y Gobierno (SG) & \$16.000 & 32 & 40 & \$1.152.000 \\
+    DevOps / Cloud Ops (DO) & \$16.000 & 60 & 60 & \$1.920.000 \\
+    \midrule
+    \textbf{Total} & & \textbf{272} & \textbf{260} & \textbf{\$8.272.000} \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+El \tabref{tab:fin-edt-horas-cloud} asigna las 272 horas de implementación a los entregables y semanas de la Carta Gantt. Esta distribución por tarea es un \emph{supuesto nuevo de planificación} elaborado para hacer auditable el presupuesto; los totales por perfil y la tarifa proceden de la línea base financiera y de planificación. Debe contrastarse con la disponibilidad real del equipo antes de aprobar el piloto. La fila 1.2--1.4 presupone seguimiento del TCO a lo largo del piloto; no representa diez semanas de dedicación completa.
+
+\begin{table}[H]
+  \centering
+  \caption{Costo de RRHH del piloto Cloud por entregable de la EDT}
+  \label{tab:fin-edt-horas-cloud}
+  \scriptsize
+  \begin{tabularx}{\textwidth}{@{}llXrrrrrr@{}}
+    \toprule
+    EDT & Sem. & Entregable & DS & DE & SG & DO & Total h & Costo CLP \\
+    \midrule
+    1.1 & S1--S2 & Alcance y requerimientos & 8 & 4 & 4 & 0 & 16 & \$248.000 \\
+    1.2--1.4 & S2--S10 & Recursos, presupuesto y control TCO & 4 & 0 & 4 & 4 & 12 & \$192.000 \\
+    2.1--2.3 & S2--S4 & Dataset inicial, gobierno e ingesta batch & 16 & 24 & 4 & 4 & 48 & \$720.000 \\
+    2.4--2.5 & S3--S4 & Dataset analítico y almacenamiento seguro & 12 & 12 & 4 & 4 & 32 & \$488.000 \\
+    3.1--3.2 & S4--S5 & Modelos candidatos y explicabilidad & 32 & 0 & 0 & 0 & 32 & \$512.000 \\
+    3.3--3.4 & S5--S6 & Servicio de inferencia y pruebas & 8 & 16 & 0 & 4 & 28 & \$416.000 \\
+    4.1--4.2 & S5--S6 & Validación técnica, ética y por subgrupos & 12 & 4 & 4 & 0 & 20 & \$312.000 \\
+    4.3--4.4 & S6 & Revisión humana y control de deriva & 4 & 4 & 4 & 0 & 12 & \$184.000 \\
+    5.1--5.2 & S6--S7 & Cloud, IAM y gestión de secretos & 0 & 0 & 4 & 16 & 20 & \$320.000 \\
+    5.3--5.4 & S7--S8 & Monitoreo, costos, backups y RTO/RPO & 0 & 4 & 4 & 16 & 24 & \$376.000 \\
+    5.5 & S8 & Piloto institucional controlado & 4 & 8 & 0 & 8 & 20 & \$304.000 \\
+    1.5 & S9--S10 & Cierre, documentación y decisión & 0 & 4 & 0 & 4 & 8 & \$120.000 \\
+    \midrule
+    \textbf{Total} & & & \textbf{100} & \textbf{80} & \textbf{32} & \textbf{60} & \textbf{272} & \textbf{\$4.192.000} \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+La operación presupuestada suma 260 horas y \$4.080.000. Dentro de las 120 horas de Data/ML se conservan las 72 horas de seis ventanas semestrales (12 horas por ventana) descritas por la fuente financiera; las 48 restantes se destinan a revisión periódica de calidad, desempeño y deriva. Las otras 140 horas cubren atención de incidencias del pipeline, controles de seguridad y gobierno, y operación de Cloud, respaldos y monitoreo. Las frecuencias de procesos automáticos no equivalen a horas de dedicación humana diaria.
+
+\begin{table}[H]
+  \centering
+  \caption{Horas de mantenimiento Cloud incluidas en el TCO a 36 meses}
+  \label{tab:fin-operacion-horas-cloud}
+  \small
+  \begin{tabularx}{\textwidth}{@{}Xrrr@{}}
+    \toprule
+    Actividad y perfil & Horas & Tarifa CLP/h & Costo CLP \\
+    \midrule
+    Seis ventanas de evaluación y eventual reentrenamiento, DS & 72 & \$16.000 & \$1.152.000 \\
+    Revisión periódica de calidad, desempeño y deriva, DS & 48 & \$16.000 & \$768.000 \\
+    Mantenimiento e incidencias de datos y pipeline, DE & 40 & \$14.000 & \$560.000 \\
+    Auditoría de privacidad, permisos y gobierno, SG & 40 & \$16.000 & \$640.000 \\
+    Operación Cloud, costos, respaldos y restauración, DO & 60 & \$16.000 & \$960.000 \\
+    \midrule
+    \textbf{Total operación RRHH} & \textbf{260} & & \textbf{\$4.080.000} \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+Esta distribución funcional de las horas recurrentes es también un supuesto de planificación. Conserva los totales por rol y no implica que cada evaluación semestral publique un modelo nuevo: cualquier sustitución requiere validación y aprobación clínica. El cómputo temporal de esas ventanas (\$55.800 en 36 meses) ya está incluido en servicios GCP, separado de las 72 horas humanas.
+
+\begin{table}[H]
+  \centering
+  \caption{Conciliación del TCO Cloud por horizonte y naturaleza del costo}
+  \label{tab:fin-conciliacion-cloud}
+  \small
+  \begin{tabularx}{\textwidth}{@{}Xr@{}}
+    \toprule
+    Componente & CLP \\
+    \midrule
+    Implementación del piloto: 272 h de RRHH & \$4.192.000 \\
+    Mantenimiento a 36 meses: 260 h de RRHH & \$4.080.000 \\
+    Servicios GCP a 36 meses, netos & \$1.311.144 \\
+    IVA presupuestado sobre servicios GCP & \$249.117 \\
+    \midrule
+    Subtotal, antes de contingencia & \$9.832.261 \\
+    Contingencia de 10\% sobre el subtotal, redondeada & \$983.226 \\
+    \textbf{TCO Cloud a 36 meses} & \textbf{\$10.815.487} \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+La bolsa GCP equivale a \$43.341 CLP mensuales en promedio, IVA incluido y redondeado, pero el cómputo para reentrenamiento ocurre en seis ventanas y no de manera uniforme. El subtotal de 36 meses ya incorpora los servicios durante el piloto: no se deben sumar otra vez a las 272 horas ni cargar 36 meses adicionales después de la semana diez. La contingencia es una reserva sobre el subtotal, no un costo fijo mensual ni una segunda provisión para cada riesgo.
+
+\begin{table}[H]
+  \centering
+  \caption{Comparación homogénea de componentes del TCO a 36 meses}
+  \label{tab:fin-conciliacion-alternativas}
+  \small
+  \begin{tabular}{lrrr}
+    \toprule
+    Componente, CLP & Cloud & Local & Híbrida \\
+    \midrule
+    Hardware y habilitación local inicial & \$0 & \$3.581.530 & \$1.715.060 \\
+    Servicios y operación no RRHH, 36 meses & \$1.560.261 & \$1.823.755 & \$1.722.900 \\
+    RRHH total, implementación y operación & \$8.272.000 & \$9.952.000 & \$10.832.000 \\
+    \midrule
+    Subtotal & \$9.832.261 & \$15.357.285 & \$14.269.960 \\
+    Contingencia 10\% & \$983.226 & \$1.535.728 & \$1.426.996 \\
+    \textbf{TCO 36 meses} & \textbf{\$10.815.487} & \textbf{\$16.893.013} & \textbf{\$15.696.956} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+El costo inicial de hardware Local e Híbrido es identificable, pero sus horas de implementación y operación aún no están separadas en la fuente financiera. Por ello, la tabla conserva sus RRHH como costo de 36 meses y no inventa un flujo anual ni un costo inicial completo para esas alternativas. Las tarifas y las horas de operación específica sí están definidas: 300 h a \$12.000/h para Local y 280 h a \$16.000/h para Híbrida. Los precios de hardware, el uso final de GCP y el tratamiento tributario requieren respaldo antes de contratar.
+
+\subsection{Beneficio esperado y criterio de decisión financiera}
+
+El beneficio buscado es disponer de análisis trazables sobre factores asociados a enfermedad cardíaca y apoyar la priorización de controles preventivos bajo supervisión clínica. El dataset académico no permite estimar ahorro institucional, retorno de inversión ni efecto clínico atribuible al piloto. Por ello, la comparación monetaria se limita al costo de obtener el mismo alcance funcional y nivel de continuidad en las tres alternativas. Cloud tiene el menor TCO presupuestado, sujeto a los gates éticos, legales, de seguridad y de validación local ya definidos. Para una futura evaluación costo--beneficio con datos reales, la contraparte deberá acordar y medir tiempo de revisión por caso, cobertura de evaluaciones, carga de trabajo, uso efectivo, eventos adversos y costos de operación observados, sin convertir esas variables en beneficios monetarios hasta disponer de evidencia y una regla de valoración aprobada.

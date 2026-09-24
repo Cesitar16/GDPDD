@@ -10,11 +10,11 @@ La matriz consolidada identifica riesgos técnicos, legales, financieros, de pro
     \toprule
     ID & Categoría & P$\times$I & Causa y consecuencia & Mitigación y responsable \\
     \midrule
-    R01 & Proyecto / financiero & 2$\times$3 = 6 (Crítico) & \parbox[t]{0.31\textwidth}{Mayor complejidad técnica incrementa horas de RRHH e impacta el 69,7\% del TCO base.} & \parbox[t]{0.29\textwidth}{Validar horas en EDT/Gantt, registrar cambios de alcance y monitorear semanalmente. \textit{Fabián / Ignacio.}} \\
+    R01 & Proyecto / financiero & 2$\times$3 = 6 (Crítico) & \parbox[t]{0.31\textwidth}{Mayor complejidad técnica incrementa horas de RRHH, que representan el 76,5\% del TCO Cloud vigente.} & \parbox[t]{0.29\textwidth}{Validar horas en EDT/Gantt, registrar cambios de alcance y monitorear semanalmente. \textit{Fabián / Ignacio.}} \\
     R02 & Legal & 2$\times$3 = 6 (Crítico) & \parbox[t]{0.31\textwidth}{La aprobación para integrar datos de salud en GCP puede retrasar el cronograma de diez semanas.} & \parbox[t]{0.29\textwidth}{Aprobación formal temprana y pseudonimización estricta antes de cargar datos. \textit{Vicente.}} \\
     R03 & Financiero & 3$\times$2 = 6 (Crítico) & \parbox[t]{0.31\textwidth}{La variación USD/CLP puede desviar el OPEX planificado.} & \parbox[t]{0.29\textwidth}{Contingencia de 10\%, alertas de gasto y revisión mensual. \textit{Ignacio.}} \\
     R04 & Financiero & 2$\times$2 = 4 (Medio) & \parbox[t]{0.31\textwidth}{Egress, logs o servicios administrados no previstos pueden producir cobros adicionales.} & \parbox[t]{0.29\textwidth}{Etiquetar costos, asignar presupuesto por servicio y aprobar activaciones. \textit{Ignacio.}} \\
-    R05 & Técnico / proyecto & 1$\times$2 = 2 (Bajo) & \parbox[t]{0.31\textwidth}{Descalces de la ingesta batch pueden generar inconsistencia de datos al cierre de jornada.} & \parbox[t]{0.29\textwidth}{Monitorear pipeline y cumplir RTO menor a 8 horas. \textit{Lucas / Fabián.}} \\
+    R05 & Técnico / proyecto & 1$\times$2 = 2 (Bajo) & \parbox[t]{0.31\textwidth}{Descalces de la ingesta batch pueden generar inconsistencia de datos al cierre de jornada.} & \parbox[t]{0.29\textwidth}{Monitorear pipeline y verificar recuperación con RTO máximo de 8 horas. \textit{Lucas / Fabián.}} \\
     \bottomrule
   \end{tabular}
 \end{table}
@@ -30,13 +30,37 @@ La matriz consolidada identifica riesgos técnicos, legales, financieros, de pro
     R06 & Financiero / legal & 2$\times$1 = 2 (Bajo) & \parbox[t]{0.31\textwidth}{El tratamiento tributario de servicios Cloud podría diferir del 19\% estimado.} & \parbox[t]{0.29\textwidth}{Validar el tratamiento con administración institucional antes de contratar. \textit{Ignacio / Vicente.}} \\
     R07 & Técnico & 2$\times$3 = 6 (Crítico) & \parbox[t]{0.31\textwidth}{Si no se aprueba nube pura, la sincronización entre entorno local y GCP puede fallar.} & \parbox[t]{0.29\textwidth}{Probar sincronización tempranamente y asignar un responsable técnico único. \textit{Lucas.}} \\
     R08 & Legal & 1$\times$3 = 3 (Medio) & \parbox[t]{0.31\textwidth}{Una brecha de seguridad podría exponer registros clínicos identificables.} & \parbox[t]{0.29\textwidth}{Aplicar IAM de mínimo privilegio, Secret Manager y pseudonimización previa. \textit{Vicente.}} \\
-    R09 & Técnico / ético & 2$\times$2 = 4 (Medio) & \parbox[t]{0.31\textwidth}{La deriva de datos puede degradar la precisión durante los 36 meses de operación.} & \parbox[t]{0.29\textwidth}{Realizar seis ventanas semestrales de reentrenamiento y aprobación médica obligatoria. \textit{César / Lucas.}} \\
+    R09 & Técnico / ético & 2$\times$2 = 4 (Medio) & \parbox[t]{0.31\textwidth}{La deriva de datos puede degradar el desempeño durante los 36 meses de operación.} & \parbox[t]{0.29\textwidth}{Realizar seis evaluaciones semestrales; reentrenar y publicar solo con validación y aprobación clínica. \textit{César / Lucas.}} \\
     R10 & Ético & 2$\times$3 = 6 (Crítico) & \parbox[t]{0.31\textwidth}{La cobertura del dataset académico deduplicado es desigual por sexo y limitada en edades extremas e intersecciones; además, su generalización a un hospital chileno es incierta.} & \parbox[t]{0.29\textwidth}{Evaluar desempeño por subgrupos con N suficiente, validar localmente, monitorear deriva y mantener supervisión humana. SHAP apoya explicabilidad, no prueba equidad. \textit{César; riesgo residual por definir.}} \\
     \bottomrule
   \end{tabular}
 \end{table}
 
 \noindent\textit{Nota:} el informe adopta P$\times$I = 2$\times$3 = 6 (Crítico) como nivel propuesto/final de R10. El riesgo residual no está definido y no se infiere en esta integración.
+
+\subsection{Trazabilidad presupuestaria de mitigaciones del piloto}
+
+El \tabref{tab:anexo-costos-mitigacion} valoriza partes identificables del trabajo Cloud ya presupuestado en el \tabref{tab:fin-edt-horas-cloud} y el \tabref{tab:fin-operacion-horas-cloud}. Cada asignación de horas indicada abajo se utiliza una sola vez en esta tabla. Es una trazabilidad parcial de controles, no una estimación de pérdida esperada ni un presupuesto adicional: los importes \emph{ya están dentro} de los \$8.272.000 de RRHH Cloud y no se suman al TCO. Una misma medida puede reducir más de un riesgo, por lo que esos riesgos comparten fila. La aprobación institucional o legal y el riesgo residual no pueden comprarse ni darse por cerrados mediante esta valorización.
+
+\begin{table}[H]
+  \centering
+  \caption{Horas de mitigación identificables dentro del presupuesto Cloud}
+  \label{tab:anexo-costos-mitigacion}
+  \scriptsize
+  \begin{tabularx}{\textwidth}{@{}lX X r@{}}
+    \toprule
+    Riesgo & Control presupuestado & Horas y origen en EDT u operación & Costo incluido \\
+    \midrule
+    R01 & Seguimiento de alcance y TCO & 1.2--1.4: DS 4 h, SG 4 h, DO 4 h & \$192.000 \\
+    R02/R08 & Datos pseudonimizados, IAM y secretos & 2.4--2.5: SG 4 h; 5.1--5.2: SG 4 h, DO 16 h & \$384.000 \\
+    R03/R04 & Alertas y revisión de consumo GCP & 5.3--5.4: DO 4 h de sus 16 h & \$64.000 \\
+    R05 & Pruebas y control de ingesta batch & 2.1--2.3: DE 8 h de sus 24 h & \$112.000 \\
+    R09/R10 & Validación por subgrupos, deriva y revisión semestral & 4.1--4.2: DS 12 h, SG 4 h; 4.3--4.4: DS 4 h; operación: DS 72 h en seis ventanas & \$1.472.000 \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+La operación y los servicios también sostienen respaldos, restauración, monitoreo, control de acceso y continuidad; sus partidas completas figuran en la conciliación financiera y no se duplican aquí. La alternativa Híbrida requiere una prueba temprana de sincronización para R07, financiable con sus 280 h de Integración/DevOps, pero la fuente no distribuye esas horas por tarea; no se le asigna un costo puntual inventado. Asimismo, los \$55.800 de cómputo temporal Cloud para seis ventanas ya están incluidos en servicios GCP, no en las horas de la última fila.
 
 \subsection{Criterios de aceptación de riesgos}
 
