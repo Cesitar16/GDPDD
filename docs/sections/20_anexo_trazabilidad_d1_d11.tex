@@ -9,7 +9,7 @@ Este anexo conserva el detalle operativo que fundamenta las secciones D1--D11. D
   \caption{Cobertura de decisiones del informe maestro de Lucas}
   \label{tab:trazabilidad-lucas-d1-d6}
   \small
-  \begin{tabular}{lll}
+  \begin{tabularx}{\textwidth}{@{}p{2.4cm}X p{3.7cm}@{}}
     \toprule
     Bloque fuente & Decisiones preservadas & Secciones de destino \\
     \midrule
@@ -17,10 +17,10 @@ Este anexo conserva el detalle operativo que fundamenta las secciones D1--D11. D
     D2 & GCP, componentes, Vertex AI y trade-offs Cloud & D2 y este anexo \\
     D3--D4 & Alternativas Local e Híbrida, controles y responsabilidades & D3, D4 y este anexo \\
     D5 & Stack base, capas tecnológicas y servicios mínimos & D5 y este anexo \\
-    D6 & Enfoque adaptativo, ciclos y efecto sobre los demás bloques & Metodología y D6 \\
+    D6 & Marcos de trabajo, sprints y efecto sobre los demás bloques & Metodología, D6 y gobierno \\
     Supuestos y handoffs & Horizonte, demanda, continuidad, costos, riesgos y elementos abiertos & D7--D14, recomendaciones y anexos \\
     \bottomrule
-  \end{tabular}
+  \end{tabularx}
 \end{table}
 
 \subsection{Alcance, actores y criterios de D1}
@@ -32,7 +32,7 @@ El alcance incluye una plataforma interna de apoyo analítico a la prevención c
   \caption{Actores, responsabilidades y acceso esperado}
   \label{tab:anexo-actores}
   \small
-  \begin{tabular}{lll}
+  \begin{tabularx}{\textwidth}{@{}p{3.1cm}X p{3.4cm}@{}}
     \toprule
     Perfil & Rol esperado & Acceso \\
     \midrule
@@ -42,7 +42,7 @@ El alcance incluye una plataforma interna de apoyo analítico a la prevención c
     TI y seguridad & Opera controles y continuidad & Administración con mínimo privilegio \\
     Dirección / gobierno & Aprueba alcance y gates & Reportes consolidados \\
     \bottomrule
-  \end{tabular}
+  \end{tabularx}
 \end{table}
 
 Los criterios de éxito incluyen trazabilidad de datos y decisiones, funcionamiento bajo supervisión humana, explicabilidad adecuada para revisión clínica, continuidad operacional, seguridad de información y evaluación por subgrupos antes de cualquier publicación de un modelo.
@@ -91,7 +91,7 @@ Cloud usa GCP como proveedor de referencia por su región en Santiago, servicios
   \end{tabular}
 \end{table}
 
-La gestión es adaptativa: conserva alcance y objetivos, pero incorpora ciclos de planificación, análisis, evaluación y ajuste. Frente a una modalidad predictiva, el caso presenta mayor incertidumbre en datos, riesgos, requisitos y solución, por lo que requiere retroalimentación frecuente y revisión continua de sesgos, privacidad y factibilidad.
+PMBOK conserva el gobierno documental y el control de cambios; Scrum organiza el desarrollo en sprints con retroalimentación frecuente; y CRISP-DM guía el análisis, preparación, modelado y evaluación de datos. Esta asignación responde a la incertidumbre en datos, riesgos, requisitos y solución, y exige revisar de forma continua sesgos, privacidad y factibilidad.
 
 \begin{table}[H]
   \centering

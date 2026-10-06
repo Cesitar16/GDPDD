@@ -1,0 +1,91 @@
+\section{Gobernanza y ejecución del piloto}
+\label{sec:gobernanza-ejecucion}
+
+La propuesta separa deliberadamente tres responsabilidades que no deben confundirse. \textbf{PMBOK} organiza el gobierno y la documentación del proyecto; \textbf{Scrum} organiza el trabajo de desarrollo en incrementos cortos; y \textbf{CRISP-DM} estructura las actividades técnicas de ciencia de datos. Esta separación evita presentar el ciclo técnico como si fuera por sí solo un modelo de gobierno, o usar ceremonias de desarrollo como sustituto de las aprobaciones clínicas, éticas, legales y de seguridad. Ningún marco reemplaza los gates definidos en este informe.
+
+\subsection{Rol de cada marco}
+
+\begin{table}[H]
+  \centering
+  \caption{Responsabilidad de los marcos en el piloto}
+  \label{tab:marcos-responsabilidad}
+  \small
+  \begin{tabularx}{\textwidth}{@{}p{2.4cm}X X@{}}
+    \toprule
+    Marco & Propósito en este proyecto & Evidencia o resultado esperado \\
+    \midrule
+    PMBOK & Mantener la línea base de alcance, interesados, cronograma, costos, riesgos, comunicaciones, calidad y cambios. & Acta de alcance, EDT, Gantt, TCO, registro de riesgos, actas de gate y control de cambios. \\
+    Scrum & Entregar incrementos verificables de desarrollo y hacer visible el trabajo pendiente, bloqueado o terminado. & Product backlog priorizado, objetivo de sprint, incremento revisable, revisión y retrospectiva. \\
+    CRISP-DM & Guiar comprensión del negocio y de los datos, preparación, modelado, evaluación y eventual despliegue. & Perfil de datos, dataset analítico, baseline, evaluación por subgrupos, explicaciones y evidencia técnica. \\
+    MLOps futuro & Operacionalizar versiones, monitoreo y cambios de modelos sólo si el piloto continúa y existe autorización. & Criterios futuros de versionado, monitoreo de deriva y aprobación previa a publicar. \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+PMBOK se utiliza como referencia de gobierno documental. Scrum no elimina la documentación: cada incremento debe actualizar los artefactos PMBOK afectados. CRISP-DM puede iterar dentro de un sprint cuando la evidencia de datos obligue a volver desde modelado o evaluación hacia preparación, sin alterar el alcance, costo o fecha sin el control de cambios correspondiente.
+
+\subsection{Ejecución Scrum durante las diez semanas}
+
+El piloto se divide en cinco sprints de dos semanas. El \emph{Product Owner} propuesto es la contraparte institucional designada, con apoyo de coordinación clínica para definir valor y aceptar resultados de negocio. El \emph{Scrum Master} propuesto facilita la remoción de impedimentos y la disciplina de las ceremonias; el equipo de desarrollo es multidisciplinario e incluye datos, desarrollo, infraestructura y seguridad. Estos son roles propuestos para el piloto y no sustituyen los responsables institucionales que deban aprobar datos de salud, presupuesto, riesgos o uso clínico.
+
+\begin{table}[H]
+  \centering
+  \caption{Relación entre sprints, CRISP-DM y puntos de control}
+  \label{tab:sprints-crisp-gates}
+  \scriptsize
+  \begin{tabularx}{\textwidth}{@{}p{1.1cm}p{1.25cm}p{2.8cm}X p{1.15cm}@{}}
+    \toprule
+    Sprint & Sem. & Foco Scrum & Actividad CRISP-DM e incremento revisable & Gate \\
+    \midrule
+    1 & 1--2 & Alcance y backlog & Comprensión del negocio, actores, supuestos, riesgos y criterios de aceptación; acta de alcance. & H1 \\
+    2 & 3--4 & Datos gobernados & Comprensión y preparación de datos, reglas de calidad, trazabilidad y prueba de carga batch. & H2 \\
+    3 & 5--6 & Evidencia analítica & Baseline, modelos candidatos, explicabilidad y evaluación técnica inicial. & H3--H4 \\
+    4 & 7--8 & Controles y piloto & Revisión de subgrupos, Human in the Loop, IAM, secretos, observabilidad y recuperación. & H5 \\
+    5 & 9--10 & Cierre verificable & Resultados del piloto condicionado, riesgos pendientes, retrospectiva y decisión de continuidad. & H6 \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+En cada sprint se realiza planificación con backlog priorizado, una revisión con la contraparte disponible y una retrospectiva interna. Un elemento sólo se considera terminado si satisface el criterio de aceptación documentado y no si simplemente existe código o un notebook. Los gates H1--H6 siguen siendo decisiones de gobierno: una revisión Scrum favorable no habilita por sí sola el uso de datos institucionales ni un despliegue.
+
+\subsection{Gobierno, responsabilidades y comunicaciones}
+
+La matriz siguiente usa \textbf{R} para quien ejecuta o prepara evidencia, \textbf{A} para quien aprueba o asume la decisión, \textbf{C} para quien debe ser consultado e \textbf{I} para quien debe ser informado. Cada fila tiene un único responsable final \textbf{A}; cuando la fila requiera una aprobación clínica, esta se conserva como evidencia obligatoria del gate. Los cargos institucionales deberán nombrarse antes de ejecutar el piloto.
+
+\begin{table}[H]
+  \centering
+  \caption{Matriz RACI propuesta para los artefactos críticos}
+  \label{tab:raci-piloto}
+  \scriptsize
+  \begin{tabularx}{\textwidth}{@{}Xccccc@{}}
+    \toprule
+    Artefacto o decisión & Patrocinio & Clínica & Datos/desarrollo & TI/seguridad & Finanzas/riesgos \\
+    \midrule
+    Alcance, prioridades y cambio relevante & A & C & R & C & C \\
+    Datos autorizados, propósito y controles & A & C & R & R & C \\
+    Baseline, evaluación y explicabilidad & I & A & R & C & C \\
+    TCO, desviaciones y contratación & A & I & C & C & R \\
+    Riesgos, continuidad y aceptación residual & A & C & R & R & R \\
+    Activación del piloto y continuidad & A & C & R & C & C \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \caption{Cadencia mínima de comunicación y evidencia}
+  \label{tab:comunicacion-piloto}
+  \small
+  \begin{tabularx}{\textwidth}{@{}p{2.9cm}p{2.2cm}X p{2.1cm}@{}}
+    \toprule
+    Instancia & Frecuencia & Propósito y evidencia & Participantes \\
+    \midrule
+    Seguimiento Scrum & Diario hábil breve & Impedimentos, progreso y actualización del tablero; no reemplaza aprobaciones. & Equipo de desarrollo \\
+    Revisión de sprint & Cada dos semanas & Revisar incremento, backlog, decisiones y dependencias; acta de acuerdos. & Product Owner propuesto, equipo y especialistas requeridos \\
+    Comité de gobierno & En H1--H6 y ante cambios relevantes & Aprobar, rechazar o condicionar alcance, riesgos, presupuesto y continuidad; acta de gate. & Patrocinio, clínica, TI/seguridad, finanzas/riesgos \\
+    Revisión de operación & Mensual; semestral para H7 & Revisar costo, respaldo, RTO/RPO, calidad, deriva y subgrupos cuando corresponda. & Responsables operativos y comité \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+Todo cambio que afecte alcance, datos, arquitectura, TCO, calendario, controles o criterios de aceptación debe registrar origen, impacto, responsable, decisión y fecha. El cambio se evalúa en el backlog para su ejecución, pero se incorpora a la línea base sólo después de la decisión de gobierno que corresponda.

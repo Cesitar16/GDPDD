@@ -1,21 +1,21 @@
 \section{Análisis D6}
 
-\subsection{Justificación del enfoque adaptativo}
+\subsection{Justificación de Scrum, PMBOK y CRISP-DM}
 
-Un enfoque predictivo presupone requisitos tempranamente estables, menor incertidumbre, cambios controlados y retroalimentación más tardía. En este caso, los requisitos pueden evolucionar, existe incertidumbre en los datos, riesgos y solución, y se requieren experimentación y revisión continua. Por ello, la adecuación del enfoque predictivo es media y la del enfoque adaptativo es alta.
+El desarrollo necesita feedback frecuente porque los requisitos, los datos, los riesgos y la solución pueden cambiar al generar evidencia. Scrum es apropiado para esa parte del trabajo: ordena el backlog, define objetivos de sprint y exige un incremento revisable. No se usa Scrum para reemplazar las responsabilidades institucionales de aprobación, presupuesto, riesgos o protección de datos.
 
-El enfoque adaptativo no significa improvisación. Conserva una línea base de alcance y objetivos, pero permite ciclos incrementales con entregables, responsables, revisiones y puntos de decisión. Esta modalidad permite ajustar la planificación frente a la evidencia de calidad de datos, desempeño, riesgos, privacidad, sesgos y factibilidad de las alternativas.
+PMBOK conserva la línea base de alcance, objetivos, costos, calendario, riesgos, comunicaciones y cambios. CRISP-DM estructura las actividades técnicas de datos dentro de los sprints. La combinación de responsabilidades permite ajustar el trabajo técnico ante evidencia de calidad, desempeño, privacidad, sesgos y factibilidad, sin cambiar la línea base sin una decisión documentada.
 
 \subsection{Criterios completos de comparación}
 
 \begin{description}[style=nextline]
-  \item[Requisitos] En un enfoque predictivo son estables tempranamente; en uno adaptativo pueden evolucionar. En este caso, pueden evolucionar.
-  \item[Incertidumbre] Es baja en el enfoque predictivo y media o alta en el adaptativo. El caso presenta incertidumbre alta en datos, riesgos y solución.
-  \item[Cambios] El enfoque predictivo los minimiza o controla; el adaptativo los incorpora de forma planificada. En este proyecto son probables.
-  \item[Retroalimentación] Es más tardía en el enfoque predictivo y frecuente en el adaptativo. El caso necesita retroalimentación frecuente.
-  \item[Datos y modelos] El enfoque predictivo requiere mayor previsibilidad; el adaptativo permite experimentar. El caso presenta incertidumbre en esta materia.
-  \item[Riesgos] En el enfoque predictivo se planifican principalmente al inicio; en el adaptativo se revisan durante los ciclos. El caso requiere revisión continua.
-  \item[Adecuación] La adecuación predictiva es media y la adaptativa es alta; por ello se selecciona el enfoque adaptativo.
+  \item[Desarrollo] Scrum permite priorizar requerimientos, revisar incrementos y tratar impedimentos cada sprint.
+  \item[Incertidumbre] CRISP-DM permite repetir comprensión, preparación y evaluación cuando los datos o resultados lo exijan.
+  \item[Cambios] PMBOK exige registrar impacto en alcance, costo, calendario, riesgos y controles antes de actualizar la línea base.
+  \item[Retroalimentación] Las revisiones de sprint hacen visible la evidencia al Product Owner propuesto y al equipo; los gates conservan la aprobación institucional.
+  \item[Datos y modelos] El trabajo técnico conserva trazabilidad entre dataset, baseline, candidatos, explicabilidad y evaluación por subgrupos.
+  \item[Riesgos] Los riesgos se revisan durante sprints y gates, con mitigación, responsable y evidencia de control.
+  \item[Adecuación] Scrum, PMBOK y CRISP-DM cubren necesidades distintas y complementarias, sin sustituirse entre sí.
 \end{description}
 
-El efecto transversal es claro: la EDT y la carta Gantt deben considerar revisiones y capacidad de ajuste; finanzas debe presupuestar iteración y contingencia; riesgos debe actualizarse al aparecer nueva evidencia; y la evaluación ética debe acompañar el ciclo completo.
+El efecto transversal es claro: la EDT y la carta Gantt deben considerar sprints, revisiones y gates; finanzas debe presupuestar iteración y contingencia; riesgos debe actualizarse al aparecer nueva evidencia; y la evaluación ética debe acompañar el ciclo completo.

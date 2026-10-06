@@ -1,18 +1,17 @@
 \section{Metodología}
 
-La gestión se basa en un enfoque adaptativo. Esta denominación describe la forma de gestionar el proyecto y no un tipo de modelo predictivo. Se elige porque los requisitos, la calidad y representatividad de los datos, el desempeño de las alternativas, los riesgos y las necesidades de validación pueden evolucionar durante el proyecto.
+El proyecto usa marcos con responsabilidades explícitas. PMBOK organiza gobierno, documentación, alcance, costos, riesgos, comunicaciones y control de cambios. Scrum organiza el desarrollo en sprints con backlog priorizado, revisiones y retrospectivas. CRISP-DM estructura el trabajo técnico de comprensión del negocio y los datos, preparación, modelado, evaluación y eventual despliegue. MLOps queda como una capacidad posterior, sólo si el piloto continúa con autorización y madurez operacional suficiente.
 
-En lugar de asumir una planificación completamente estable, el enfoque adaptativo organiza ciclos incrementales de planificación, análisis, evaluación y ajuste. Cada ciclo mantiene entregables, responsables e hitos definidos, pero permite incorporar evidencia antes de decidir las etapas siguientes.
+Esta división responde a la incertidumbre de requisitos, calidad y representatividad de los datos, desempeño de las alternativas y validaciones requeridas. Scrum permite revisar incrementos cortos; PMBOK conserva la línea base y exige que cambios de alcance, costo, calendario, riesgos o controles se documenten y aprueben; CRISP-DM permite volver a preparación de datos cuando la evidencia técnica lo requiera.
 
 \subsection{Ciclos de gestión propuestos}
 
 \begin{description}[style=nextline]
-  \item[Ciclo 1] Comprensión del problema, objetivos, actores y criterios de éxito. Hito: alcance inicial aprobado.
-  \item[Ciclo 2] Comprensión y evaluación de datos: calidad, representatividad y privacidad. Hito: factibilidad inicial de datos validada.
-  \item[Ciclo 3] Diseño y evaluación de Cloud, Local e Híbrida, herramientas, costos preliminares y riesgos. Hito: alternativas técnicamente viables.
-  \item[Ciclo 4] Evaluación integral técnica, ética, financiera, legal y de riesgos. Hito: alternativa preferida seleccionada.
-  \item[Ciclo 5] Planificación de un eventual piloto: recursos, seguridad, operación y mantenimiento. Hito: plan de ejecución aprobado.
-  \item[Ciclo 6] Evaluación, retroalimentación, ajustes y lecciones aprendidas. Hito: decisión de continuidad o escalamiento.
+  \item[Sprint 1] Comprensión del problema, objetivos, actores, criterios de éxito y backlog inicial. Gate: H1, alcance revisado.
+  \item[Sprint 2] Comprensión y preparación de datos: calidad, representatividad, privacidad y trazabilidad. Gate: H2, datos gobernados.
+  \item[Sprint 3] Modelado y evidencia técnica: baseline, candidatos, explicabilidad y pruebas iniciales. Gates: H3--H4.
+  \item[Sprint 4] Evaluación por subgrupos, revisión humana, seguridad, continuidad y preparación de piloto. Gate: H5 condicionado.
+  \item[Sprint 5] Piloto controlado, indicadores, retrospectiva, lecciones y decisión documentada. Gate: H6, continuidad o cierre.
 \end{description}
 
-La planificación debe incluir revisiones, hitos y capacidad de ajuste; las finanzas deben incorporar horas de revisión e iteración; los riesgos deben reevaluarse durante los ciclos; y la ética debe considerar sesgos y explicabilidad de forma continua, no solo al cierre.
+La planificación debe incluir revisiones, hitos y capacidad de ajuste; las finanzas deben incorporar horas de revisión e iteración; los riesgos deben reevaluarse en los sprints y gates; y la ética debe considerar sesgos y explicabilidad de forma continua, no solo al cierre.
