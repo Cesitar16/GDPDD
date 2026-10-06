@@ -1,0 +1,246 @@
+\documentclass[12pt,a4paper]{article}
+
+\input{config/packages}
+\newcommand{\ProyectoTitulo}{Definición de alcance y planificación del proyecto Heart Disease}
+\newcommand{\ProyectoSubtitulo}{Actividad 2 de EA2 --- Gestión de Proyectos de Datos}
+\newcommand{\ProyectoAutor}{Lucas Moncada \quad Ignacio Silva \quad Fabián Leal \\ Vicente Hormazábal \quad César Rojas}
+\newcommand{\ProyectoFecha}{Septiembre de 2026}
+\input{config/commands}
+\rhead{EA2}
+
+\begin{document}
+\hypersetup{pageanchor=false}
+\input{sections/00_portada}
+\hypersetup{pageanchor=true}
+\pagenumbering{roman}
+\tableofcontents
+\clearpage
+\pagenumbering{arabic}
+
+\section{Ficha de la actividad}
+
+\begin{table}[H]
+  \centering
+  \caption{Datos de la actividad formativa}
+  \small
+  \begin{tabularx}{\textwidth}{@{}lX@{}}
+    \toprule
+    Campo & Descripción \\
+    \midrule
+    Asignatura & SCY1102 Gestión de Proyectos de Datos \\
+    Experiencia de aprendizaje & EA2 Planificación del proyecto de ciencia de datos \\
+    Actividad & 2.2 Definición de alcance y planificación de un proyecto de ciencia de datos \\
+    Semana de referencia & 17, según la guía 2.2.2 \\
+    Tiempo y modalidad & 2 horas; trabajo en grupo, según la guía 2.2.2 \\
+    Resultado de aprendizaje & RA2: planificar un proyecto de ciencia de datos considerando requerimientos, procesos organizacionales y estándares de la industria. \\
+    Indicador de logro & IL 2.2: definir el alcance y planificar el proyecto con un marco de trabajo de la industria. \\
+    Caso aplicado & Piloto institucional de apoyo analítico a la prevención cardiovascular Heart Disease. \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\subsection{Base y carácter de la propuesta}
+
+Esta actividad transforma el informe semestral y el levantamiento de la actividad 2.1 en una propuesta de alcance, estructura de desglose del trabajo (EDT) y planificación. El caso supone un hospital público que necesita organizar datos de controles cardiovasculares preventivos y apoyar la revisión por profesionales de salud. El producto analítico no diagnostica ni decide atención de forma autónoma. Las funciones, aprobaciones y asignaciones aquí descritas son \emph{propuestas de trabajo}; no se afirma que una contraparte hospitalaria haya aprobado el piloto.
+
+La planificación usa dos horizontes distintos: \textbf{10 semanas} como supuesto para implementar y cerrar un piloto condicionado, y \textbf{36 meses} como horizonte del análisis financiero y de una operación eventual. El informe presupuestó Cloud/GCP por \$10.815.487 CLP a 36 meses y 532 horas de RR.\,HH., de las cuales 272 corresponden a implementación y 260 a mantención. Estas cifras son línea base del informe, no una autorización para ejecutarlas. La ejecución institucional requiere resolver los puntos de control éticos CA-E01 a CA-E10, autorización y gobierno de datos, seguridad, aceptación de riesgos y validación local.
+
+\section{Parte 1 --- Definición del alcance}
+
+\subsection{Objetivo y resultado esperado}
+
+Planificar un piloto de análisis de datos cardiovasculares que prepare información gobernada, evalúe modelos candidatos y entregue resultados explicables para revisión humana. La utilidad prevista es ayudar a priorizar evaluaciones preventivas y estudiar factores asociados; su valor clínico debe comprobarse con una contraparte y datos locales autorizados. El archivo académico \texttt{heart.csv} sirve para diseñar y probar el flujo, no para declarar desempeño clínico: contiene 1.025 filas, 723 duplicados exactos y 302 registros únicos según el informe.
+
+\subsection{Tres entregables comprometidos en la propuesta}
+
+\begin{table}[H]
+  \centering
+  \caption{Entregables y criterios de revisión}
+  \small
+  \begin{tabularx}{\textwidth}{@{}p{1.2cm}p{3.5cm}X@{}}
+    \toprule
+    Código & Entregable & Contenido y criterio de revisión \\
+    \midrule
+    E1 & Acta de alcance y línea base & Problema, actores, requisitos priorizados, exclusiones, supuestos, restricciones, EDT, responsables, calendario y presupuesto de referencia; revisión de la contraparte antes de iniciar el trabajo con datos institucionales. \\
+    E2 & Dataset analítico gobernado & Diccionario, reglas de calidad y deduplicación, trazabilidad de preparación y controles de acceso; con datos hospitalarios, evidencia de autorización y desidentificación o pseudonimización antes de su uso. \\
+    E3 & Prototipo analítico evaluado y plan de piloto & Baseline y modelos candidatos, métricas y auditoría por subgrupos, explicaciones, pruebas del servicio, protocolo de revisión humana y evidencia de seguridad y continuidad. Su activación en GCP y el piloto con usuarios solo proceden tras los puntos de control aplicables. \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\subsection{Fuera de alcance}
+
+\begin{enumerate}[leftmargin=*]
+  \item Diagnóstico, indicación terapéutica, asignación o rechazo automático de atención. La decisión permanece en el profesional de salud.
+  \item Integración con ficha clínica electrónica, sistemas externos o ingestión en tiempo real. La línea base propone un flujo \emph{batch} diario.
+  \item Despliegue clínico generalizado o uso de predicciones sobre pacientes reales antes de autorización, validación local, revisión ética, controles de seguridad y aceptación de riesgos.
+  \item Reentrenamiento automático y publicación de nuevas versiones sin evaluación y aprobación clínica. Las seis revisiones semestrales del horizonte de 36 meses son planificación de una operación eventual, no una función automática del piloto.
+\end{enumerate}
+
+\subsection{Supuestos y restricciones}
+
+\begin{table}[H]
+  \centering
+  \caption{Condiciones de planificación por validar}
+  \small
+  \begin{tabularx}{\textwidth}{@{}p{2cm}p{1.3cm}X@{}}
+    \toprule
+    Tipo & Código & Condición y efecto si cambia \\
+    \midrule
+    Supuesto & S1 & El equipo dispone de \texttt{heart.csv} para el prototipo académico; la disponibilidad y aptitud de datos hospitalarios se verifican antes de cualquier piloto institucional. Si faltan, se limita la evaluación a datos académicos. \\
+    Supuesto & S2 & Las contrapartes de prevención, TI y gobierno de datos podrán revisar requisitos, criterios de aceptación y riesgos. Si no participan, los hitos de aprobación se reprograman. \\
+    Restricción & R1 & El piloto se planifica en 10 semanas. Las dependencias y puntos de control pueden desplazar la puesta en marcha; una fecha no sustituye una aprobación. \\
+    Restricción & R2 & La línea base Cloud/GCP tiene TCO de \$10.815.487 CLP a 36 meses y 272 horas de implementación. Cambios de recursos o arquitectura exigen recalcular costo y cronograma. \\
+    Restricción & R3 & Los datos de salud requieren autorización, minimización, control de acceso y resguardo; no se cargan a Cloud por defecto. \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\section{EDT --- Estructura de Desglose del Trabajo}
+
+La EDT ordena \emph{qué resultados deben producirse}, de mayor a menor nivel. Los códigos se alinean con la EDT y la Carta Gantt del informe; las tareas, responsables y fechas se asignan después en la planificación CRISP-DM. El paquete 6 pertenece a la operación eventual de 36 meses y no se confunde con el cierre de la semana 10. En la siguiente tabla, cada fila de nivel 2 es un componente verificable del paquete de nivel 1.
+
+\begin{spacing}{1.0}
+\small
+\begin{longtable}{@{}p{1.25cm}p{4.05cm}p{9.0cm}@{}}
+  \caption{Desglose jerárquico del proyecto y evidencia de salida}\label{tab:act2-edt}\\
+  \toprule
+  Código & Paquete o componente & Resultado verificable \\
+  \midrule
+  \endfirsthead
+  \toprule
+  Código & Paquete o componente & Resultado verificable \\
+  \midrule
+  \endhead
+  \textbf{1} & \textbf{Gobierno, alcance y línea base} & \textbf{E1: alcance y condiciones de ejecución} \\
+  1.1 & Alcance y requerimientos & Acta y criterios de aceptación propuestos; aprobación institucional pendiente. \\
+  1.2--1.4 & Recursos y control TCO & Equipo, estimación de horas, presupuesto y seguimiento de desviaciones. \\
+  1.5 & Cierre del piloto & Informe de resultados, riesgos residuales y decisión de continuidad. \\
+  \textbf{2} & \textbf{Dataset gobernado y flujo batch} & \textbf{E2: datos aptos y trazables} \\
+  2.1--2.3 & Datos, gobierno e ingesta & Fuente inventariada, permisos, reglas de calidad y flujo batch probado. \\
+  2.4--2.5 & Dataset analítico y almacenamiento & Tabla de análisis documentada y repositorio con acceso controlado. \\
+  \textbf{3} & \textbf{Modelo, explicabilidad y servicio} & \textbf{Componentes analíticos de E3} \\
+  3.1--3.2 & Candidatos y explicaciones & Baseline, comparación de modelos y explicación de resultados. \\
+  3.3--3.4 & Servicio y pruebas & Interfaz de inferencia controlada y resultados de pruebas técnicas. \\
+  \textbf{4} & \textbf{Validación técnica, ética y de sesgos} & \textbf{Evidencia de evaluación de E3} \\
+  4.1--4.2 & Evaluación y subgrupos & Métricas acordadas, análisis de errores y auditoría por subgrupos. \\
+  4.3--4.4 & Revisión humana y deriva & Protocolo de supervisión y plan de monitoreo; decisión clínica humana. \\
+  \textbf{5} & \textbf{Plataforma Cloud segura y piloto} & \textbf{Puesta en marcha condicionada de E3} \\
+  5.1--5.2 & Entorno, IAM y secretos & Configuración y pruebas de permisos y secretos, si Cloud es autorizado. \\
+  5.3--5.4 & Observabilidad y continuidad & Alertas, costos, respaldos y prueba RTO/RPO. \\
+  5.5 & Piloto controlado & Acta de habilitación y registro de uso, únicamente tras los puntos de control. \\
+  \textbf{6} & \textbf{Continuidad operacional} & \textbf{Horizonte eventual de 36 meses} \\
+  6.1 & Operación diaria & Bitácoras de cargas batch, respaldos, alertas y costos. \\
+  6.2 & Evaluación semestral & Actas en meses 6, 12, 18, 24, 30 y 36. \\
+  6.3 & Cambio controlado & Validación y aprobación clínica antes de publicar otra versión. \\
+  \bottomrule
+\end{longtable}
+\normalsize
+\end{spacing}
+
+\section{Parte 2 --- Planificación con CRISP-DM}
+
+CRISP-DM organiza el trabajo en comprensión del negocio, comprensión de los datos, preparación de los datos, modelado, evaluación y despliegue. La EDT identifica productos; CRISP-DM da la secuencia de actividades para obtenerlos. La asignación nominal indica un \emph{responsable propuesto} dentro del grupo, no sustituye las funciones ni aprobaciones de profesionales e institución. Fabián coordina el plan y sus dependencias; Ignacio controla la línea base financiera; César lidera datos y gobierno; Lucas lidera el diseño técnico; Vicente sigue riesgos y controles. Cada fase requiere colaboración de los demás según la tabla.
+
+\begin{table}[H]
+  \centering
+  \caption{Tareas por fase, responsables y tiempo estimado del piloto}
+  \label{tab:act2-crisp}
+  \scriptsize
+  \begin{tabularx}{\textwidth}{@{}p{2.15cm}X p{2.9cm}p{1.1cm}@{}}
+    \toprule
+    Fase & Tareas y salida esperada & Responsable propuesto y apoyo & Semanas \\
+    \midrule
+    Comprensión del negocio & Precisar problema, actores, criterios de utilidad, alcance, riesgos y TCO; E1 y punto de control H1. EDT 1.1--1.4. & Fabián; Ignacio y Vicente & 1--2 \\
+    Comprensión de datos & Inventariar fuentes, permisos, variables, duplicados, faltantes y sesgos iniciales; perfil de datos. EDT 2.1--2.2. & César; Lucas y Vicente & 2--3 \\
+    Preparación de datos & Definir reglas de deduplicación, transformación, particiones y trazabilidad; probar flujo batch y almacenamiento; E2 y H2. EDT 2.3--2.5. & César; Lucas & 3--4 \\
+    Modelado & Construir baseline, comparar candidatos, generar explicaciones y probar servicio; H3. EDT 3.1--3.4. & Lucas; César & 4--6 \\
+    Evaluación & Medir desempeño y errores por subgrupos, revisar riesgos, definir supervisión humana y comprobar condiciones de aceptación; H4. EDT 4.1--4.4. & Vicente; Lucas y César & 5--6 \\
+    Despliegue & Preparar GCP/IAM, observabilidad y recuperación; ejecutar piloto condicionado, documentar resultados y cierre H5--H6. EDT 5.1--5.5 y 1.5. & Lucas; Fabián, Ignacio y Vicente & 6--10 \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\subsection{Dependencias, hitos y criterio para avanzar}
+
+La ruta de dependencia del informe es: alcance revisado $\rightarrow$ dataset analítico $\rightarrow$ modelo candidato $\rightarrow$ servicio probado $\rightarrow$ evaluación técnica y por subgrupos $\rightarrow$ revisión humana $\rightarrow$ piloto condicionado $\rightarrow$ cierre. Hay solapamientos preparatorios entre fases, pero el equipo no puede dar por cumplido un hito sin la evidencia del predecesor.
+
+\begin{table}[H]
+  \centering
+  \caption{Hitos de la línea base de diez semanas}
+  \small
+  \begin{tabularx}{\textwidth}{@{}p{1cm}p{1.8cm}X@{}}
+    \toprule
+    Hito & Momento & Evidencia requerida en el plan \\
+    \midrule
+    H1 & Semana 2 & Alcance, responsables, TCO y condiciones de uso de datos revisados. \\
+    H2 & Semana 4 & Dataset preparado, documentado y con controles de datos aplicables. \\
+    H3 & Semana 5 & Baseline y modelos candidatos comparados, con explicabilidad. \\
+    H4 & Semana 6 & Evaluación técnica, subgrupos, riesgos, revisión humana y continuidad verificados; autorización pendiente si aún no existe. \\
+    H5 & Semana 8 & Piloto controlado solo si se aprobaron todos los puntos de control. \\
+    H6 & Semana 10 & Informe de cierre y decisión documentada de continuidad o ajuste. \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+Las 260 horas de mantención del TCO y las seis ventanas semestrales H7 pertenecen a la fase de operación eventual de 36 meses. No se añaden a las 272 horas ni al calendario de implementación de diez semanas. Si la autorización de datos o una revisión clínica se retrasa, se actualiza el calendario antes de iniciar tareas dependientes.
+
+\section{Parte 3 --- Esquema para la presentación}
+
+El siguiente esquema reúne alcance, EDT y planificación en una sola vista que el grupo puede trasladar a Canva o Miro. Los recuadros de resultado son entregables; la línea inferior muestra la secuencia temporal y sus puntos de control. Debe presentarse como \emph{plan propuesto}, no como ejecución terminada.
+
+\begin{figure}[H]
+  \centering
+  \fbox{\begin{minipage}{0.94\textwidth}
+    \centering
+    \textbf{Objetivo: apoyo analítico a prevención cardiovascular con revisión humana}\\[0.45em]
+    \begin{tabularx}{\textwidth}{@{}>{\centering\arraybackslash}X>{\centering\arraybackslash}X>{\centering\arraybackslash}X@{}}
+      \cellcolor{blue!7}\textbf{E1 Alcance}\newline EDT 1 &
+      \cellcolor{blue!7}\textbf{E2 Datos}\newline EDT 2 &
+      \cellcolor{blue!7}\textbf{E3 Prototipo y piloto}\newline EDT 3--5 \\
+      Acta y línea base & Dataset gobernado & Modelo, evaluación, controles \\
+    \end{tabularx}
+    \vspace{0.5em}
+    \hrule
+    \vspace{0.5em}
+    \textbf{CRISP-DM:} negocio $\rightarrow$ comprensión de datos $\rightarrow$ preparación $\rightarrow$ modelado $\rightarrow$ evaluación $\rightarrow$ despliegue\\[0.4em]
+    \textbf{Semanas:} 1--2 $\rightarrow$ 2--3 $\rightarrow$ 3--4 $\rightarrow$ 4--6 $\rightarrow$ 5--6 $\rightarrow$ 6--10\\[0.4em]
+    \textbf{Puntos de control:} H1 alcance $\rightarrow$ H2 datos $\rightarrow$ H3 modelo $\rightarrow$ H4 validación $\rightarrow$ H5 piloto $\rightarrow$ H6 cierre\\[0.4em]
+    \textbf{Fuera de alcance:} diagnóstico autónomo, integración en tiempo real y despliegue clínico sin autorización.\\[0.4em]
+    \textbf{Operación eventual:} EDT 6 y revisiones H7 en meses 6--36, sujetas a decisión de continuidad.
+  \end{minipage}}
+  \caption{Contenido propuesto para un esquema visual de alcance y planificación}
+\end{figure}
+
+\subsection{Guion grupal de hasta tres minutos}
+
+\begin{spacing}{1.0}
+\begin{table}[H]
+  \centering
+  \caption{Distribución de la presentación entre los cinco integrantes}
+  \small
+  \begin{tabularx}{\textwidth}{@{}p{2.6cm}p{1.6cm}X@{}}
+    \toprule
+    Integrante & Tiempo aprox. & Intervención sugerida \\
+    \midrule
+    Fabián Leal & 35 s & ``Nuestro proyecto propone un piloto de apoyo analítico a controles cardiovasculares. La EDT divide el trabajo en alcance, datos, modelo, validación, plataforma y continuidad. El piloto se planifica en diez semanas.'' \\
+    Ignacio Silva & 30 s & ``Los tres entregables son el acta de alcance, un dataset gobernado y un prototipo evaluado con plan de piloto. El TCO Cloud del informe es de \$10.815.487 a 36 meses; esa cifra no significa que el gasto ya esté aprobado.'' \\
+    César Rojas & 35 s & ``En CRISP-DM, comprendemos y preparamos los datos antes de modelar. El archivo académico tiene duplicados y no representa por sí solo la población hospitalaria. Para datos reales necesitamos autorización, calidad y resguardo.'' \\
+    Lucas Moncada & 35 s & ``Después construimos un baseline y modelos candidatos, evaluamos su desempeño y explicaciones, y probamos un servicio. GCP y el piloto con usuarios solo avanzan si se verifican seguridad, continuidad y validación local.'' \\
+    Vicente Hormazábal & 35 s & ``Quedan fuera el diagnóstico autónomo, la integración en tiempo real y un despliegue clínico sin aprobación. Revisamos errores y subgrupos, mantenemos la decisión humana y cerramos con evidencia para decidir la continuidad.'' \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+\end{spacing}
+
+La distribución suma \textbf{170 segundos} y deja unos diez segundos para cambios de expositor dentro del límite de tres minutos.
+
+\section{Reflexión grupal}
+
+\begin{spacing}{1.0}
+Una definición clara de alcance permite estimar recursos sobre entregables concretos y detectar expectativas que el piloto no puede cumplir, como usar predicciones para diagnóstico o integrar sistemas clínicos en tiempo real. La EDT hace visibles los productos y sus dependencias; CRISP-DM muestra en qué orden se obtendrán y qué evidencia debe revisarse antes de avanzar. Juntas, ambas herramientas permiten detectar retrasos de datos, validación y permisos antes de comprometer el presupuesto o la fecha del piloto.
+
+En Heart Disease, el valor posible depende de que la información preparada sea útil y de que las recomendaciones sean comprensibles y supervisadas. La planificación condicionada protege esa viabilidad: si no hay datos autorizados, criterios clínicos acordados o controles suficientes, corresponde mantener el trabajo en la etapa académica o replanificar. Así, el grupo puede justificar cada decisión con entregables, responsables, plazos y riesgos, sin atribuir al prototipo una capacidad clínica que todavía no se ha demostrado.
+\end{spacing}
+
+\end{document}
