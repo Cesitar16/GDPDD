@@ -7,7 +7,8 @@ El piloto de diez semanas y la evaluación de 36 meses son horizontes distintos:
   \caption{Tarifas y separación temporal de RRHH para Cloud}
   \label{tab:fin-rrhh-fases-cloud}
   \scriptsize
-  \begin{tabularx}{\textwidth}{@{}Xrrrr@{}}
+  \resizebox{\textwidth}{!}{%
+  \begin{tabular}{lrrrr}
     \toprule
     Perfil & Tarifa CLP/h & Piloto, h & Operación, h & Costo 36 meses CLP \\
     \midrule
@@ -18,7 +19,7 @@ El piloto de diez semanas y la evaluación de 36 meses son horizontes distintos:
     \midrule
     \textbf{Total} & & \textbf{272} & \textbf{260} & \textbf{\$8.272.000} \\
     \bottomrule
-  \end{tabularx}
+  \end{tabular}}
 \end{table}
 
 El \tabref{tab:fin-edt-horas-cloud} asigna las 272 horas de implementación a los entregables y semanas de la Carta Gantt. Esta distribución por tarea es un \emph{supuesto nuevo de planificación} elaborado para hacer auditable el presupuesto; los totales por perfil y la tarifa proceden de la línea base financiera y de planificación. Debe contrastarse con la disponibilidad real del equipo antes de aprobar el piloto. La fila 1.2--1.4 presupone seguimiento del TCO a lo largo del piloto; no representa diez semanas de dedicación completa.
@@ -28,7 +29,8 @@ El \tabref{tab:fin-edt-horas-cloud} asigna las 272 horas de implementación a lo
   \caption{Costo de RRHH del piloto Cloud por entregable de la EDT}
   \label{tab:fin-edt-horas-cloud}
   \scriptsize
-  \begin{tabularx}{\textwidth}{@{}llXrrrrrr@{}}
+  \resizebox{\textwidth}{!}{%
+  \begin{tabular}{lllrrrrrr}
     \toprule
     EDT & Sem. & Entregable & DS & DE & SG & DO & Total h & Costo CLP \\
     \midrule
@@ -47,7 +49,7 @@ El \tabref{tab:fin-edt-horas-cloud} asigna las 272 horas de implementación a lo
     \midrule
     \textbf{Total} & & & \textbf{100} & \textbf{80} & \textbf{32} & \textbf{60} & \textbf{272} & \textbf{\$4.192.000} \\
     \bottomrule
-  \end{tabularx}
+  \end{tabular}}
 \end{table}
 
 La operación presupuestada suma 260 horas y \$4.080.000. Dentro de las 120 horas de Data/ML se conservan las 72 horas de seis ventanas semestrales (12 horas por ventana) descritas por la fuente financiera; las 48 restantes se destinan a revisión periódica de calidad, desempeño y deriva. Las otras 140 horas cubren atención de incidencias del pipeline, controles de seguridad y gobierno, y operación de Cloud, respaldos y monitoreo. Las frecuencias de procesos automáticos no equivalen a horas de dedicación humana diaria.
@@ -57,7 +59,8 @@ La operación presupuestada suma 260 horas y \$4.080.000. Dentro de las 120 hora
   \caption{Horas de mantenimiento Cloud incluidas en el TCO a 36 meses}
   \label{tab:fin-operacion-horas-cloud}
   \small
-  \begin{tabularx}{\textwidth}{@{}Xrrr@{}}
+  \resizebox{\textwidth}{!}{%
+  \begin{tabular}{lrrr}
     \toprule
     Actividad y perfil & Horas & Tarifa CLP/h & Costo CLP \\
     \midrule
@@ -69,7 +72,7 @@ La operación presupuestada suma 260 horas y \$4.080.000. Dentro de las 120 hora
     \midrule
     \textbf{Total operación RRHH} & \textbf{260} & & \textbf{\$4.080.000} \\
     \bottomrule
-  \end{tabularx}
+  \end{tabular}}
 \end{table}
 
 Esta distribución funcional de las horas recurrentes es también un supuesto de planificación. Conserva los totales por rol y no implica que cada evaluación semestral publique un modelo nuevo: cualquier sustitución requiere validación y aprobación clínica. El cómputo temporal de esas ventanas (\$55.800 en 36 meses) ya está incluido en servicios GCP, separado de las 72 horas humanas.
@@ -79,7 +82,8 @@ Esta distribución funcional de las horas recurrentes es también un supuesto de
   \caption{Conciliación del TCO Cloud por horizonte y naturaleza del costo}
   \label{tab:fin-conciliacion-cloud}
   \small
-  \begin{tabularx}{\textwidth}{@{}Xr@{}}
+  \resizebox{\textwidth}{!}{%
+  \begin{tabular}{lr}
     \toprule
     Componente & CLP \\
     \midrule
@@ -92,7 +96,7 @@ Esta distribución funcional de las horas recurrentes es también un supuesto de
     Contingencia de 10\% sobre el subtotal, redondeada & \$983.226 \\
     \textbf{TCO Cloud a 36 meses} & \textbf{\$10.815.487} \\
     \bottomrule
-  \end{tabularx}
+  \end{tabular}}
 \end{table}
 
 La bolsa GCP equivale a \$43.341 CLP mensuales en promedio, IVA incluido y redondeado, pero el cómputo para reentrenamiento ocurre en seis ventanas y no de manera uniforme. El subtotal de 36 meses ya incorpora los servicios durante el piloto: no se deben sumar otra vez a las 272 horas ni cargar 36 meses adicionales después de la semana diez. La contingencia es una reserva sobre el subtotal, no un costo fijo mensual ni una segunda provisión para cada riesgo.

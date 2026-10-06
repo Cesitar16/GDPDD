@@ -19,6 +19,10 @@
 \usepackage{tabularx}
 \usepackage{longtable}
 \usepackage{array}
+% Compatibilidad entre la versión local de array y columnas p{} usadas por tabularx.
+\makeatletter
+\providecommand{\insert@pcolumn}{\insert@column}
+\makeatother
 \usepackage{enumitem}
 \usepackage{float}
 \usepackage[font=small,labelfont=bf,justification=centering]{caption}
