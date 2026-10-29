@@ -27,7 +27,7 @@
 
 ## 5. Metodología
 
-- Enfoque adaptativo con piloto de 10 semanas y horizonte de operación/evaluación de 36 meses.
+- PMBOK para gobierno y documentación, Scrum para desarrollo en cinco sprints del piloto de 10 semanas y CRISP-DM para el trabajo técnico de datos; horizonte de operación/evaluación de 36 meses.
 - **Estado:** supuesto de planificación vigente; el piloto no autoriza publicación automática de un modelo.
 
 ## 6. Supuestos de planificación

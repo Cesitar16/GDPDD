@@ -1,0 +1,77 @@
+\section{Requisitos, indicadores y aceptación}
+\label{sec:requisitos-aceptacion}
+
+Esta sección consolida los requisitos propuestos en la actividad EA2 con la EDT, los gates y los controles ya definidos en el informe maestro. Los requisitos son condiciones de diseño y validación; no describen capacidades ya disponibles en una institución. Las métricas clínicas, umbrales de desempeño y tamaños mínimos de subgrupos no se inventan con el dataset académico y deben acordarse con la contraparte antes de habilitar un uso con datos locales.
+
+\subsection{Backlog de requisitos y trazabilidad}
+
+\begin{table}[H]
+  \centering
+  \caption{Requisitos priorizados y relación con la planificación}
+  \label{tab:requisitos-trazabilidad}
+  \scriptsize
+  \begin{tabularx}{\textwidth}{@{}p{1.15cm}p{1.1cm}p{4.6cm}X p{1.1cm}@{}}
+    \toprule
+    ID & Prioridad & Capacidad o condición verificable & Evidencia, EDT y gate asociado & Estado \\
+    \midrule
+    RF-01 & Must & Carga batch diaria con validación de campos, duplicados, dominios y cambios de esquema. & Bitácora por lote; EDT 2.1--2.5; H2. & Propuesto \\
+    RF-02 & Must & Reportes agregados de calidad y factores cardiovasculares para usuarios autorizados. & Reporte con período, cobertura y prueba de acceso; EDT 3.3--3.4; H3. & Propuesto \\
+    RF-03 & Should & Estimación explicable bajo demanda, con registro de revisión humana, sólo después de validación local. & Versión, explicación y acta clínica; EDT 3--4; H4--H5. & Condicionado \\
+    RNF-01 & Must & Minimización, pseudonimización, mínimo privilegio y trazabilidad de accesos. & Pruebas de roles y bitácora; EDT 2 y 5; H2--H4. & Propuesto \\
+    RNF-02 & Must & Disponibilidad objetivo 99\% operacional, RTO $\leq$ 8 h, RPO $\leq$ 24 h, respaldos y restauración. & Prueba documentada de restauración; EDT 5.3--5.4; H4. & Propuesto \\
+    RNF-03 & Must para RF-03 & Evidencia de calidad, explicabilidad, desempeño y cobertura por subgrupos con aprobación clínica. & Acta de evaluación y límites de uso; EDT 4; H4. & Pendiente de evidencia local \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+Los elementos \emph{Must} forman la línea base del piloto; el requisito RF-03 no se promueve a entrega operativa por presión de calendario. Si las aprobaciones, evidencia local o criterios clínicos no están disponibles, el resultado correcto es mantenerlo como condicionado o replanificarlo.
+
+\subsection{Indicadores del piloto}
+
+Los indicadores distinguen controles verificables de resultados clínicos que aún no pueden afirmarse. Cada medición debe conservar período, fuente, responsable y limitaciones. La ausencia de evidencia o de una aprobación es un resultado relevante y debe registrarse, no reemplazarse por una estimación.
+
+\begin{table}[H]
+  \centering
+  \caption{Plan mínimo de indicadores y evidencia}
+  \label{tab:kpi-piloto}
+  \scriptsize
+  \begin{tabularx}{\textwidth}{@{}p{2.4cm}X p{2.6cm}p{1.8cm}p{1.8cm}@{}}
+    \toprule
+    Indicador & Definición y criterio de lectura & Evidencia o fuente & Frecuencia & Responsable propuesto \\
+    \midrule
+    Calidad de carga & Lotes con validación registrada, registros aceptados/rechazados y causa de rechazo. No se fija un porcentaje clínico sin línea base. & Bitácora batch y reglas de calidad. & Por carga; síntesis de sprint & Datos \\
+    Control de acceso & Accesos y cambios trazables; hallazgos de revisión de roles abiertos o resueltos. & IAM, bitácora y revisión de permisos. & Mensual y antes de H4 & TI/seguridad \\
+    Continuidad & Resultado de prueba de restauración frente a RTO $\leq$ 8 h y RPO $\leq$ 24 h. & Acta de restauración. & Mensual; gate H4 & TI/seguridad \\
+    Costo y esfuerzo & Horas ejecutadas y gasto comprometido contra línea base, con desviaciones explicadas. & Control TCO y EDT. & Cada sprint y comité & Finanzas \\
+    Desempeño del modelo & Métricas, población, intervalo de incertidumbre y comparación con baseline; umbrales definidos por clínica. & Informe de evaluación. & H3--H4 y H7 & Datos y clínica \\
+    Equidad y cobertura & Tamaño de subgrupos y métricas sólo cuando exista N suficiente; no se infiere equidad desde SHAP. & Auditoría por subgrupos. & H4 y H7 & Datos y clínica \\
+    Utilidad operativa & Uso, tiempo de revisión y observaciones de profesionales, sin atribuir beneficio clínico o ahorro sin evidencia. & Registro de uso y retroalimentación. & Piloto y cierre H6 & Clínica y patrocinio \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\subsection{Tablero de aceptación y tratamiento de riesgos}
+
+Los gates no se presentan como cumplidos por existir una planificación. El tablero siguiente establece el tipo de evidencia que deberá existir para que la contraparte pueda tomar una decisión. Su estado inicial es \emph{pendiente} hasta que una autoridad competente revise la evidencia.
+
+\begin{table}[H]
+  \centering
+  \caption{Gates de aceptación y evidencia requerida}
+  \label{tab:gates-aceptacion}
+  \scriptsize
+  \begin{tabularx}{\textwidth}{@{}p{1.1cm}p{2.15cm}X p{2.1cm}p{1.55cm}@{}}
+    \toprule
+    Gate & Decisión & Evidencia mínima & Dueño de aprobación & Estado inicial \\
+    \midrule
+    H1 & Alcance y línea base & Requisitos priorizados, EDT, responsables, TCO y restricciones revisadas. & Patrocinio institucional & Pendiente \\
+    H2 & Datos gobernados & Inventario de fuente, permisos aplicables, perfil de calidad, deduplicación y controles de acceso. & Gobierno de datos designado & Pendiente \\
+    H3 & Evidencia técnica & Baseline, candidatos, explicaciones, pruebas de servicio y límites documentados. & Clínica y datos & Pendiente \\
+    H4 & Seguridad, ética y continuidad & Subgrupos, revisión humana, riesgos, IAM, secretos y prueba RTO/RPO. & Comité competente & Pendiente \\
+    H5 & Piloto condicionado & Actas de H1--H4, autorización aplicable y protocolo de uso supervisado. & Patrocinio y clínica & Pendiente \\
+    H6 & Continuidad o cierre & Indicadores, lecciones, riesgos residuales y decisión documentada. & Patrocinio institucional & Pendiente \\
+    H7 & Operación semestral & Deriva, desempeño, equidad, explicabilidad y aprobación antes de cualquier cambio de modelo. & Clínica y gobierno & Pendiente \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+Para los riesgos críticos R01, R02, R03, R07 y R10, cada revisión de gate debe conservar el riesgo inherente, control ejecutado, evidencia, propietario, riesgo residual aceptado o pendiente y fecha de próxima revisión. Este registro completa la matriz existente, pero no permite declarar aceptado el riesgo residual de R10 mientras no haya evidencia local suficiente.
