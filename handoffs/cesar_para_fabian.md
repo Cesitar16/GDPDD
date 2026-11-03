@@ -1,17 +1,14 @@
-# Handoff de César para Fabián
+# Evidencia de datos para planificación
 
-> **Estado de cierre:** insumo ejecutado y conservado como trazabilidad histórica. Las actividades propuestas se reflejan en la matriz de cobertura CA-E01--CA-E10 y en los gates del informe maestro; no constituyen tareas abiertas de este handoff.
+Este documento comunica el estado que puede comprobarse en el repositorio. No crea hitos, fechas de avance ni asignaciones institucionales.
 
-Este handoff documenta las actividades de planificación que se propusieron a partir de evidencia de datos y análisis ético. Su resultado fue incorporado como trazabilidad en la EDT/Gantt y en la matriz de cobertura; no representa una asignación activa de tareas.
+| Área | Trabajo verificable | Evidencia | Pendiente o límite |
+|---|---|---|---|
+| Calidad | Auditoría de nulos, duplicados, dominios y valores extremos | Notebook 04 y CSV en `outputs/tables/` | No se conoce identidad ni procedencia individual de las filas repetidas |
+| Preparación | Deduplicación previa a la partición; codificación one-hot en modelos nuevos | `src/modeling.py` y notebook | Dominios del dataset tienen discrepancias que requieren validación de fuente |
+| Modelado | Comparación de XGBoost ordinal, XGBoost one-hot y logística | Tabla de CV y métricas de test | No afirmar mejora; test N=76 |
+| GPU | Entrenamiento XGBoost en CUDA | Pipeline Joblib indica `cuda:0` | Sólo evidencia entrenamiento local |
+| Automatización | Inferencia por lotes para cinco filas sintéticas | `src/automatizacion_predicciones.py` y CSV de ejemplo | No API, UI, integración o despliegue |
+| Ética | Límites de uso y restricciones de representación documentados | Informe maestro y matriz ética | Validación local, evaluación clínica y aprobación no realizadas |
 
-| ID | Hallazgo | Mitigación | Actividad candidata para EDT/Gantt | Criterio de aceptación | Cobertura actual |
-|---|---|---|---|---|---|
-| E01 | 723 de 1.025 filas son duplicados exactos (70,54 %); quedan 302 registros únicos. | Conservar el original, documentar la deduplicación y evitar registros equivalentes entre particiones. | Añadir validación de duplicados y regla reproducible de separación antes de cualquier entrenamiento/evaluación. | CA-E01: tratamiento de duplicados documentado y verificable. | Parcialmente cubierto: H2 exige dataset validado, sin regla explícita de duplicados/particiones. |
-| E02 | Mujeres: 96 (31,79 %) y hombres: 206 (68,21 %) en la versión única. | Evaluar desempeño por sexo sólo cuando exista modelo y N suficiente. | Incorporar revisión de cobertura y reporte de métricas por sexo en la validación técnica. | CA-E02: desempeño por sexo cuando exista N suficiente. | Parcialmente cubierto: H4 menciona auditoría por subgrupos, sin criterio operativo. |
-| E03 | Edades <40: 15 (4,97 %); 70+: 10 (3,31 %); 50--59: 125 (41,39 %). | Definir mínimo N, evaluar por edad y restringir uso no respaldado. | Incluir regla de tamaño mínimo y evaluación por rangos etarios antes de cualquier gate de piloto. | CA-E03: desempeño por edad cuando exista N suficiente. | Parcialmente cubierto: auditoría por subgrupos sin detalle de edad/N. |
-| E04 | Mujeres <40 y mujeres 70+ tienen N=5 cada una. | Reportar N junto a porcentajes y no aprobar uso en grupos sin respaldo. | Definir plantilla de informe interseccional y gate de exclusión/limitación de uso. | CA-E04: no aprobar uso en grupos sin cobertura respaldada. | No cubierto. |
-| E05--E06 | Target por grupos es descriptivo; el dataset Kaggle no valida población hospitalaria chilena. | Validación local y monitoreo de cambio de dominio/deriva. | Planificar adquisición/validación de datos locales, protocolo de aceptación del sitio y monitoreo periódico. | CA-E05: validación local; CA-E09: monitoreo de deriva. | Parcialmente cubierto: H7 considera deriva, pero falta validación local previa. |
-| E07 | No hay modelo ni métrica clínica validada; existen riesgos de falsos positivos/negativos y automatización. | Revisión humana obligatoria, registro de decisión y uso preventivo. | Especificar flujo Human in the Loop, responsables y prueba del protocolo antes del piloto. | CA-E06: supervisión humana; CA-E10: apoyo preventivo, sin diagnóstico ni decisión automática. | Parcialmente cubierto: EDT menciona Human in the Loop, no su protocolo verificable. |
-| E08--E09 | Datos de salud sensibles y uso previsto de explicabilidad SHAP. | Pseudonimización, mínimo privilegio, propósito/retención/auditoría; documentación de límites. | Añadir entregables de gobierno de datos, bitácora de acceso y ficha de explicabilidad/limitaciones. | CA-E07: explicabilidad documentada; CA-E08: pseudonimización y control de acceso. | Parcialmente cubierto: H2/H4 mencionan pseudonimización y explicabilidad, sin evidencia detallada. |
-
-No se asignan plazos ni responsables nuevos en este documento. El análisis no autoriza entrenar modelos ni sustituye decisiones clínicas.
+El plan académico vigente cubre diez semanas conforme al informe EP3 corregido. La simulación del informe 3.2.2 no debe usarse como estado de avance ejecutado. Para cualquier actualización de calendario, se requiere evidencia concreta en archivos o entregables.

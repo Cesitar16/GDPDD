@@ -9,6 +9,7 @@
 \rhead{EA2}
 
 \begin{document}
+\begin{center}\fbox{\parbox{0.92\textwidth}{\textbf{Documento histórico de la entrega EA2.} La EDT, roles, hitos, nube y piloto que aparecen en este registro son propuestas académicas, no evidencia de avance ejecutado. La línea base vigente es de diez semanas; consulte el informe maestro actualizado para el estado comprobable.}}\end{center}
 \hypersetup{pageanchor=false}
 \input{sections/00_portada}
 \hypersetup{pageanchor=true}
@@ -43,7 +44,7 @@
 
 Esta actividad transforma el informe semestral y el levantamiento de la actividad 2.1 en una propuesta de alcance, estructura de desglose del trabajo (EDT) y planificación. El caso supone un hospital público que necesita organizar datos de controles cardiovasculares preventivos y apoyar la revisión por profesionales de salud. El producto analítico no diagnostica ni decide atención de forma autónoma. Las funciones, aprobaciones y asignaciones aquí descritas son \emph{propuestas de trabajo}; no se afirma que una contraparte hospitalaria haya aprobado el piloto.
 
-La planificación usa dos horizontes distintos: \textbf{10 semanas} como supuesto para implementar y cerrar un piloto condicionado, y \textbf{36 meses} como horizonte del análisis financiero y de una operación eventual. El informe presupuestó Cloud/GCP por \$10.815.487 CLP a 36 meses y 532 horas de RR.\,HH., de las cuales 272 corresponden a implementación y 260 a mantención. Estas cifras son línea base del informe, no una autorización para ejecutarlas. La ejecución institucional requiere resolver los puntos de control éticos CA-E01 a CA-E10, autorización y gobierno de datos, seguridad, aceptación de riesgos y validación local.
+La línea base académica vigente es de \textbf{10 semanas}, según el informe EP3 corregido. Su presupuesto estimado es \textbf{\$10.506.069 CLP} para un prototipo de investigación y demostración; no representa gasto ejecutado ni autorización institucional. Esta entrega conserva propuestas de alcance como antecedentes: no acredita que exista contraparte hospitalaria, piloto aprobado, aplicación institucional o uso clínico.
 
 \section{Parte 1 --- Definición del alcance}
 
@@ -74,7 +75,7 @@ Planificar un piloto de análisis de datos cardiovasculares que prepare informac
   \item Diagnóstico, indicación terapéutica, asignación o rechazo automático de atención. La decisión permanece en el profesional de salud.
   \item Integración con ficha clínica electrónica, sistemas externos o ingestión en tiempo real. La línea base propone un flujo \emph{batch} diario.
   \item Despliegue clínico generalizado o uso de predicciones sobre pacientes reales antes de autorización, validación local, revisión ética, controles de seguridad y aceptación de riesgos.
-  \item Reentrenamiento automático y publicación de nuevas versiones sin evaluación y aprobación clínica. Las seis revisiones semestrales del horizonte de 36 meses son planificación de una operación eventual, no una función automática del piloto.
+  \item Reentrenamiento automático o publicación de modelos: no forman parte del repositorio ni del alcance vigente.
 \end{enumerate}
 
 \subsection{Supuestos y restricciones}
@@ -90,7 +91,7 @@ Planificar un piloto de análisis de datos cardiovasculares que prepare informac
     Supuesto & S1 & El equipo dispone de \texttt{heart.csv} para el prototipo académico; la disponibilidad y aptitud de datos hospitalarios se verifican antes de cualquier piloto institucional. Si faltan, se limita la evaluación a datos académicos. \\
     Supuesto & S2 & Las contrapartes de prevención, TI y gobierno de datos podrán revisar requisitos, criterios de aceptación y riesgos. Si no participan, los hitos de aprobación se reprograman. \\
     Restricción & R1 & El piloto se planifica en 10 semanas. Las dependencias y puntos de control pueden desplazar la puesta en marcha; una fecha no sustituye una aprobación. \\
-    Restricción & R2 & La línea base Cloud/GCP tiene TCO de \$10.815.487 CLP a 36 meses y 272 horas de implementación. Cambios de recursos o arquitectura exigen recalcular costo y cronograma. \\
+    Restricción & R2 & El presupuesto EP3 es una estimación académica para diez semanas; no hay presupuesto operativo aprobado ni arquitectura institucional implementada. \\
     Restricción & R3 & Los datos de salud requieren autorización, minimización, control de acceso y resguardo; no se cargan a Cloud por defecto. \\
     \bottomrule
   \end{tabularx}
@@ -98,7 +99,7 @@ Planificar un piloto de análisis de datos cardiovasculares que prepare informac
 
 \section{EDT --- Estructura de Desglose del Trabajo}
 
-La EDT ordena \emph{qué resultados deben producirse}, de mayor a menor nivel. Los códigos se alinean con la EDT y la Carta Gantt del informe; las tareas, responsables y fechas se asignan después en la planificación CRISP-DM. El paquete 6 pertenece a la operación eventual de 36 meses y no se confunde con el cierre de la semana 10. En la siguiente tabla, cada fila de nivel 2 es un componente verificable del paquete de nivel 1.
+La EDT que sigue es una propuesta académica de entregables; no describe avances ejecutados. Para el estado vigente, los componentes implementados se detallan en el informe maestro y en la documentación técnica. Las propuestas de infraestructura y operación se excluyen del alcance actual.
 
 \begin{spacing}{1.0}
 \small
@@ -129,10 +130,6 @@ La EDT ordena \emph{qué resultados deben producirse}, de mayor a menor nivel. L
   5.1--5.2 & Entorno, IAM y secretos & Configuración y pruebas de permisos y secretos, si Cloud es autorizado. \\
   5.3--5.4 & Observabilidad y continuidad & Alertas, costos, respaldos y prueba RTO/RPO. \\
   5.5 & Piloto controlado & Acta de habilitación y registro de uso, únicamente tras los puntos de control. \\
-  \textbf{6} & \textbf{Continuidad operacional} & \textbf{Horizonte eventual de 36 meses} \\
-  6.1 & Operación diaria & Bitácoras de cargas batch, respaldos, alertas y costos. \\
-  6.2 & Evaluación semestral & Actas en meses 6, 12, 18, 24, 30 y 36. \\
-  6.3 & Cambio controlado & Validación y aprobación clínica antes de publicar otra versión. \\
   \bottomrule
 \end{longtable}
 \normalsize
@@ -183,7 +180,7 @@ La ruta de dependencia del informe es: alcance revisado $\rightarrow$ dataset an
   \end{tabularx}
 \end{table}
 
-Las 260 horas de mantención del TCO y las seis ventanas semestrales H7 pertenecen a la fase de operación eventual de 36 meses. No se añaden a las 272 horas ni al calendario de implementación de diez semanas. Si la autorización de datos o una revisión clínica se retrasa, se actualiza el calendario antes de iniciar tareas dependientes.
+El cierre de esta actividad no incluye mantenimiento posterior ni ventanas futuras de evaluación. Las propuestas de revisión clínica, autorización y operación sólo pueden retomarse con un alcance actualizado y evidencia correspondiente.
 
 \section{Parte 3 --- Esquema para la presentación}
 
@@ -207,7 +204,7 @@ El siguiente esquema reúne alcance, EDT y planificación en una sola vista que 
     \textbf{Semanas:} 1--2 $\rightarrow$ 2--3 $\rightarrow$ 3--4 $\rightarrow$ 4--6 $\rightarrow$ 5--6 $\rightarrow$ 6--10\\[0.4em]
     \textbf{Puntos de control:} H1 alcance $\rightarrow$ H2 datos $\rightarrow$ H3 modelo $\rightarrow$ H4 validación $\rightarrow$ H5 piloto $\rightarrow$ H6 cierre\\[0.4em]
     \textbf{Fuera de alcance:} diagnóstico autónomo, integración en tiempo real y despliegue clínico sin autorización.\\[0.4em]
-    \textbf{Operación eventual:} EDT 6 y revisiones H7 en meses 6--36, sujetas a decisión de continuidad.
+    \textbf{Estado comprobable:} prototipo local académico; sin despliegue ni operación institucional.
   \end{minipage}}
   \caption{Contenido propuesto para un esquema visual de alcance y planificación}
 \end{figure}
@@ -224,7 +221,7 @@ El siguiente esquema reúne alcance, EDT y planificación en una sola vista que 
     Integrante & Tiempo aprox. & Intervención sugerida \\
     \midrule
     Fabián Leal & 35 s & ``Nuestro proyecto propone un piloto de apoyo analítico a controles cardiovasculares. La EDT divide el trabajo en alcance, datos, modelo, validación, plataforma y continuidad. El piloto se planifica en diez semanas.'' \\
-    Ignacio Silva & 30 s & ``Los tres entregables son el acta de alcance, un dataset gobernado y un prototipo evaluado con plan de piloto. El TCO Cloud del informe es de \$10.815.487 a 36 meses; esa cifra no significa que el gasto ya esté aprobado.'' \\
+    Ignacio Silva & 30 s & ``El presupuesto EP3 de CLP 10.506.069 es una estimación académica para diez semanas, no gasto ejecutado ni autorización de compra.'' \\
     César Rojas & 35 s & ``En CRISP-DM, comprendemos y preparamos los datos antes de modelar. El archivo académico tiene duplicados y no representa por sí solo la población hospitalaria. Para datos reales necesitamos autorización, calidad y resguardo.'' \\
     Lucas Moncada & 35 s & ``Después construimos un baseline y modelos candidatos, evaluamos su desempeño y explicaciones, y probamos un servicio. GCP y el piloto con usuarios solo avanzan si se verifican seguridad, continuidad y validación local.'' \\
     Vicente Hormazábal & 35 s & ``Quedan fuera el diagnóstico autónomo, la integración en tiempo real y un despliegue clínico sin aprobación. Revisamos errores y subgrupos, mantenemos la decisión humana y cerramos con evidencia para decidir la continuidad.'' \\

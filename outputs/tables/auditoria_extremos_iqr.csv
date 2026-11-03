@@ -1,0 +1,6 @@
+variable,min,max,limite_inferior_iqr,limite_superior_iqr,conteo_fuera_iqr
+age,29.0,77.0,28.5,80.5,0
+trestbps,94.0,200.0,90.0,170.0,9
+chol,126.0,564.0,115.375,370.375,5
+thalach,71.0,202.0,84.125,215.125,1
+oldpeak,0.0,6.2,-2.4000000000000004,4.0,5

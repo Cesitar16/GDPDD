@@ -1,19 +1,16 @@
 \section{Preparación de datos}
 
-La preparación de datos constituye una capacidad permanente de la plataforma. La ingesta debe ser controlada, con validación de faltantes, duplicados, valores inválidos y cambios de esquema antes de actualizar las vistas analíticas o habilitar nuevos datos para análisis y modelamiento.
+La preparación de datos de esta actividad es un flujo reproducible para el dataset académico disponible. Valida faltantes, duplicados, dominios y extremos antes de crear la matriz analítica. No se implementa una capacidad permanente de ingesta institucional.
 
-Los registros nuevos o modificados se incorporarán mediante un proceso batch incremental diario, preferentemente al cierre de la jornada clínica. No se requiere streaming ni ingestión continua para el piloto. La inferencia se ejecuta bajo demanda y se mantiene separada del proceso de incorporación de datos.
+La automatización desarrollada procesa un archivo CSV bajo demanda y produce predicción y score no calibrado. No se conecta a sistemas clínicos, no ingiere registros diarios y no ejecuta reentrenamiento ni publicación automática.
 
-\subsection{Frecuencia operacional de datos y modelo}
+\subsection{Alcance de la automatización en la actividad}
 
 \begin{description}[style=nextline]
-  \item[Cada jornada operacional] Validación e incorporación de nuevos registros mediante batch diario.
-  \item[Posterior a la carga diaria] Actualización de dashboard y estadísticas.
-  \item[Bajo demanda] Inferencia de riesgo solicitada por el profesional.
-  \item[Mensual] Revisión de cambios de distribución.
-  \item[Trimestral] Revisión formal de desempeño, estabilidad, sesgos y explicabilidad.
-  \item[Semestral] Ventana planificada de reentrenamiento y evaluación, dos veces al año.
-  \item[Siempre] La sustitución del modelo requiere validación y aprobación; nunca es automática.
+  \item[Al ejecutar el comando] Validación de columnas, nulos y dominios categóricos del CSV de entrada.
+  \item[Inferencia batch] Aplicación del pipeline versionado y escritura de clase y score no calibrado.
+  \item[Fuera de alcance] Ingesta clínica periódica, dashboard institucional, monitoreo productivo y reentrenamiento automático.
+  \item[Control de versiones] Cualquier nuevo artefacto requiere entrenamiento y revisión explícitos; el script de inferencia no modifica ni publica modelos.
 \end{description}
 
 \subsection{Validación de duplicados}

@@ -1,24 +1,20 @@
-# Reporte breve de cierre definitivo
+# Estado integrado del proyecto
 
-## Decisiones adoptadas
+## Línea base
 
-- **Viabilidad:** el proyecto se declara viable condicionado.
-- **Arquitectura:** Cloud/GCP es la alternativa integral recomendada para el piloto; Híbrida es contingencia ante una no aprobación legal, institucional o de gobierno de datos de Cloud; Local es técnicamente viable, pero no recomendada por mayor TCO y carga operacional.
-- **Finanzas:** el TCO oficial Cloud es CLP 10.815.487 a 36 meses. El valor CLP 11.866.338 queda sólo como trazabilidad histórica de una versión previa de Riesgos.
-- **R10:** se conserva la formulación basada en representación y generalización y se adopta P×I = 2×3 = 6 (Crítico). El riesgo residual no está definido.
-- **Ética:** CA-E01 a CA-E10 son condiciones formales de aceptación antes del piloto.
+- Duración: diez semanas, 5 de octubre–13 de diciembre de 2026, conforme al EP3 corregido.
+- Presupuesto de referencia: CLP 10.506.069, estimación académica para prototipo; no es gasto observado ni cotización vinculante.
+- No se define operación posterior ni un presupuesto recurrente.
+- La planificación 3.2.2 es un ejercicio de seguimiento con estados simulados, separado de la línea base.
 
-## Condiciones previas al piloto
+## Estado técnico
 
-1. Autorización y gobierno de datos aplicables, sin declarar cumplimiento legal definitivo.
-2. Cumplimiento verificable de CA-E01 a CA-E10.
-3. Controles técnicos, de seguridad, continuidad y aceptación de riesgos.
-4. Validación local y clínica; este informe no inventa umbrales clínicos.
+El repositorio contiene un flujo de modelado y automatización de inferencia de ejemplo. El notebook elimina duplicados exactos antes de particionar, compara transformaciones en los mismos folds, evalúa en test y genera cinco predicciones sintéticas. XGBoost one-hot fue entrenado en CUDA en una RTX 4060; el pipeline y entorno están en el repo.
 
-## Integridad de evidencia
+En test el modelo seleccionado obtuvo ROC-AUC 0,875, igual al baseline ordinal (0,875); accuracy 0,776 frente a 0,789; precisión positiva 0,786 frente a 0,791; recall 0,805 frente a 0,829; F1 0,795 frente a 0,810. Por tanto, no se documenta una mejora predictiva. La logística CPU obtuvo el mayor ROC-AUC de CV (0,919 ± 0,052), pero el artefacto GPU se conserva por requisito de implementación.
 
-El dataset académico se mantiene separado del supuesto de planificación: `heart.csv` contiene 1.025 filas y 302 registros únicos deduplicados; los 10.000 registros históricos iniciales corresponden exclusivamente al dimensionamiento del piloto. No se modificaron `heart.csv`, los resultados EDA ni la evidencia primaria.
+## Límites
 
-## Estado de cierre
+No existe despliegue clínico, integración hospitalaria, validación con población local, calibración de scores ni aprobación clínica documentada. El dataset es pequeño y académico; el resultado es un prototipo técnico y no se debe emplear para diagnóstico, tratamiento o priorización asistencial.
 
-El informe maestro queda cerrado y listo para auditoría final de rúbrica y posterior síntesis a 4--6 páginas. Las condiciones previas al piloto son gates de ejecución, no contradicciones de la línea base documental.
+Las figuras, tablas, decisiones de limpieza, pasos de reproducción y automatización se documentan en `docs/implementacion_tecnica_3_1_2.md` y en la sección de modelado del informe maestro.

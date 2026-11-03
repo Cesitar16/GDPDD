@@ -1,0 +1,18 @@
+[project]
+name = "heart-disease-eva1"
+version = "0.1.0"
+description = "Implementación académica Heart Disease para la actividad 3.1.2"
+requires-python = ">=3.10,<3.13"
+dependencies = [
+    "pandas",
+    "numpy",
+    "matplotlib",
+    "jupyter",
+    "ipykernel",
+    "scikit-learn",
+    "joblib",
+    "xgboost>=3.1,<4",
+]
+
+[tool.uv]
+package = false

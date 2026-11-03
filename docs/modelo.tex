@@ -1,0 +1,167 @@
+\documentclass[12pt,a4paper]{article}
+
+\input{config/packages}
+\input{config/metadata}
+\input{config/commands}
+\renewcommand{\ProyectoTitulo}{Documentación técnica del modelo Heart Disease}
+\renewcommand{\ProyectoSubtitulo}{Datos, preparación, entrenamiento y evaluación experimental}
+\renewcommand{\ProyectoFecha}{Noviembre de 2026}
+
+\begin{document}
+\hypersetup{pageanchor=false}
+\begin{titlepage}
+  \centering
+  \vspace*{2.2cm}
+  {\Large Duoc UC\par}
+  \vspace{2.0cm}
+  {\Huge\bfseries Documentación técnica del modelo Heart Disease\par}
+  \vspace{0.8cm}
+  {\Large Datos, preparación, entrenamiento y evaluación experimental\par}
+  \vspace{1.5cm}
+  {\large Gestión de Proyectos de Datos --- EVA1\par}
+  \vfill
+  {\large Lucas Moncada \quad Ignacio Silva \quad Fabián Leal\par}
+  {\large Vicente Hormazábal \quad César Rojas\par}
+  \vspace{0.8cm}
+  {\large Noviembre de 2026\par}
+\end{titlepage}
+\hypersetup{pageanchor=true}
+\pagenumbering{roman}
+\tableofcontents
+\clearpage
+\pagenumbering{arabic}
+
+\section{Propósito y alcance}
+Este documento describe exclusivamente el prototipo académico de clasificación construido con el archivo \texttt{heart.csv}: composición de los datos, auditoría, transformaciones, entrenamiento, selección, evaluación y artefactos reproducibles. No describe un sistema clínico desplegado. El modelo no está validado en población local chilena y no debe usarse para diagnóstico, tratamiento, priorización asistencial ni decisiones sobre pacientes.
+
+La implementación reproducible está en \texttt{notebooks/04\_implementacion\_tecnica\_3\_1\_2.ipynb} y \texttt{src/modeling.py}. La fuente académica se conserva en \texttt{data/raw/heart.csv}; el entrenamiento elimina duplicados exactos en memoria y no modifica el original.
+
+\section{Dataset y variables}
+El archivo contiene 1.025 filas, 13 predictores y la variable binaria \texttt{target}; se observan 723 filas duplicadas exactas y 302 filas únicas. No se detectaron valores nulos. La etiqueta se conserva como está codificada en el archivo; su significado y su equivalencia clínica no se dan por validados para una población distinta.
+
+\input{tables/diccionario_datos}
+
+Las variables numéricas usadas como cuantitativas por el pipeline son \texttt{age}, \texttt{trestbps}, \texttt{chol}, \texttt{thalach} y \texttt{oldpeak}. Se codifican como categóricas \texttt{sex}, \texttt{cp}, \texttt{fbs}, \texttt{restecg}, \texttt{exang}, \texttt{slope}, \texttt{ca} y \texttt{thal}. Aunque algunas variables binarias o de conteo están almacenadas como enteros, su tipo estadístico y su tratamiento del modelo no se infieren sólo del dtype.
+
+La copia presenta diferencias de dominio con la documentación de UCI, en particular para \texttt{cp}, \texttt{slope}, \texttt{ca} y \texttt{thal}. El caso \texttt{ca=4} se conserva como observado. No se inventa una recodificación semántica cuando la versión concreta del dataset no permite sostenerla \parencite{uci-heart-disease,kaggle-heart}.
+
+\section{Auditoría y preparación de datos}
+\subsection{Duplicados, nulos y dominios}
+Se detectaron 723 duplicados exactos al comparar las 14 columnas. El flujo conserva las 302 observaciones distintas y deduplica antes de particionar para impedir que copias idénticas queden simultáneamente en entrenamiento y prueba. También verifica combinaciones repetidas de predictores con etiquetas en conflicto; no se encontraron casos. No hay identificador de paciente, por lo que no se puede determinar si las repeticiones son publicaciones repetidas o mediciones de una misma persona.
+
+No se observaron nulos, de modo que no se imputa. El pipeline valida columnas esperadas, clases binarias de \texttt{target} y ausencia de nulos. Los dominios categóricos observados se preservan y se contrastan con la ficha de la fuente; las categorías nuevas se rechazan en la rutina batch y no se asignan silenciosamente.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.88\textwidth]{../outputs/figures/distribucion_clases_antes_despues_deduplicar.png}
+  \caption{Distribución de clases antes y después de quitar duplicados exactos. La deduplicación cambia el peso relativo de las clases, por lo que se aplica antes de separar los datos.}
+  \label{fig:clases}
+\end{figure}
+
+\subsection{Extremos y escalado}
+La regla exploratoria de 1,5 veces el rango intercuartílico marca 9 valores de \texttt{trestbps}, 5 de \texttt{chol}, 1 de \texttt{thalach} y 5 de \texttt{oldpeak}; no marca valores de \texttt{age}. Se conservan: la regla señala casos para revisar, pero no demuestra que sean errores. No se aplicó recorte ni winsorización.
+
+No se aplica una normalización uniforme a todos los algoritmos. La regresión logística de referencia usa \texttt{RobustScaler} en las variables cuantitativas y one-hot en las categóricas. XGBoost recibe las cuantitativas en escala original y las categóricas one-hot, porque el modelo de árboles divide mediante umbrales y no requiere estandarización como la regresión logística. Los transformadores se ajustan dentro de cada pipeline/fold, evitando que estadísticas del conjunto de prueba entren en el preprocesamiento.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.93\textwidth]{../outputs/figures/diagramas_caja_variables_cuantitativas.png}
+  \caption{Distribuciones de variables cuantitativas y candidatos a revisión según el criterio IQR.}
+  \label{fig:iqr}
+\end{figure}
+
+\section{Relaciones exploratorias}
+La correlación de Pearson se calcula entre variables cuantitativas y la etiqueta binaria. Para variables categóricas se representa por separado la correlación de cada indicador de nivel con \texttt{target}. Estos gráficos describen asociaciones en esta muestra; no muestran causalidad ni bastan para excluir predictores. Los códigos categóricos no se interpretan como magnitudes continuas.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.91\textwidth]{../outputs/figures/matriz_correlacion_continuas_target.png}
+  \caption{Correlación de Pearson de predictores cuantitativos y \texttt{target}.}
+  \label{fig:corr-num}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.91\textwidth]{../outputs/figures/asociacion_niveles_categoricos_target.png}
+  \caption{Asociación descriptiva entre niveles categóricos y \texttt{target}; el tamaño muestral varía por nivel.}
+  \label{fig:corr-cat}
+\end{figure}
+
+\section{Diseño experimental}
+\subsection{Partición y validación}
+Tras deduplicar, se separa 75\% para entrenamiento y 25\% para prueba mediante partición estratificada con semilla 42: 226 registros de entrenamiento y 76 de prueba. En entrenamiento se comparan candidatos con validación cruzada estratificada de cinco folds, aleatorizada con la misma semilla. La selección se basa en el promedio de ROC-AUC de validación cruzada entre candidatos XGBoost one-hot que entrenan con CUDA. El conjunto de prueba retenido se usa para la comparación final reportada.
+
+\subsection{Candidatos y configuración}
+Se evaluaron una regresión logística de referencia (CPU, one-hot y RobustScaler), un XGBoost ordinal previo y dos XGBoost CUDA con variables categóricas one-hot. El XGBoost one-hot somero usa 250 estimadores, profundidad máxima 2, tasa de aprendizaje 0,04, \texttt{min\_child\_weight=3}, \texttt{subsample=0,9}, \texttt{colsample\_bytree=0,9} y regularización L2 de 2. El candidato one-hot regularizado usa 200 estimadores, profundidad 3, tasa 0,03, \texttt{min\_child\_weight=5}, subsampling y muestreo de columnas 0,85, L2 de 5. Ambos configuran objetivo binario logístico, métrica de entrenamiento logloss, método hist y dispositivo CUDA. La semilla es 42.
+
+El artefacto final es el XGBoost one-hot somero, entrenado localmente con CUDA en la NVIDIA GeForce RTX 4060 Laptop GPU. Se eligió entre los candidatos GPU one-hot por ROC-AUC promedio de validación cruzada; la regresión logística obtuvo el promedio numérico más alto, pero es una referencia CPU y no el artefacto final seleccionado para este ejercicio.
+
+\section{Resultados}
+\begin{table}[H]
+  \centering
+  \caption{ROC-AUC medio (desviación estándar) en validación cruzada de entrenamiento}
+  \label{tab:cv}
+  \small
+  \begin{tabularx}{\textwidth}{Xlr}
+    \toprule
+    Candidato & Dispositivo & ROC-AUC CV \\
+    \midrule
+    Regresión logística (one-hot + RobustScaler) & CPU & 0,919 (0,052) \\
+    XGBoost ordinal previo & CUDA & 0,917 (0,062) \\
+    XGBoost one-hot somero, seleccionado & CUDA & 0,914 (0,055) \\
+    XGBoost one-hot regularizado & CUDA & 0,913 (0,061) \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.91\textwidth]{../outputs/figures/comparacion_roc_auc_validacion_cruzada.png}
+  \caption{Comparación del ROC-AUC medio y su dispersión entre folds. La variabilidad es apreciable dada la muestra pequeña.}
+  \label{fig:cv}
+\end{figure}
+
+En los 76 registros de prueba, el XGBoost one-hot seleccionado obtuvo accuracy 0,776, precisión de clase 1 de 0,786, recall 0,805, F1 0,795 y ROC-AUC 0,875. El baseline ordinal previo obtuvo 0,789, 0,791, 0,829, 0,810 y 0,875, respectivamente. Por tanto, el cambio a one-hot no mejoró estas métricas en esta partición y ambos modelos empataron en ROC-AUC. La comparación de un único conjunto pequeño no demuestra equivalencia ni diferencia estadística.
+
+\begin{table}[H]
+  \centering
+  \caption{Métricas en el mismo conjunto de prueba retenido}
+  \label{tab:test}
+  \begin{tabular}{lrr}
+    \toprule
+    Métrica & XGBoost ordinal previo & XGBoost one-hot seleccionado \\
+    \midrule
+    Accuracy & 0,789 & 0,776 \\
+    Precisión (clase 1) & 0,791 & 0,786 \\
+    Recall (clase 1) & 0,829 & 0,805 \\
+    F1 (clase 1) & 0,810 & 0,795 \\
+    ROC-AUC & 0,875 & 0,875 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.91\textwidth]{../outputs/figures/comparacion_metricas_test_antes_despues.png}
+  \caption{Métricas de ambos pipelines sobre la misma partición retenida.}
+  \label{fig:test}
+\end{figure}
+
+\section{Interpretación, limitaciones y uso}
+Los valores son resultados experimentales de un conjunto académico con 302 observaciones únicas. La copia de datos contiene duplicación extensa, hay diferencias de dominio pendientes de aclarar, no se conoce población de referencia ni existe validación externa. El ROC-AUC de prueba de 0,875 y las demás métricas describen sólo esta partición; no constituyen desempeño clínico esperado. Los scores de clase 1 no están calibrados como probabilidades clínicas.
+
+No se presenta análisis de explicabilidad SHAP ni auditoría robusta de desempeño por subgrupos como resultado completado. No hay datos hospitalarios, aprobación institucional, revisión clínica, servicio/API, despliegue productivo ni monitoreo. La inferencia batch local está demostrada sólo con cinco casos sintéticos y no modifica ni reentrena el artefacto.
+
+\section{Reproducción y artefactos}
+El código fuente de entrenamiento se encuentra en \texttt{src/modeling.py}; el desarrollo y las figuras se documentan en el notebook técnico. El entorno de dependencias está fijado mediante \texttt{uv.lock}. El modelo serializado está en \texttt{outputs/models/heart\_disease\_pipeline.joblib}; su uso requiere las dependencias y el esquema de entrada documentado. Los gráficos incluidos en este informe se generan bajo \texttt{outputs/figures/}; las tablas de auditoría y métricas, bajo \texttt{outputs/tables/}.
+
+Para instalar el entorno y ejecutar el análisis desde la raíz del repositorio:
+\begin{lstlisting}[language=bash]
+uv sync
+uv run jupyter lab notebooks/04_implementacion_tecnica_3_1_2.ipynb
+\end{lstlisting}
+
+La documentación del preprocesamiento sigue prácticas de ajuste de transformadores dentro de los datos de entrenamiento para evitar fuga de información \parencite{scikit-learn-common-pitfalls}. La documentación del conjunto de origen está referenciada como contexto de procedencia, no como validación de esta copia \parencite{uci-heart-disease,kaggle-heart}.
+
+\printbibliography
+\end{document}
