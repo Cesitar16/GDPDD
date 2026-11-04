@@ -98,7 +98,7 @@ def rows(m: dict[str, int | float]) -> list[dict[str, str]]:
          "Mitigación": "Mantener el uso local con datos académicos; exigir autorización y controles antes de una futura integración clínica.",
          "Criterio aceptación": "CA-E08."},
         {"ID": "E09", "Hallazgo/riesgo ético": "Transparencia y explicabilidad insuficientes.",
-         "Evidencia": "Existe un modelo experimental con métricas globales; no hay SHAP ni evaluación suficiente por subgrupos.",
+         "Evidencia": "Existe un modelo experimental con métricas globales y explicaciones SHAP globales/locales; la muestra es pequeña y no hay evaluación suficiente por subgrupos ni validación externa.",
          "Impacto técnico potencial": "No detectar límites o errores por subgrupo mediante explicaciones aisladas.",
          "Impacto ético potencial": "Confianza injustificada y falta de rendición de cuentas.",
          "Mitigación": "Documentar transformaciones, versiones, métricas y límites; no presentar explicabilidad como prueba de equidad.",

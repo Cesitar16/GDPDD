@@ -1,0 +1,9 @@
+modelo,clase_real,prediccion,conteo
+Pipeline previo (ordinal),0,0,26
+Pipeline previo (ordinal),0,1,9
+Pipeline previo (ordinal),1,0,7
+Pipeline previo (ordinal),1,1,34
+Pipeline nuevo (one-hot),0,0,26
+Pipeline nuevo (one-hot),0,1,9
+Pipeline nuevo (one-hot),1,0,8
+Pipeline nuevo (one-hot),1,1,33

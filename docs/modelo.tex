@@ -121,7 +121,7 @@ El artefacto final es el XGBoost one-hot somero, entrenado localmente con CUDA e
   \label{fig:cv}
 \end{figure}
 
-En los 76 registros de prueba, el XGBoost one-hot seleccionado obtuvo accuracy 0,776, precisión de clase 1 de 0,786, recall 0,805, F1 0,795 y ROC-AUC 0,875. El baseline ordinal previo obtuvo 0,789, 0,791, 0,829, 0,810 y 0,875, respectivamente. Por tanto, el cambio a one-hot no mejoró estas métricas en esta partición y ambos modelos empataron en ROC-AUC. La comparación de un único conjunto pequeño no demuestra equivalencia ni diferencia estadística.
+En los 76 registros de prueba, el XGBoost one-hot seleccionado obtuvo accuracy 0,776, precisión de clase 1 de 0,786, recall 0,805, F1 0,795 y ROC-AUC 0,875. El baseline ordinal previo obtuvo 0,789, 0,791, 0,829, 0,810 y 0,875, respectivamente. Las matrices de confusión muestran 60 aciertos del baseline y 59 del one-hot. Ambos tuvieron 26 verdaderos negativos y 9 falsos positivos; el baseline tuvo 34 verdaderos positivos y 7 falsos negativos, frente a 33 y 8 del one-hot. Por tanto, la ventaja de accuracy es 1/76, equivalente a 1,32 puntos porcentuales, explicada por un solo caso positivo adicional acertado. No es evidencia de una superioridad estable del pipeline ordinal. Las curvas ROC empatan en AUC=0,875: la discriminación agregada es la misma en esta prueba, aunque el conteo al umbral predeterminado cambia por un caso. La codificación one-hot sigue siendo la decisión más coherente para categorías nominales, pues no impone un orden artificial entre códigos. Este resultado pequeño no demuestra equivalencia ni diferencia estadística.
 
 \begin{table}[H]
   \centering
@@ -147,10 +147,61 @@ En los 76 registros de prueba, el XGBoost one-hot seleccionado obtuvo accuracy 0
   \label{fig:test}
 \end{figure}
 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.92\textwidth]{../outputs/figures/matrices_confusion_test_comparacion.png}
+  \caption{Matrices de confusión sobre la prueba retenida. La ventaja de accuracy del baseline es un único caso positivo adicional correctamente clasificado.}
+  \label{fig:matrices-test}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.76\textwidth]{../outputs/figures/curvas_roc_test_comparacion.png}
+  \caption{Curvas ROC de los dos pipelines en test; ambos obtienen AUC=0,875.}
+  \label{fig:roc-test}
+\end{figure}
+
+\subsection{Explicabilidad global y local}
+La matriz de confusión muestra conteos de aciertos y errores; no atribuye su origen a los predictores. Se extrajeron contribuciones TreeSHAP nativas de XGBoost con \texttt{pred\_contribs}. En el pipeline one-hot, las contribuciones de sus indicadores se agruparon por variable fuente; en el baseline ordinal se explicaron las 13 columnas tal como fueron entregadas al árbol. En ambos casos, la suma de contribuciones más el valor base reconstruye el margen log-odds, verificado numéricamente. Esta descomposición explica la salida del modelo, no causalidad \parencite{xgboost-pred-contribs}.
+
+Ambos modelos destacan las mismas tres variables en el promedio absoluto sobre los 302 registros únicos: \texttt{cp} (one-hot 0,971; ordinal 0,872), \texttt{ca} (0,855; 0,643) y \texttt{thal} (0,599; 0,479), en unidades de margen log-odds. Después aparecen \texttt{oldpeak} (0,407; 0,362), \texttt{sex} (0,395; 0,248) y \texttt{thalach} (0,346; 0,210). Ambos asignaron contribución cero a \texttt{fbs} en los registros explicados; esto describe estos artefactos, no la relevancia clínica de la variable. La dirección de los valores positivos/negativos se refiere a empujar el score hacia las clases codificadas 1/0, cuya equivalencia clínica no está confirmada. El baseline ordinal recibe categorías como enteros y puede imponer umbrales dependientes del orden numérico; sus atribuciones deben interpretarse con esta salvedad.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.90\textwidth]{../outputs/figures/shap_importancia_comparacion.png}
+  \caption{Media global de contribuciones SHAP absolutas por variable original para el XGBoost one-hot y el baseline ordinal.}
+  \label{fig:shap-global-modelo}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.98\textwidth]{../outputs/figures/shap_relacion_valor_atribucion.png}
+  \caption{Atribuciones del pipeline one-hot según valor cuantitativo o nivel categórico. Cada nivel categórico aparece separado; el eje no define un orden entre códigos.}
+  \label{fig:shap-direccion-modelo}
+\end{figure}
+
+Para explicar el modelo con mayor accuracy (baseline ordinal, 60/76) se descompusieron un falso negativo (fila 5: real 1, predicho 0, score de clase 1 0,388) y un falso positivo (fila 33: real 0, predicho 1, score 0,852). Como contraste, el pipeline one-hot (59/76) produjo en esas filas scores 0,300 y 0,848. Los números de fila son índices técnicos, no identificadores de personas. Las atribuciones indican qué variables empujaron los scores calculados, no por qué ocurrió el resultado real.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.98\textwidth]{../outputs/figures/shap_explicacion_casos_error_ordinal.png}
+  \caption{Atribuciones por variable en dos errores del baseline ordinal, que tuvo el mayor accuracy en test. Rojo empuja hacia clase 1; azul hacia clase 0. Scores no calibrados.}
+  \label{fig:shap-local-modelo}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.98\textwidth]{../outputs/figures/shap_explicacion_casos_error.png}
+  \caption{Mismos dos registros explicados con el XGBoost one-hot seleccionado.}
+  \label{fig:shap-local-onehot}
+\end{figure}
+
+Las magnitudes SHAP dependen del modelo y de la muestra explicada: resumen cómo cada artefacto distribuye sus márgenes, no causalidad, importancia clínica ni equidad. El resumen global usa los 302 registros observados; la prueba de 76 se conserva para las métricas predictivas y los ejemplos locales.
+
 \section{Interpretación, limitaciones y uso}
 Los valores son resultados experimentales de un conjunto académico con 302 observaciones únicas. La copia de datos contiene duplicación extensa, hay diferencias de dominio pendientes de aclarar, no se conoce población de referencia ni existe validación externa. El ROC-AUC de prueba de 0,875 y las demás métricas describen sólo esta partición; no constituyen desempeño clínico esperado. Los scores de clase 1 no están calibrados como probabilidades clínicas.
 
-No se presenta análisis de explicabilidad SHAP ni auditoría robusta de desempeño por subgrupos como resultado completado. No hay datos hospitalarios, aprobación institucional, revisión clínica, servicio/API, despliegue productivo ni monitoreo. La inferencia batch local está demostrada sólo con cinco casos sintéticos y no modifica ni reentrena el artefacto.
+Se incluyen atribuciones TreeSHAP globales y locales para explicar este artefacto XGBoost; éstas describen la lógica del modelo y no prueban causalidad, equidad ni importancia clínica. La auditoría de desempeño por subgrupos sigue siendo insuficiente. No hay datos hospitalarios, aprobación institucional, revisión clínica, servicio/API, despliegue productivo ni monitoreo. La inferencia batch local está demostrada sólo con cinco casos sintéticos y no modifica ni reentrena el artefacto.
 
 \section{Reproducción y artefactos}
 El código fuente de entrenamiento se encuentra en \texttt{src/modeling.py}; el desarrollo y las figuras se documentan en el notebook técnico. El entorno de dependencias está fijado mediante \texttt{uv.lock}. El modelo serializado está en \texttt{outputs/models/heart\_disease\_pipeline.joblib}; su uso requiere las dependencias y el esquema de entrada documentado. Los gráficos incluidos en este informe se generan bajo \texttt{outputs/figures/}; las tablas de auditoría y métricas, bajo \texttt{outputs/tables/}.

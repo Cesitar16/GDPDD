@@ -2,7 +2,7 @@
 
 Esta carpeta contiene la documentación LaTeX modular del informe maestro del proyecto Heart Disease. La línea base vigente comprende diez semanas y un prototipo académico. El informe integra planificación, estado del dataset, modelo experimental, gráficos, resultados y límites de uso.
 
-El documento autónomo `modelo.tex` concentra la documentación técnica del modelo: diccionario y tipos de variables, auditoría y preparación de datos, correlaciones, entrenamiento GPU, validación, métricas, gráficos, reproducibilidad y limitaciones. Su PDF se genera como `build/modelo.pdf`.
+El documento autónomo `modelo.tex` concentra la documentación técnica del modelo: diccionario y tipos de variables, auditoría y preparación de datos, correlaciones, entrenamiento GPU, validación, métricas, explicabilidad global/local TreeSHAP, reproducibilidad y limitaciones. Su PDF se genera como `build/modelo.pdf`.
 
 ## Compilación
 

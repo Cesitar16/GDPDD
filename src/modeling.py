@@ -186,6 +186,9 @@ def train_and_evaluate(data: pd.DataFrame) -> dict[str, Any]:
         "metrics": metrics,
         "baseline_metrics": baseline_metrics,
         "baseline_name": baseline_name,
+        "baseline_model": baseline_model,
+        "baseline_predictions": baseline_predictions,
+        "baseline_probabilities": baseline_probabilities,
     }
 
 

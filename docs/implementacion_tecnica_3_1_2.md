@@ -23,9 +23,25 @@ Las decisiones siguen la recomendación de ajustar el preprocesamiento sólo sob
 - `outputs/figures/distribucion_clases_antes_despues_deduplicar.png`: conteos antes y después de quitar duplicados.
 - `outputs/figures/comparacion_roc_auc_validacion_cruzada.png`: media de ROC-AUC y dispersión entre folds por pipeline.
 - `outputs/figures/comparacion_metricas_test_antes_despues.png`: métricas de ambos pipelines en la misma prueba retenida.
+- `outputs/figures/matrices_confusion_test_comparacion.png`: conteos de errores/aciertos por clase para los dos pipelines.
+- `outputs/figures/curvas_roc_test_comparacion.png`: curvas ROC de ambos pipelines en la prueba retenida.
+- `outputs/figures/shap_importancia_global.png`: media de contribución absoluta TreeSHAP por variable fuente en el modelo one-hot.
+- `outputs/figures/shap_relacion_valor_atribucion.png`: dirección y dispersión de contribuciones en valores numéricos/niveles categóricos observados.
+- `outputs/figures/shap_explicacion_casos_error.png`: descomposición local de un falso negativo y un falso positivo del test.
+- `outputs/figures/shap_importancia_comparacion.png`: comparación de las contribuciones globales del XGBoost one-hot y el baseline ordinal.
+- `outputs/figures/shap_explicacion_casos_error_ordinal.png`: descomposición de los mismos errores del XGBoost ordinal, ganador de accuracy en test.
 - `outputs/tables/correlacion_pearson_continuas_target.csv`, `asociacion_niveles_categoricos_target.csv` y `auditoria_extremos_iqr.csv`: cifras que respaldan los gráficos.
+- `outputs/tables/matrices_confusion_test.csv`: conteos de las matrices de confusión, por modelo, clase real y predicción.
+- `outputs/tables/shap_importancia_global.csv`, `shap_contribuciones_test.csv` y `shap_casos_error_test.csv`: resumen por variable y contribuciones por fila de prueba/caso ilustrado.
+- `outputs/tables/shap_importancia_global_ordinal.csv`, `shap_contribuciones_test_ordinal.csv`, `shap_casos_error_test_ordinal.csv` y `shap_importancia_comparacion.csv`: explicaciones del baseline y comparación pareada.
 
 En la matriz Pearson sobre los 302 registros únicos, `thalach` tiene r=0,420 con target y `oldpeak` r=−0,429; la mayor correlación absoluta entre dos predictores cuantitativos es |r|=0,395 (`age` con `thalach`). Estos valores no prueban efecto causal.
+
+## Explicabilidad del modelo seleccionado
+
+Los dos XGBoost se explican con TreeSHAP nativo (`pred_contribs`), que descompone cada margen log-odds en un valor base y contribuciones de predictores. En el one-hot las columnas transformadas se agrupan por variable original. En el baseline ordinal se atribuyen directamente las columnas de entrada, que incluyen códigos categóricos enteros. Ambos modelos sitúan `cp`, `ca` y `thal` en los tres primeros lugares de contribución absoluta media sobre los 302 registros únicos: 0,971/0,872, 0,855/0,643 y 0,599/0,479 log-odds para one-hot/ordinal. `fbs` tiene cero en ambos artefactos. Las explicaciones locales muestran el falso negativo y el falso positivo del baseline ganador de accuracy (60/76) y los mismos casos en one-hot (59/76). La dirección se refiere sólo a las clases codificadas 1/0. SHAP describe el comportamiento de cada modelo en estos datos: no es causalidad ni importancia clínica y no demuestra la semántica de `target`.
+
+SHAP transparenta cómo el modelo distribuye sus scores para estos registros; no revela causas, no demuestra importancia clínica ni equidad. La pequeña muestra y la semántica no verificada de `target` limitan la interpretación. Para repetir la generación, el notebook invoca `src/explainability.py` después de evaluar el modelo.
 
 ## Comparación antes y después
 
@@ -33,7 +49,7 @@ Todos los candidatos usan la misma partición estratificada (226 train / 76 test
 
 ROC-AUC CV: baseline XGBoost ordinal 0,917 ± 0,062; XGBoost one-hot somero 0,914 ± 0,055; XGBoost one-hot regularizado 0,913 ± 0,061. La referencia logística con RobustScaler y one-hot obtuvo 0,919 ± 0,052 en CPU. El XGBoost one-hot somero fue seleccionado para el artefacto GPU.
 
-En el conjunto test, baseline ordinal versus XGBoost one-hot seleccionado: accuracy 0,789 vs 0,776; precision clase 1 0,791 vs 0,786; recall clase 1 0,829 vs 0,805; F1 0,810 vs 0,795; ROC-AUC 0,875 vs 0,875. Por tanto, la codificación categórica mejoró el tratamiento metodológico de los datos, pero **no mejoró las métricas predictivas en esta partición**. Las diferencias son pequeñas e inestables en 76 casos; no se deben presentar como una mejora estadísticamente demostrada. La logística CPU tuvo el mayor ROC-AUC CV, pero el modelo entregado se mantiene en GPU conforme al requisito de ejecución acordado.
+En el conjunto test, baseline ordinal versus XGBoost one-hot seleccionado: accuracy 0,789 vs 0,776; precision clase 1 0,791 vs 0,786; recall clase 1 0,829 vs 0,805; F1 0,810 vs 0,795; ROC-AUC 0,875 vs 0,875. Las matrices de confusión son, con filas como clase real y columnas como predicción, `[[26, 9], [7, 34]]` para el baseline y `[[26, 9], [8, 33]]` para one-hot. Ambos comparten 26 verdaderos negativos y 9 falsos positivos; el baseline acierta un positivo más y comete un falso negativo menos. Su ventaja es exactamente 1/76 aciertos (1,32 puntos porcentuales), no una mejora estable demostrada. La curva ROC coincide en AUC=0,875; el pequeño cambio de accuracy ocurre en el umbral predeterminado y no cambia el AUC redondeado. La codificación one-hot conserva sentido estadístico para códigos categóricos nominales; el acierto adicional del ordinal no justifica asumir distancias/orden entre categorías. La logística CPU tuvo el mayor ROC-AUC CV, pero el artefacto seleccionado se restringió a XGBoost GPU por el requisito de ejecución acordado.
 
 ## Ejecución GPU y artefactos
 
