@@ -89,7 +89,7 @@ La correlación de Pearson se calcula entre variables cuantitativas y la etiquet
 
 \section{Diseño experimental}
 \subsection{Partición y validación}
-Tras deduplicar, se separa 75\% para entrenamiento y 25\% para prueba mediante partición estratificada con semilla 42: 226 registros de entrenamiento y 76 de prueba. En entrenamiento se comparan candidatos con validación cruzada estratificada de cinco folds, aleatorizada con la misma semilla. La selección se basa en el promedio de ROC-AUC de validación cruzada entre candidatos XGBoost one-hot que entrenan con CUDA. El conjunto de prueba retenido se usa para la comparación final reportada.
+Tras deduplicar, se separa 75\% para entrenamiento y 25\% para prueba mediante partición estratificada con semilla 42: 226 registros de entrenamiento y 76 de prueba. En entrenamiento se comparan candidatos con validación cruzada estratificada de cinco folds, aleatorizada con la misma semilla. Se ensayan dos transformaciones experimentales, sin usarlas para seleccionar el artefacto final: interacción $\texttt{oldpeak}\times\texttt{exang}$ en XGBoost y splines cuadráticas de tres nudos en regresión logística. La selección permanece restringida a candidatos XGBoost one-hot regulares que entrenan con CUDA. El conjunto de prueba retenido se usa para la comparación final reportada.
 
 \subsection{Candidatos y configuración}
 Se evaluaron una regresión logística de referencia (CPU, one-hot y RobustScaler), un XGBoost ordinal previo y dos XGBoost CUDA con variables categóricas one-hot. El XGBoost one-hot somero usa 250 estimadores, profundidad máxima 2, tasa de aprendizaje 0,04, \texttt{min\_child\_weight=3}, \texttt{subsample=0,9}, \texttt{colsample\_bytree=0,9} y regularización L2 de 2. El candidato one-hot regularizado usa 200 estimadores, profundidad 3, tasa 0,03, \texttt{min\_child\_weight=5}, subsampling y muestreo de columnas 0,85, L2 de 5. Ambos configuran objetivo binario logístico, métrica de entrenamiento logloss, método hist y dispositivo CUDA. La semilla es 42.
@@ -110,6 +110,8 @@ El artefacto final es el XGBoost one-hot somero, entrenado localmente con CUDA e
     XGBoost ordinal previo & CUDA & 0,917 (0,062) \\
     XGBoost one-hot somero, seleccionado & CUDA & 0,914 (0,055) \\
     XGBoost one-hot regularizado & CUDA & 0,913 (0,061) \\
+    XGBoost experimental, interacción $\texttt{oldpeak}\times\texttt{exang}$ & CUDA & 0,912 (0,056) \\
+    Logística experimental, splines + one-hot & CPU & 0,904 (0,043) \\
     \bottomrule
   \end{tabularx}
 \end{table}
@@ -119,6 +121,17 @@ El artefacto final es el XGBoost one-hot somero, entrenado localmente con CUDA e
   \includegraphics[width=0.91\textwidth]{../outputs/figures/comparacion_roc_auc_validacion_cruzada.png}
   \caption{Comparación del ROC-AUC medio y su dispersión entre folds. La variabilidad es apreciable dada la muestra pequeña.}
   \label{fig:cv}
+\end{figure}
+
+En la comprobación con diez repeticiones de cinco folds, la interacción XGBoost promedió ROC-AUC 0,91279 frente a 0,91262 de su referencia (delta $+0,00016$); el cambio favoreció al candidato en cuatro repeticiones y a la referencia en seis (mediana $-0,00078$). La logística con splines promedió 0,90099 frente a 0,91897 y fue inferior en las diez repeticiones (delta medio $-0,01798$). La señal de la interacción es prácticamente nula y no consistente; la de splines es negativa en estos folds. Las repeticiones comparten observaciones, así que no constituyen 50 muestras independientes ni una prueba de significación. Ninguna transformación se incorpora al artefacto final.
+
+\paragraph{Justificación de la decisión.} No se implementa la interacción explícita porque no ofrece una ganancia reproducible que compense añadir otra transformación: el XGBoost de profundidad 2 ya puede aprender interacciones simples mediante divisiones sucesivas, y el delta observado se centra prácticamente en cero. Tampoco se implementan splines: aumentan los grados de libertad de la referencia logística con sólo 226 registros de entrenamiento y su ROC-AUC fue menor en las diez repeticiones. Mantenerlas sin evidencia de mejora agregaría complejidad y riesgo de ajustar particularidades de esta muestra. La conclusión se limita a estos candidatos y datos; no afirma que cualquier ingeniería de variables sea inútil.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.78\textwidth]{../outputs/figures/feature_engineering_repeated_cv.png}
+  \caption{Diferencias medias de ROC-AUC por repetición de cinco folds para cada transformación frente a su referencia.}
+  \label{fig:feature-engineering-cv}
 \end{figure}
 
 En los 76 registros de prueba, el XGBoost one-hot seleccionado obtuvo accuracy 0,776, precisión de clase 1 de 0,786, recall 0,805, F1 0,795 y ROC-AUC 0,875. El baseline ordinal previo obtuvo 0,789, 0,791, 0,829, 0,810 y 0,875, respectivamente. Las matrices de confusión muestran 60 aciertos del baseline y 59 del one-hot. Ambos tuvieron 26 verdaderos negativos y 9 falsos positivos; el baseline tuvo 34 verdaderos positivos y 7 falsos negativos, frente a 33 y 8 del one-hot. Por tanto, la ventaja de accuracy es 1/76, equivalente a 1,32 puntos porcentuales, explicada por un solo caso positivo adicional acertado. No es evidencia de una superioridad estable del pipeline ordinal. Las curvas ROC empatan en AUC=0,875: la discriminación agregada es la misma en esta prueba, aunque el conteo al umbral predeterminado cambia por un caso. La codificación one-hot sigue siendo la decisión más coherente para categorías nominales, pues no impone un orden artificial entre códigos. Este resultado pequeño no demuestra equivalencia ni diferencia estadística.

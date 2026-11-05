@@ -3,7 +3,11 @@
 
 La actividad técnica añade un prototipo local reproducible en \texttt{notebooks/04\_implementacion\_tecnica\_3\_1\_2.ipynb}. Se entrena sobre los 302 registros únicos, con partición estratificada de 226 observaciones para entrenamiento y 76 para prueba (semilla 42). Los modelos nuevos utilizan codificación one-hot para predictores categóricos; la regresión logística aplica \texttt{RobustScaler} a variables cuantitativas. El preprocesamiento se ajusta dentro del pipeline de validación cruzada para evitar fuga de información.
 
-Se compararon cinco folds sobre el conjunto de entrenamiento. La regresión logística de referencia obtuvo ROC-AUC medio de 0,919 $\pm$ 0,052; XGBoost one-hot somero obtuvo 0,914 $\pm$ 0,055; XGBoost one-hot regularizado 0,913 $\pm$ 0,061; y el baseline XGBoost ordinal 0,917 $\pm$ 0,062. Se eligió el XGBoost one-hot somero como artefacto final para cumplir el requisito de entrenamiento local con GPU, aunque no tuvo el mayor promedio de validación cruzada.
+Se compararon cinco folds sobre el conjunto de entrenamiento. La regresión logística de referencia obtuvo ROC-AUC medio de 0,919 $\pm$ 0,052; XGBoost one-hot somero obtuvo 0,914 $\pm$ 0,055; XGBoost one-hot regularizado 0,913 $\pm$ 0,061; y el baseline XGBoost ordinal 0,917 $\pm$ 0,062. Como experimento de ingeniería se añadió la interacción $\texttt{oldpeak}\times\texttt{exang}$ al XGBoost one-hot somero (0,912 $\pm$ 0,056), y se probaron splines cuadráticas de tres nudos en las variables continuas de la logística (0,904 $\pm$ 0,043). El cambio medio pareado contra sus respectivas referencias fue $-0,002$ y $-0,015$ ROC-AUC; ninguno mostró mejora consistente. Por ello, ambas transformaciones quedan sólo como experimentos y no se incorporan al artefacto. Se eligió el XGBoost one-hot somero como artefacto final para cumplir el requisito de entrenamiento local con GPU, aunque no tuvo el mayor promedio de validación cruzada.
+
+Para evaluar la sensibilidad a la partición se repitieron cinco folds diez veces usando sólo el conjunto de entrenamiento. La interacción XGBoost obtuvo ROC-AUC medio 0,91279 frente a 0,91262 de su referencia (delta $+0,00016$); mejoró en cuatro repeticiones y empeoró en seis, con mediana de delta $-0,00078$. La logística con splines obtuvo 0,90099 frente a 0,91897 y quedó por debajo en las diez repeticiones (delta medio $-0,01798$). Los folds repetidos comparten observaciones y no son muestras independientes; se reportan como diagnóstico de estabilidad, sin inferencia estadística. No hay evidencia consistente de mejora para conservar esas transformaciones.
+
+Por esa razón no se implementan en el pipeline final. El XGBoost con profundidad máxima 2 ya puede representar interacciones simples con divisiones sucesivas, por lo que el producto explícito no añade una ventaja medida que compense más procesamiento. Las splines aumentan los grados de libertad de la logística en un entrenamiento de sólo 226 registros y empeoran en las diez repeticiones. La decisión evita complejidad adicional y posible ajuste a peculiaridades de la muestra sin una mejora reproducible; no implica que cualquier ingeniería de variables sea inútil.
 
 En la prueba retenida, el baseline ordinal obtuvo accuracy 0,789, precisión de clase positiva 0,791, recall 0,829, F1 0,810 y ROC-AUC 0,875. El XGBoost one-hot seleccionado obtuvo 0,776, 0,786, 0,805, 0,795 y 0,875, respectivamente. Las matrices de confusión muestran exactamente 60/76 aciertos para el baseline y 59/76 para one-hot: ambos clasificaron correctamente los mismos 26 casos de clase 0 y cometieron 9 falsos positivos; el baseline acertó un caso positivo más (34 vs. 33) y tuvo un falso negativo menos (7 vs. 8). Por eso su accuracy fue 1,32 puntos porcentuales mayor en esta prueba. La diferencia depende de un solo caso; no demuestra superioridad estable. Las curvas ROC tienen el mismo AUC (0,875), por lo que la capacidad global de ordenar los scores fue igual en la prueba. El one-hot sigue siendo una representación metodológicamente más apropiada para códigos categóricos nominales; que el ordinal gane por un acierto no justifica imponer orden numérico ni descartar el tratamiento correcto. Con sólo 76 casos no se afirma diferencia estadística ni superioridad predictiva.
 
@@ -40,6 +44,20 @@ En la prueba retenida, el baseline ordinal obtuvo accuracy 0,789, precisión de 
   \includegraphics[width=0.88\textwidth]{../outputs/figures/comparacion_roc_auc_validacion_cruzada.png}
   \caption{ROC-AUC medio y dispersión en validación cruzada para pipelines evaluados sobre los mismos folds.}
   \label{fig:roc-cv}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.78\textwidth]{../outputs/figures/feature_engineering_delta_auc_por_fold.png}
+  \caption{Cambio pareado de ROC-AUC por fold para la interacción XGBoost y las splines logísticas, cada una frente a su referencia. Ninguna transformación mejora de forma consistente.}
+  \label{fig:feature-engineering-cv}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.78\textwidth]{../outputs/figures/feature_engineering_repeated_cv.png}
+  \caption{Distribución de diferencias medias por repetición de cinco folds. La interacción XGBoost queda centrada cerca de cero; las splines logísticas son inferiores en las diez repeticiones.}
+  \label{fig:feature-engineering-repeated-cv}
 \end{figure}
 
 \begin{figure}[H]

@@ -3,3 +3,5 @@ modelo,dispositivo,preparación,roc_auc_cv_promedio,roc_auc_cv_desv
 XGBoost CUDA (baseline ordinal previo),CUDA GPU,Códigos originales como ordinales (pipeline previo),0.9165333333333333,0.06205565715982643
 XGBoost CUDA (one-hot somero),CUDA GPU,Categóricas one-hot,0.9138285714285714,0.05489389935543794
 XGBoost CUDA (one-hot regularizado),CUDA GPU,Categóricas one-hot,0.9125587301587302,0.06111018490330894
+XGBoost CUDA (experimental: one-hot + oldpeak×exang),CUDA GPU,One-hot + interacción oldpeak×exang (experimental),0.911831746031746,0.05637625060832848
+"Regresión logística (experimental: splines + one-hot, CPU)",CPU,One-hot + splines cuadráticos con 3 nudos (experimental),0.9038857142857142,0.042566293204933436
