@@ -27,8 +27,10 @@ Ejecute los notebooks en este orden:
 2. `02_eda_sesgos.ipynb`
 3. `03_resultados_finales.ipynb`
 4. `04_implementacion_tecnica_3_1_2.ipynb`
+5. `05_evaluacion_robusta_modelo.ipynb` (validación anidada; complementaria)
+6. `06_auditoria_errores_y_subgrupos.ipynb` (requiere salidas del notebook 04)
 
-La actividad 3.1.2 incluye un flujo de modelado con XGBoost CUDA y gráficos. En Windows con GPU NVIDIA, prepare el entorno con `uv sync` y abra el cuaderno con `uv run jupyter notebook notebooks/04_implementacion_tecnica_3_1_2.ipynb`. Los resultados, decisiones y límites se documentan en `docs/implementacion_tecnica_3_1_2.md` y en el informe maestro.
+La actividad 3.1.2 incluye un flujo de modelado con XGBoost CUDA y gráficos. En Windows con GPU NVIDIA, prepare el entorno con `uv sync` y abra el cuaderno con `uv run jupyter notebook notebooks/04_implementacion_tecnica_3_1_2.ipynb`. La evaluación robusta complementaria está en el notebook 05; las explicaciones de todos los errores y las métricas por subgrupo, en el notebook 06. La síntesis para revisión del proceso del modelo está en `docs/explicabilidad_y_auditoria_modelo.md`; el detalle técnico en `docs/implementacion_tecnica_3_1_2.md` y la memoria LaTeX específica en `docs/modelo.tex`.
 
 El modelo es experimental: no está validado clínicamente ni desplegado. Los scores no están calibrados y las cinco filas de ejemplo son sintéticas. El proyecto vigente no incluye operación posterior a diez semanas ni arquitectura productiva Cloud/Local/Híbrida.
 

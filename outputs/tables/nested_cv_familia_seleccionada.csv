@@ -1,0 +1,3 @@
+selected_model,outer_folds_selected
+LogisticRegression,14
+XGBClassifier,1

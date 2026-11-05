@@ -15,6 +15,6 @@ En test el modelo seleccionado obtuvo ROC-AUC 0,875, igual al baseline ordinal (
 
 ## Límites
 
-No existe despliegue clínico, integración hospitalaria, validación con población local, calibración de scores ni aprobación clínica documentada. El dataset es pequeño y académico; el resultado es un prototipo técnico y no se debe emplear para diagnóstico, tratamiento o priorización asistencial.
+No existe despliegue clínico, integración hospitalaria, validación con población local ni aprobación clínica documentada. Se realizó una evaluación experimental anidada con calibración sigmoide, pero no se ha aprobado ni liberado un modelo calibrado para uso operativo. El dataset es pequeño y académico; el resultado es un prototipo técnico y no se debe emplear para diagnóstico, tratamiento o priorización asistencial. El detalle está en `docs/evaluacion_modelo_robusta.md`.
 
-Las figuras, tablas, decisiones de limpieza, pasos de reproducción y automatización se documentan en `docs/implementacion_tecnica_3_1_2.md` y en la sección de modelado del informe maestro.
+Las figuras, tablas, decisiones de limpieza, pasos de reproducción y automatización se documentan en `docs/implementacion_tecnica_3_1_2.md` y en la sección de modelado del informe maestro. La evaluación robusta complementaria se detalla en `docs/evaluacion_modelo_robusta.md`; la explicación de variables, errores y subgrupos está sintetizada en `docs/explicabilidad_y_auditoria_modelo.md`.

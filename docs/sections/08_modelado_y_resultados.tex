@@ -116,6 +116,24 @@ Como explicación local se descompusieron un falso negativo (fila 5 del conjunto
   \label{fig:shap-casos-onehot}
 \end{figure}
 
+Se amplió el análisis a los 17 errores del test: 8 falsos negativos y 9 falsos positivos. En ambos grupos, \texttt{cp}, \texttt{ca} y \texttt{thal} tienen las mayores contribuciones SHAP absolutas medias. Para los falsos negativos, el SHAP firmado medio de \texttt{cp} fue $-0,565$ log-odds; entre falsos positivos, las mayores contribuciones firmadas medias fueron \texttt{cp} ($+0,558$) y \texttt{ca} ($+0,566$). Esas atribuciones explican el score del modelo en los errores observados, no su causa real.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.98\textwidth]{../outputs/figures/shap_mapa_errores_test.png}
+  \caption{Mapa SHAP de todos los errores del test one-hot; azul empuja hacia target=0 y rojo hacia target=1.}
+  \label{fig:shap-todos-errores}
+\end{figure}
+
+Como revisión descriptiva de cobertura, se midieron recall y especificidad por código de \texttt{sex} y rango etario en la misma partición. Para \texttt{sex=0} (n=22), fueron 0,813 y 0,833; para \texttt{sex=1} (n=54), 0,800 y 0,724. Los intervalos Wilson son amplios y se solapan. Los grupos etarios menores de 40 y de 70 o más tienen tres casos cada uno; sus tasas no permiten comparaciones. No se concluye presencia ni ausencia de sesgo.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.95\textwidth]{../outputs/figures/metricas_test_por_subgrupo.png}
+  \caption{Recall y especificidad por subgrupo en el test, con intervalos Wilson del 95\% y tamaño/conteo de clases. Los grupos pequeños son inestables.}
+  \label{fig:metricas-error-subgrupo}
+\end{figure}
+
 El artefacto \texttt{outputs/models/heart\_disease\_pipeline.joblib} registra entrenamiento con XGBoost 3.2.0 y \texttt{cuda:0} en una NVIDIA GeForce RTX 4060 Laptop GPU. La automatización \texttt{src/automatizacion\_predicciones.py} procesa cinco filas sintéticas de ejemplo; sus scores no están calibrados y no son probabilidades clínicas. El modelo no está desplegado, no se evaluó en datos locales chilenos y no se autoriza para diagnóstico, tratamiento o priorización asistencial.
 
-Los gráficos, tablas, entorno \texttt{uv} y pasos de ejecución se describen en \texttt{docs/implementacion\_tecnica\_3\_1\_2.md}. La guía solicita además guardar el notebook en Google Drive; este repositorio sólo acredita la copia local, por lo que no afirma que ese requisito externo se haya completado.
+El análisis reproducible está en el notebook local de auditoría de errores y subgrupos; los gráficos, tablas, entorno \texttt{uv} y pasos de ejecución se describen en la documentación técnica. La guía solicita además guardar el notebook en Google Drive; este repositorio sólo acredita la copia local, por lo que no afirma que ese requisito externo se haya completado.
