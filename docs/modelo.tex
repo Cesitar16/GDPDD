@@ -211,8 +211,66 @@ Para explicar el modelo con mayor accuracy (baseline ordinal, 60/76) se descompu
 
 Las magnitudes SHAP dependen del modelo y de la muestra explicada: resumen cómo cada artefacto distribuye sus márgenes, no causalidad, importancia clínica ni equidad. El resumen global usa los 302 registros observados; la prueba de 76 se conserva para las métricas predictivas y los ejemplos locales.
 
+\subsection{Todos los errores y análisis por subgrupo}
+Se extendió la explicación local a los 17 errores del test one-hot (8 falsos negativos y 9 falsos positivos), sin volver a entrenar ni cambiar los 76 casos de prueba. Entre ambos tipos de error, \texttt{cp}, \texttt{ca} y \texttt{thal} tienen las mayores contribuciones absolutas medias. Para los falsos negativos, la contribución firmada media de \texttt{cp} fue $-0,565$ y la de \texttt{thalach} $-0,514$ log-odds; para los falsos positivos, \texttt{cp} fue $+0,558$ y \texttt{ca} $+0,566$. SHAP indica la dirección del score calculado en estos registros, no la causa del desenlace.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.98\textwidth]{../outputs/figures/shap_mapa_errores_test.png}
+  \caption{Contribuciones SHAP de todas las variables en cada error del test. Cada fila es un caso; los IDs son índices técnicos del conjunto deduplicado.}
+  \label{fig:shap-mapa-errores}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.9\textwidth]{../outputs/figures/shap_resumen_errores_test.png}
+  \caption{Media de contribución absoluta para las variables más influyentes entre falsos positivos y negativos (9 y 8 casos).}
+  \label{fig:shap-resumen-errores}
+\end{figure}
+
+En la prueba, el código \texttt{sex=0} reúne 22 casos (recall $0,813$, especificidad $0,833$) y \texttt{sex=1}, 54 (recall $0,800$, especificidad $0,724$). Los intervalos Wilson del 95\% son amplios y se solapan. En los grupos etarios de 60--69 años (n=25), recall fue $0,500$ y especificidad $0,824$; en 50--59 (n=29), $0,778$ y $0,727$. Los grupos menores de 40 y de 70 o más tienen sólo tres casos cada uno y no permiten inferencias. La bandera de soporte bajo se activa si el grupo tiene menos de 10 filas o menos de cinco casos en cualquiera de las clases.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.95\textwidth]{../outputs/figures/metricas_test_por_subgrupo.png}
+  \caption{Recall y especificidad por códigos de sexo y rangos etarios, con tamaños y conteos de clase en las etiquetas e intervalos Wilson del 95\%. Los grupos pequeños no sustentan comparaciones concluyentes.}
+  \label{fig:metricas-subgrupos}
+\end{figure}
+
+El dataset deduplicado tiene 138 etiquetas 0 y 164 etiquetas 1, sin un desbalance global fuerte. La distinta representación por código de sexo y los tamaños reducidos siguen siendo riesgos de cobertura. Estas métricas de una sola partición no prueban ni descartan sesgo; no se realiza una afirmación de equidad. El análisis es reproducible con el notebook 06 de auditoría de errores y subgrupos; sus tablas están en \texttt{outputs/tables/}.
+
+\section{Evaluación anidada, calibración y umbrales}
+Como análisis complementario se ejecutó validación cruzada estratificada anidada, con tres repeticiones de cinco folds externos y tres folds internos. En cada fold externo, la familia y los hiperparámetros se seleccionaron por ROC-AUC interno. La calibración sigmoide y la selección de umbrales se ajustaron dentro del entrenamiento externo; el fold externo sólo se utilizó para evaluar. Este diseño reduce el optimismo al separar selección y evaluación, aunque las tres repeticiones comparten registros y no son muestras independientes.
+
+El ROC-AUC externo fue 0,9112 (desviación 0,0104 entre las tres medias por repetición), tanto antes como después de la calibración. Brier bajó de 0,1197 a 0,1169 y log-loss de 0,3914 a 0,3745, mejoras modestas en la muestra evaluada. Con umbral 0,5 calibrado, balanced accuracy fue 0,8366, recall de clase 1 fue 0,8739 y especificidad de clase 0 fue 0,7993. El umbral que optimizó balanced accuracy dentro del entrenamiento promedió 0,5330 y obtuvo 0,8319 en los folds externos; el umbral que optimizó F1 promedió 0,4163, alcanzó recall 0,8941 pero redujo especificidad a 0,7557 y balanced accuracy a 0,8249. Ningún umbral alternativo mejoró consistentemente el balance externo. No se recomienda un punto de operación clínica.
+
+La regresión logística fue seleccionada en 14 de los 15 folds externos y XGBoost en uno. Esto justifica incluir logística en futuras evaluaciones si se permite CPU, pero no demuestra superioridad definitiva ni reemplaza el artefacto XGBoost CUDA que el proyecto conserva por su requisito de implementación.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.9\textwidth]{../outputs/figures/nested_cv_roc_auc_repeticiones.png}
+  \caption{ROC-AUC por repetición externa en la evaluación anidada. La calibración sigmoide no cambia el orden de scores.}
+  \label{fig:nested-auc}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.9\textwidth]{../outputs/figures/nested_cv_calibracion.png}
+  \caption{Curvas de calibración agregadas sobre predicciones externas; Brier y log-loss resumen el error probabilístico.}
+  \label{fig:nested-calibracion}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.9\textwidth]{../outputs/figures/nested_cv_umbral.png}
+  \caption{Umbrales seleccionados dentro de entrenamiento externo. Su dispersión no determina un umbral clínico.}
+  \label{fig:nested-umbrales}
+\end{figure}
+
+La ficha del proveedor Kaggle declara $0$ como sin enfermedad y $1$ como enfermedad; se utiliza esa definición para orientar métricas por clase, pero no se validó clínicamente ni se trazaron los registros a UCI. No hay cohorte externa independiente, autorizada y compatible en el repositorio. Por ello, los resultados son internos y no miden desempeño esperado en una población clínica. El notebook reproducible, la auditoría de fuente y las tablas se describen en \texttt{docs/evaluacion\_modelo\_robusta.md}.
+
 \section{Interpretación, limitaciones y uso}
-Los valores son resultados experimentales de un conjunto académico con 302 observaciones únicas. La copia de datos contiene duplicación extensa, hay diferencias de dominio pendientes de aclarar, no se conoce población de referencia ni existe validación externa. El ROC-AUC de prueba de 0,875 y las demás métricas describen sólo esta partición; no constituyen desempeño clínico esperado. Los scores de clase 1 no están calibrados como probabilidades clínicas.
+Los valores son resultados experimentales de un conjunto académico con 302 observaciones únicas. La copia de datos contiene duplicación extensa, hay diferencias de dominio pendientes de aclarar y no se conoce población de referencia. El ROC-AUC de prueba de 0,875 y las demás métricas describen una partición; la evaluación anidada ofrece una estimación interna adicional. Ninguna constituye desempeño clínico esperado. La calibración sigmoide se evaluó experimentalmente, pero no se liberó como score clínico ni se validó externamente.
 
 Se incluyen atribuciones TreeSHAP globales y locales para explicar este artefacto XGBoost; éstas describen la lógica del modelo y no prueban causalidad, equidad ni importancia clínica. La auditoría de desempeño por subgrupos sigue siendo insuficiente. No hay datos hospitalarios, aprobación institucional, revisión clínica, servicio/API, despliegue productivo ni monitoreo. La inferencia batch local está demostrada sólo con cinco casos sintéticos y no modifica ni reentrena el artefacto.
 
