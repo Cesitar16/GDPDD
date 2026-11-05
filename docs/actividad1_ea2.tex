@@ -9,6 +9,7 @@
 \rhead{EA2}
 
 \begin{document}
+\begin{center}\fbox{\parbox{0.92\textwidth}{\textbf{Documento histórico de la entrega EA2.} Los requisitos aquí descritos son propuestas de aquella entrega, no funciones implementadas. El estado actual del repositorio y la línea base de diez semanas están en el informe maestro actualizado.}}\end{center}
 \hypersetup{pageanchor=false}
 \input{sections/00_portada}
 \hypersetup{pageanchor=true}
@@ -52,7 +53,7 @@ La secuencia de trabajo de la guía es: reunirse con el grupo, tener el enunciad
 
 El caso supone un hospital público que obtiene datos en controles cardiovasculares preventivos, pero carece de una solución analítica que los convierta sistemáticamente en información sobre factores asociados a enfermedad cardíaca y apoyo para priorizar evaluaciones preventivas. La decisión que se busca mejorar es \emph{qué pacientes revisar primero y qué hallazgos explorar}, siempre a criterio del profesional de salud. El sistema propuesto no diagnostica ni asigna o niega atención de forma automática.
 
-El archivo académico \texttt{heart.csv} contiene 1.025 filas y 14 variables. El informe EVA1 documenta 723 filas duplicadas exactas y 302 registros únicos. Es evidencia útil para descubrir problemas de calidad y diseñar un prototipo, pero no representa por sí sola la población del hospital ni permite declarar un modelo listo para uso clínico. El volumen operativo de 10.000 registros iniciales y 5.000 nuevos o actualizados durante el primer año es un supuesto de dimensionamiento, distinto de los datos disponibles.
+El archivo académico \texttt{heart.csv} contiene 1.025 filas y 14 variables. La auditoría encuentra 723 duplicados exactos y 302 registros únicos. Es evidencia para un prototipo académico; no representa por sí sola una población hospitalaria ni permite declarar un modelo listo para uso clínico. No hay datos operacionales hospitalarios en el repositorio.
 
 \subsection{Stakeholders propuestos}
 

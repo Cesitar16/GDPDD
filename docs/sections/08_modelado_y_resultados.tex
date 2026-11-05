@@ -1,0 +1,103 @@
+\section{Modelado experimental y resultados}
+\label{sec:modelado-resultados}
+
+La actividad técnica añade un prototipo local reproducible en \texttt{notebooks/04\_implementacion\_tecnica\_3\_1\_2.ipynb}. Se entrena sobre los 302 registros únicos, con partición estratificada de 226 observaciones para entrenamiento y 76 para prueba (semilla 42). Los modelos nuevos utilizan codificación one-hot para predictores categóricos; la regresión logística aplica \texttt{RobustScaler} a variables cuantitativas. El preprocesamiento se ajusta dentro del pipeline de validación cruzada para evitar fuga de información.
+
+Se compararon cinco folds sobre el conjunto de entrenamiento. La regresión logística de referencia obtuvo ROC-AUC medio de 0,919 $\pm$ 0,052; XGBoost one-hot somero obtuvo 0,914 $\pm$ 0,055; XGBoost one-hot regularizado 0,913 $\pm$ 0,061; y el baseline XGBoost ordinal 0,917 $\pm$ 0,062. Se eligió el XGBoost one-hot somero como artefacto final para cumplir el requisito de entrenamiento local con GPU, aunque no tuvo el mayor promedio de validación cruzada.
+
+En la prueba retenida, el baseline ordinal obtuvo accuracy 0,789, precisión de clase positiva 0,791, recall 0,829, F1 0,810 y ROC-AUC 0,875. El XGBoost one-hot seleccionado obtuvo 0,776, 0,786, 0,805, 0,795 y 0,875, respectivamente. Las matrices de confusión muestran exactamente 60/76 aciertos para el baseline y 59/76 para one-hot: ambos clasificaron correctamente los mismos 26 casos de clase 0 y cometieron 9 falsos positivos; el baseline acertó un caso positivo más (34 vs. 33) y tuvo un falso negativo menos (7 vs. 8). Por eso su accuracy fue 1,32 puntos porcentuales mayor en esta prueba. La diferencia depende de un solo caso; no demuestra superioridad estable. Las curvas ROC tienen el mismo AUC (0,875), por lo que la capacidad global de ordenar los scores fue igual en la prueba. El one-hot sigue siendo una representación metodológicamente más apropiada para códigos categóricos nominales; que el ordinal gane por un acierto no justifica imponer orden numérico ni descartar el tratamiento correcto. Con sólo 76 casos no se afirma diferencia estadística ni superioridad predictiva.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.88\textwidth]{../outputs/figures/distribucion_clases_antes_despues_deduplicar.png}
+  \caption{Distribución de clases antes y después de deduplicar. El cambio de proporciones respalda documentar el tratamiento de duplicados antes de particionar.}
+  \label{fig:clases-deduplicacion}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.9\textwidth]{../outputs/figures/matriz_correlacion_continuas_target.png}
+  \caption{Correlación Pearson de variables cuantitativas con \texttt{target}. Es una asociación descriptiva, no evidencia causal.}
+  \label{fig:correlacion-modelado}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.9\textwidth]{../outputs/figures/asociacion_niveles_categoricos_target.png}
+  \caption{Asociación descriptiva entre niveles categóricos y \texttt{target}; los tamaños de muestra varían entre niveles.}
+  \label{fig:asociacion-categorica}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.9\textwidth]{../outputs/figures/diagramas_caja_variables_cuantitativas.png}
+  \caption{Distribuciones y valores candidatos a revisión por la regla de 1,5 IQR. Los extremos se conservaron porque no se confirmaron como errores.}
+  \label{fig:outliers-modelado}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.88\textwidth]{../outputs/figures/comparacion_roc_auc_validacion_cruzada.png}
+  \caption{ROC-AUC medio y dispersión en validación cruzada para pipelines evaluados sobre los mismos folds.}
+  \label{fig:roc-cv}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.9\textwidth]{../outputs/figures/comparacion_metricas_test_antes_despues.png}
+  \caption{Métricas del baseline ordinal y del modelo one-hot en la misma partición de prueba. No se observa mejora general del modelo nuevo.}
+  \label{fig:metricas-test-modelos}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.92\textwidth]{../outputs/figures/matrices_confusion_test_comparacion.png}
+  \caption{Conteos de clase real y predicción para los mismos 76 registros. La diferencia de accuracy corresponde a un único caso positivo adicional acertado por el baseline ordinal.}
+  \label{fig:matrices-confusion-test}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.76\textwidth]{../outputs/figures/curvas_roc_test_comparacion.png}
+  \caption{Curvas ROC sobre la prueba retenida. El área bajo ambas curvas es 0,875; el gráfico resume discriminación a distintos umbrales, no exactitud ni calibración.}
+  \label{fig:roc-test-comparacion}
+\end{figure}
+
+\subsection{Explicabilidad comparativa de los XGBoost}
+La matriz de confusión informa cuántos casos acierta o falla, pero no atribuye esos resultados a predictores. Se calcularon contribuciones TreeSHAP nativas de XGBoost (\texttt{pred\_contribs}) para el pipeline one-hot seleccionado y para el baseline ordinal que obtuvo más accuracy. En el primero se agruparon los indicadores one-hot por variable fuente; en el ordinal se explicaron las 13 columnas entregadas al árbol. La suma de contribuciones más el valor base reconstruye el margen log-odds; esta propiedad se verificó numéricamente. Las atribuciones describen el comportamiento del modelo, no causas clínicas \parencite{xgboost-pred-contribs}.
+
+Ambos modelos destacan las mismas tres variables en promedio absoluto sobre las 302 observaciones únicas: \texttt{cp} (one-hot 0,971; ordinal 0,872 log-odds), \texttt{ca} (0,855; 0,643) y \texttt{thal} (0,599; 0,479). Después aparecen \texttt{oldpeak} (0,407; 0,362), \texttt{sex} (0,395; 0,248) y \texttt{thalach} (0,346; 0,210). Ambos asignan cero a \texttt{fbs} en estos registros; esto describe los artefactos, no la relevancia clínica de esa variable. La magnitud no es una unidad de probabilidad ni importancia causal. Los códigos categóricos del baseline se modelan como enteros ordenados; esa suposición puede influir en las atribuciones y es una razón para preferir one-hot al representar categorías nominales.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.90\textwidth]{../outputs/figures/shap_importancia_comparacion.png}
+  \caption{Media de contribuciones SHAP absolutas por variable en ambos modelos, sobre los 302 registros únicos.}
+  \label{fig:shap-global}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.98\textwidth]{../outputs/figures/shap_relacion_valor_atribucion.png}
+  \caption{Dirección y dispersión de las atribuciones en los datos observados. En variables categóricas cada boxplot corresponde a un nivel separado; su eje no representa una escala ordinal.}
+  \label{fig:shap-direccion}
+\end{figure}
+
+Como explicación local se descompusieron un falso negativo (fila 5 del conjunto único: real 1, predicho 0) y un falso positivo (fila 33: real 0, predicho 1). El baseline ordinal, que obtuvo 60/76 aciertos, dio scores de clase 1 de 0,388 y 0,852; el one-hot, que obtuvo 59/76, dio 0,300 y 0,848 en esos mismos casos. Las etiquetas de fila son índices técnicos, no identificadores de pacientes. Las barras muestran cómo cada predictor empujó el margen de esos casos hacia una clase; no demuestran por qué ocurrió el resultado real.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.98\textwidth]{../outputs/figures/shap_explicacion_casos_error_ordinal.png}
+  \caption{Descomposición TreeSHAP de dos errores del baseline ordinal, el XGBoost con mayor accuracy de prueba. Rojo empuja hacia clase 1 y azul hacia clase 0. Scores no calibrados.}
+  \label{fig:shap-casos}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.98\textwidth]{../outputs/figures/shap_explicacion_casos_error.png}
+  \caption{Los mismos casos explicados con el pipeline XGBoost one-hot seleccionado.}
+  \label{fig:shap-casos-onehot}
+\end{figure}
+
+El artefacto \texttt{outputs/models/heart\_disease\_pipeline.joblib} registra entrenamiento con XGBoost 3.2.0 y \texttt{cuda:0} en una NVIDIA GeForce RTX 4060 Laptop GPU. La automatización \texttt{src/automatizacion\_predicciones.py} procesa cinco filas sintéticas de ejemplo; sus scores no están calibrados y no son probabilidades clínicas. El modelo no está desplegado, no se evaluó en datos locales chilenos y no se autoriza para diagnóstico, tratamiento o priorización asistencial.
+
+Los gráficos, tablas, entorno \texttt{uv} y pasos de ejecución se describen en \texttt{docs/implementacion\_tecnica\_3\_1\_2.md}. La guía solicita además guardar el notebook en Google Drive; este repositorio sólo acredita la copia local, por lo que no afirma que ese requisito externo se haya completado.
