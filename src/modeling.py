@@ -21,7 +21,12 @@ from sklearn.metrics import (
 )
 from sklearn.model_selection import StratifiedKFold, cross_val_score, train_test_split
 from sklearn.pipeline import Pipeline
-from sklearn.preprocessing import OneHotEncoder, RobustScaler
+from sklearn.preprocessing import (
+    FunctionTransformer,
+    OneHotEncoder,
+    RobustScaler,
+    SplineTransformer,
+)
 from xgboost import XGBClassifier
 
 TARGET = "target"
@@ -50,11 +55,57 @@ def _logistic_preprocessor() -> ColumnTransformer:
     )
 
 
+def _logistic_spline_preprocessor() -> ColumnTransformer:
+    """Add low-complexity spline bases to continuous inputs for logistic regression."""
+    numeric = Pipeline([
+        (
+            "splines",
+            SplineTransformer(
+                n_knots=3,
+                degree=2,
+                knots="quantile",
+                extrapolation="linear",
+            ),
+        ),
+        ("scaler", RobustScaler()),
+    ])
+    return ColumnTransformer(
+        [
+            ("numeric_splines", numeric, NUMERIC_FEATURES),
+            ("categorical", _categorical_encoder(), CATEGORICAL_FEATURES),
+        ],
+        remainder="drop",
+    )
+
+
 def _xgb_preprocessor() -> ColumnTransformer:
     return ColumnTransformer(
         [
             ("numeric", "passthrough", NUMERIC_FEATURES),
             ("categorical", _categorical_encoder(), CATEGORICAL_FEATURES),
+        ],
+        remainder="drop",
+    )
+
+
+def _exercise_interaction(values: pd.DataFrame):
+    """Return a compact interaction between ST depression and exercise angina."""
+    oldpeak = values["oldpeak"].to_numpy(dtype=float)
+    exang = values["exang"].to_numpy(dtype=float)
+    return (oldpeak * exang).reshape(-1, 1)
+
+
+def _xgb_experimental_interaction_preprocessor() -> ColumnTransformer:
+    """Typed XGBoost preprocessing plus a single exercise-related interaction."""
+    return ColumnTransformer(
+        [
+            ("numeric", "passthrough", NUMERIC_FEATURES),
+            ("categorical", _categorical_encoder(), CATEGORICAL_FEATURES),
+            (
+                "exercise_interaction",
+                FunctionTransformer(_exercise_interaction, validate=False),
+                ["oldpeak", "exang"],
+            ),
         ],
         remainder="drop",
     )
@@ -80,10 +131,14 @@ def _xgb_model(*, shallow: bool = False) -> XGBClassifier:
 
 
 def build_candidates() -> dict[str, Pipeline]:
-    """Build old ordinal baseline and typed pipelines; final choice is CUDA one-hot only."""
+    """Build baseline pipelines and a non-selectable feature-engineering experiment."""
     return {
         "Regresión logística (RobustScaler + one-hot, CPU)": Pipeline([
             ("preprocessor", _logistic_preprocessor()),
+            ("model", LogisticRegression(max_iter=2000, random_state=RANDOM_STATE)),
+        ]),
+        "Regresión logística (experimental: splines + one-hot, CPU)": Pipeline([
+            ("preprocessor", _logistic_spline_preprocessor()),
             ("model", LogisticRegression(max_iter=2000, random_state=RANDOM_STATE)),
         ]),
         "XGBoost CUDA (baseline ordinal previo)": Pipeline([
@@ -96,6 +151,10 @@ def build_candidates() -> dict[str, Pipeline]:
         "XGBoost CUDA (one-hot regularizado)": Pipeline([
             ("preprocessor", _xgb_preprocessor()),
             ("model", _xgb_model(shallow=False)),
+        ]),
+        "XGBoost CUDA (experimental: one-hot + oldpeak×exang)": Pipeline([
+            ("preprocessor", _xgb_experimental_interaction_preprocessor()),
+            ("model", _xgb_model(shallow=True)),
         ]),
     }
 
@@ -120,15 +179,21 @@ def train_and_evaluate(data: pd.DataFrame) -> dict[str, Any]:
     candidates = build_candidates()
     rows = []
     fitted = {}
+    fold_scores = {}
     for name, pipeline in candidates.items():
         scores = cross_val_score(
             pipeline, X_train, y_train, cv=cv, scoring="roc_auc", n_jobs=None
         )
+        fold_scores[name] = scores
         pipeline.fit(X_train, y_train)
         if "baseline ordinal previo" in name:
             encoding = "Códigos originales como ordinales (pipeline previo)"
+        elif "experimental: splines" in name:
+            encoding = "One-hot + splines cuadráticos con 3 nudos (experimental)"
         elif "logística" in name:
             encoding = "One-hot + RobustScaler numérico"
+        elif "experimental" in name:
+            encoding = "One-hot + interacción oldpeak×exang (experimental)"
         elif "one-hot" in name:
             encoding = "Categóricas one-hot"
         else:
@@ -181,6 +246,7 @@ def train_and_evaluate(data: pd.DataFrame) -> dict[str, Any]:
         "predictions": predictions,
         "probabilities": probabilities,
         "comparison": comparison,
+        "cv_fold_scores": pd.DataFrame(fold_scores, index=range(1, cv.n_splits + 1)),
         "selected_name": selected_name,
         "model": selected,
         "metrics": metrics,

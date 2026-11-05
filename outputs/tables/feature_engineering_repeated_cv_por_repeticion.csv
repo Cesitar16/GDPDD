@@ -1,0 +1,21 @@
+experimento,repeticion,delta_roc_auc
+XGBoost interacción oldpeak × exang,1,-0.0019968253968253745
+XGBoost interacción oldpeak × exang,2,-0.0023206349206349453
+XGBoost interacción oldpeak × exang,3,-0.0011523809523809713
+XGBoost interacción oldpeak × exang,4,0.005492063492063481
+XGBoost interacción oldpeak × exang,5,-0.002000000000000024
+XGBoost interacción oldpeak × exang,6,0.001200000000000001
+XGBoost interacción oldpeak × exang,7,-0.0019111111111111301
+XGBoost interacción oldpeak × exang,8,0.0039714285714285815
+XGBoost interacción oldpeak × exang,9,0.0007619047619047414
+XGBoost interacción oldpeak × exang,10,-0.00040000000000000034
+Logística splines,1,-0.014892063492063535
+Logística splines,2,-0.026063492063492056
+Logística splines,3,-0.024425396825396815
+Logística splines,4,-0.012676190476190419
+Logística splines,5,-0.01709841269841268
+Logística splines,6,-0.025244444444444424
+Logística splines,7,-0.022206349206349184
+Logística splines,8,-0.022628571428571352
+Logística splines,9,-0.006679365079365085
+Logística splines,10,-0.00789206349206346
