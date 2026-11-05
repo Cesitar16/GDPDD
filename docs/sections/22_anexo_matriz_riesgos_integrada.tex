@@ -1,71 +1,27 @@
-\section{Anexo de matriz de riesgos integrada}
+\section{Anexo de riesgos del alcance vigente}
 
-La matriz consolidada identifica riesgos técnicos, legales, financieros, de proyecto y éticos asociados a los entregables D7--D14. La escala empleada es de 1 a 3 para probabilidad e impacto; la prioridad corresponde al producto de ambas dimensiones \parencite{vicente-riesgos}.
+Los riesgos se refieren al prototipo académico de diez semanas y a sus límites de datos y evaluación. La escala cualitativa es orientativa; no sustituye la aceptación de riesgos institucional para un eventual uso asistencial.
 
 \begin{table}[H]
   \centering
-  \caption{Matriz de riesgos priorizada: R01--R05}\label{tab:anexo-riesgos-integrados-a}
-  \scriptsize
-  \begin{tabularx}{\textwidth}{@{}p{0.8cm}p{1.9cm}p{1.6cm}XX@{}}
+  \caption{Riesgos principales del prototipo y controles}
+  \label{tab:riesgos-alcance-vigente}
+  \small
+  \begin{tabularx}{\textwidth}{@{}p{0.8cm}p{2.8cm}X X@{}}
     \toprule
-    ID & Categoría & P$\times$I & Causa y consecuencia & Mitigación y responsable \\
+    ID & Riesgo & Consecuencia posible & Control o límite \\
     \midrule
-    R01 & Proyecto / financiero & 2$\times$3 = 6 (Crítico) & Mayor complejidad técnica incrementa horas de RRHH, que representan el 76,5\% del TCO Cloud vigente. & Validar horas en EDT/Gantt, registrar cambios de alcance y monitorear semanalmente. \textit{Fabián / Ignacio.} \\
-    R02 & Legal & 2$\times$3 = 6 (Crítico) & La aprobación para integrar datos de salud en GCP puede retrasar el cronograma de diez semanas. & Aprobación formal temprana y pseudonimización estricta antes de cargar datos. \textit{Vicente.} \\
-    R03 & Financiero & 3$\times$2 = 6 (Crítico) & La variación USD/CLP puede desviar el OPEX planificado. & Contingencia de 10\%, alertas de gasto y revisión mensual. \textit{Ignacio.} \\
-    R04 & Financiero & 2$\times$2 = 4 (Medio) & Egress, logs o servicios administrados no previstos pueden producir cobros adicionales. & Etiquetar costos, asignar presupuesto por servicio y aprobar activaciones. \textit{Ignacio.} \\
-    R05 & Técnico / proyecto & 1$\times$2 = 2 (Bajo) & Descalces de la ingesta batch pueden generar inconsistencia de datos al cierre de jornada. & Monitorear pipeline y verificar recuperación con RTO máximo de 8 horas. \textit{Lucas / Fabián.} \\
+    R01 & Dataset pequeño y procedencia académica & Baja generalización a población distinta & No afirmar validez externa; exigir validación local para cualquier uso posterior \\
+    R02 & Duplicados exactos & Sobreponderación y fuga entre particiones & Deduplicar antes de dividir y preservar la fuente original \\
+    R03 & Dominios/codificaciones inconsistentes & Interpretación incorrecta de variables & Documentar discrepancias; no recodificar sin fuente verificable \\
+    R04 & Desbalance de cobertura por sexo/edad & Métricas globales ocultan errores en grupos pequeños & Reportar tamaños; no inferir equidad con subgrupos insuficientes \\
+    R05 & Scores sin calibración & Lectura errónea como probabilidad clínica & Etiquetar score como no calibrado; no usar para decisiones asistenciales \\
+    R06 & Sobreinterpretación de métricas & Afirmar mejora o utilidad clínica no demostrada & Informar que AUC test es 0,875 en ambos modelos y test N=76 \\
+    R07 & Uso indebido de predicciones sintéticas & Confusión con registros reales & Mantener ejemplos sintéticos identificados como tales \\
+    R08 & Automatización sin controles clínicos/institucionales & Daño si se conecta a un flujo asistencial sin validar & No desplegar ni integrar; mantener inferencia local demostrativa \\
+    R09 & Desviación del alcance/cronograma & Retraso del cierre de diez semanas & Gestionar cambios según EP3 y separar simulaciones 3.2.2 de evidencia de ejecución \\
     \bottomrule
   \end{tabularx}
 \end{table}
 
-\begin{table}[H]
-  \centering
-  \caption{Matriz de riesgos priorizada: R06--R10}\label{tab:anexo-riesgos-integrados-b}
-  \scriptsize
-  \begin{tabularx}{\textwidth}{@{}p{0.8cm}p{1.9cm}p{1.6cm}XX@{}}
-    \toprule
-    ID & Categoría & P$\times$I & Causa y consecuencia & Mitigación y responsable \\
-    \midrule
-    R06 & Financiero / legal & 2$\times$1 = 2 (Bajo) & El tratamiento tributario de servicios Cloud podría diferir del 19\% estimado. & Validar el tratamiento con administración institucional antes de contratar. \textit{Ignacio / Vicente.} \\
-    R07 & Técnico & 2$\times$3 = 6 (Crítico) & Si no se aprueba nube pura, la sincronización entre entorno local y GCP puede fallar. & Probar sincronización tempranamente y asignar un responsable técnico único. \textit{Lucas.} \\
-    R08 & Legal & 1$\times$3 = 3 (Medio) & Una brecha de seguridad podría exponer registros clínicos identificables. & Aplicar IAM de mínimo privilegio, Secret Manager y pseudonimización previa. \textit{Vicente.} \\
-    R09 & Técnico / ético & 2$\times$2 = 4 (Medio) & La deriva de datos puede degradar el desempeño durante los 36 meses de operación. & Realizar seis evaluaciones semestrales; reentrenar y publicar solo con validación y aprobación clínica. \textit{César / Lucas.} \\
-    R10 & Ético & 2$\times$3 = 6 (Crítico) & La cobertura del dataset académico deduplicado es desigual por sexo y limitada en edades extremas e intersecciones; además, su generalización a un hospital chileno es incierta. & Evaluar desempeño por subgrupos con N suficiente, validar localmente, monitorear deriva y mantener supervisión humana. SHAP apoya explicabilidad, no prueba equidad. \textit{César; riesgo residual por definir.} \\
-    \bottomrule
-  \end{tabularx}
-\end{table}
-
-\noindent\textit{Nota:} el informe adopta P$\times$I = 2$\times$3 = 6 (Crítico) como nivel propuesto/final de R10. El riesgo residual no está definido y no se infiere en esta integración.
-
-\subsection{Trazabilidad presupuestaria de mitigaciones del piloto}
-
-El \tabref{tab:anexo-costos-mitigacion} valoriza partes identificables del trabajo Cloud ya presupuestado en el \tabref{tab:fin-edt-horas-cloud} y el \tabref{tab:fin-operacion-horas-cloud}. Cada asignación de horas indicada abajo se utiliza una sola vez en esta tabla. Es una trazabilidad parcial de controles, no una estimación de pérdida esperada ni un presupuesto adicional: los importes \emph{ya están dentro} de los \$8.272.000 de RRHH Cloud y no se suman al TCO. Una misma medida puede reducir más de un riesgo, por lo que esos riesgos comparten fila. La aprobación institucional o legal y el riesgo residual no pueden comprarse ni darse por cerrados mediante esta valorización.
-
-\begin{table}[H]
-  \centering
-  \caption{Horas de mitigación identificables dentro del presupuesto Cloud}
-  \label{tab:anexo-costos-mitigacion}
-  \scriptsize
-  \begin{tabularx}{\textwidth}{@{}lX X r@{}}
-    \toprule
-    Riesgo & Control presupuestado & Horas y origen en EDT u operación & Costo incluido \\
-    \midrule
-    R01 & Seguimiento de alcance y TCO & 1.2--1.4: DS 4 h, SG 4 h, DO 4 h & \$192.000 \\
-    R02/R08 & Datos pseudonimizados, IAM y secretos & 2.4--2.5: SG 4 h; 5.1--5.2: SG 4 h, DO 16 h & \$384.000 \\
-    R03/R04 & Alertas y revisión de consumo GCP & 5.3--5.4: DO 4 h de sus 16 h & \$64.000 \\
-    R05 & Pruebas y control de ingesta batch & 2.1--2.3: DE 8 h de sus 24 h & \$112.000 \\
-    R09/R10 & Validación por subgrupos, deriva y revisión semestral & 4.1--4.2: DS 12 h, SG 4 h; 4.3--4.4: DS 4 h; operación: DS 72 h en seis ventanas & \$1.472.000 \\
-    \bottomrule
-  \end{tabularx}
-\end{table}
-
-La operación y los servicios también sostienen respaldos, restauración, monitoreo, control de acceso y continuidad; sus partidas completas figuran en la conciliación financiera y no se duplican aquí. La alternativa Híbrida requiere una prueba temprana de sincronización para R07, financiable con sus 280 h de Integración/DevOps, pero la fuente no distribuye esas horas por tarea; no se le asigna un costo puntual inventado. Asimismo, los \$55.800 de cómputo temporal Cloud para seis ventanas ya están incluidos en servicios GCP, no en las horas de la última fila.
-
-\subsection{Criterios de aceptación de riesgos}
-
-La matriz satisface los criterios definidos por su fuente: diferencia riesgos técnicos, legales, financieros y éticos; mantiene una escala consistente de probabilidad e impacto; y vincula cada riesgo con una mitigación y un responsable. Cloud/GCP es la arquitectura seleccionada para el piloto, condicionada a los gates éticos, legales, técnicos, de seguridad, de riesgos y de validación local. Los riesgos críticos R01, R02, R03, R07 y R10 deben revisarse en los gates correspondientes antes de avanzar al piloto o a una nueva versión del modelo. El riesgo residual de R10 permanece sin definir.
-
-\subsection{Trazabilidad financiera histórica}
-
-El TCO oficial Cloud para este informe es \$10.815.487 CLP a 36 meses, según la evaluación financiera D7--D11. El valor de \$11.866.338 presente en una versión previa de la matriz de riesgos se conserva únicamente como antecedente histórico de alineación; no es un valor vigente ni condiciona el presupuesto del piloto.
+El trabajo actual no afirma que estos riesgos estén resueltos para un producto clínico. Las mitigaciones describen controles de investigación y comunicación de límites. Se excluyen de esta matriz las estimaciones financieras, de continuidad Cloud y operación de la línea base anterior.

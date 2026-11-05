@@ -1,64 +1,38 @@
-# Línea base maestra de integración EVA1
+# Línea base maestra vigente — Heart Disease
 
-## 1. Proyecto y alcance
+## Alcance temporal y financiero
 
-- **Decisión vigente:** piloto institucional de apoyo a la prevención cardiovascular; no es diagnóstico autónomo ni reemplaza el juicio clínico.
-- **Fuente responsable:** Lucas (D1--D6), consolidada por el equipo.
-- **Estado:** validado documentalmente. **Decisión de equipo:** no para este alcance; sí para cualquier ampliación clínica.
+- Referencia vigente: `Informe_EP3_Cardiaco_CORREGIDO_Desarrollador_Full_Stack (1).pdf`.
+- Horizonte académico de diez semanas: 5 de octubre–13 de diciembre de 2026.
+- Presupuesto estimado: CLP 10.506.069, para prototipo de investigación y demostración; no es cotización ni gasto observado.
+- No se define presupuesto ni plan de operación posterior al cierre académico.
+- `Informe_Actividad_3_2_2_Monitoreo_Control_Heart_Disease.pdf` se conserva como ejercicio de monitoreo y control con simulaciones. No sustituye calendario/presupuesto EP3 ni demuestra ejecución material.
 
-## 2. Dataset
+## Estado actual del repositorio
 
-- **Evidencia observada:** `heart.csv` contiene 1.025 filas y 14 variables; 723 filas son duplicados exactos y la versión derivada contiene 302 registros únicos.
-- **Fuente responsable:** César; `data/raw/heart.csv`, `data/processed/heart_unique.csv` y EDA.
-- **Estado:** validado. El dataset es académico y no representa por sí mismo una población hospitalaria chilena.
+- Dataset `heart.csv`: 1.025 filas, 14 variables, 723 duplicados exactos y 302 registros únicos; sin nulos detectados en la auditoría.
+- Notebook `notebooks/04_implementacion_tecnica_3_1_2.ipynb`: preparación reproducible, EDA, comparación de candidatos, evaluación, cinco predicciones sintéticas y automatización batch.
+- Código de apoyo: `src/modeling.py`, `src/automatizacion_predicciones.py`; entorno fijado con `uv` en `pyproject.toml` y `uv.lock`.
+- Artefacto: `outputs/models/heart_disease_pipeline.joblib`, XGBoost one-hot entrenado en CUDA (`cuda:0`) en NVIDIA GeForce RTX 4060 Laptop GPU.
+- Resultados y gráficos: `outputs/figures/`, `outputs/tables/`; resumen y decisiones en `docs/implementacion_tecnica_3_1_2.md` y `docs/sections/08_modelado_y_resultados.tex`.
+- No hay producto clínico desplegado, conexión institucional, validación local, aprobación clínica ni operación posterior documentada.
 
-## 3. Arquitecturas
+## Evaluación del modelo
 
-- **Cloud (GCP):** Cloud Run, Cloud SQL, Cloud Storage, IAM y Secret Manager como escenario técnico de referencia.
-- **Local:** datos, procesamiento e inferencia en infraestructura hospitalaria.
-- **Híbrida:** identidad y registro maestro locales; analítica controlada en GCP.
-- **Decisión de cierre:** Cloud/GCP es la arquitectura integral recomendada para el piloto; Híbrida es contingencia si Cloud no supera la aprobación legal, institucional o de gobierno de datos; Local es técnicamente viable, pero no recomendado por mayor TCO y carga operacional.
-- **Estado:** seleccionado de forma condicionada. **Condiciones:** CA-E01 a CA-E10, autorización y gobierno de datos aplicables, controles técnicos y de seguridad, aceptación de riesgos y validación local.
+- Partición estratificada: 226 train / 76 test, semilla 42; CV de cinco folds.
+- ROC-AUC CV: logística CPU 0,919 ± 0,052; XGBoost ordinal baseline 0,917 ± 0,062; XGBoost one-hot somero 0,914 ± 0,055; XGBoost one-hot regularizado 0,913 ± 0,061.
+- Test baseline ordinal vs XGBoost one-hot seleccionado: accuracy 0,789 vs 0,776; precisión clase 1 0,791 vs 0,786; recall 0,829 vs 0,805; F1 0,810 vs 0,795; ROC-AUC 0,875 vs 0,875.
+- La codificación categórica one-hot es metodológicamente preferible para las variables tratadas, pero no mejoró las métricas de esta partición. El candidato GPU se conserva por el requisito académico de ejecución en GPU, no por superioridad predictiva.
+- El conjunto pequeño, las diferencias de dominio y la falta de validación local impiden conclusiones clínicas o de generalización. Scores de ejemplo no calibrados; filas de ejemplo sintéticas.
 
-## 4. Herramientas
+## Decisiones de datos
 
-- Python, Pandas, NumPy, scikit-learn, PostgreSQL, SHAP, FastAPI, Streamlit, Docker y Git.
-- **Estado:** decisión de diseño vigente. SHAP se utiliza para explicabilidad y revisión humana, no como demostración de equidad.
+- Se deduplicó antes de particionar; no se detectaron combinaciones repetidas de predictores con etiquetas contradictorias.
+- Sin nulos, no se imputó.
+- Se preservaron categorías discrepantes y valores extremos no confirmados como errores.
+- RobustScaler se aplica sólo a variables cuantitativas del comparador logístico; árboles no escalan cuantitativas. Transformaciones se ajustan dentro de pipeline/fold.
+- Correlaciones y asociaciones categóricas son descriptivas, no causales.
 
-## 5. Metodología
+## Fuentes de verdad y documentos históricos
 
-- PMBOK para gobierno y documentación, Scrum para desarrollo en cinco sprints del piloto de 10 semanas y CRISP-DM para el trabajo técnico de datos; horizonte de operación/evaluación de 36 meses.
-- **Estado:** supuesto de planificación vigente; el piloto no autoriza publicación automática de un modelo.
-
-## 6. Supuestos de planificación
-
-- 20/5, 25/6 y 30/8 usuarios/concurrencia en años 1--3; batch diario; seis ventanas semestrales; 99% operacional, RTO 8 h y RPO 24 h.
-- **Volumen:** 10.000 registros históricos iniciales y 5.000 nuevos/actualizados en año 1 con 10% anual son supuestos de dimensionamiento, no resultados del EDA.
-
-## 7. Finanzas
-
-- **Resultado vigente de Ignacio:** TCO 36 meses Cloud CLP 10.815.487, Local CLP 16.893.013 e Híbrida CLP 15.696.956; montos de planificación con contingencia de 10%.
-- **Decisión de cierre:** Cloud/GCP es la alternativa integral recomendada para el piloto. El TCO oficial Cloud es CLP 10.815.487 a 36 meses.
-- **Trazabilidad histórica:** CLP 11.866.338 corresponde a una versión previa de Riesgos y no es un valor vigente. Las cotizaciones y el sizing final se confirman antes de contratación, sin alterar la línea base TCO del informe.
-
-## 8. Ética
-
-- **Estado:** análisis documental y criterios CA-E01 a CA-E10 completados.
-- **Pendiente:** validación local, desempeño por subgrupos cuando exista modelo y N suficiente, aprobación clínica y monitoreo de deriva.
-
-## 9. Riesgos
-
-- R10 se basa en evidencia real de cobertura y generalización, no en los 10.000 registros de planificación. **Nivel adoptado en el informe:** P×I = 2×3 = 6 (Crítico).
-- **Pendiente:** el riesgo residual no está definido y no se infiere en este informe.
-
-## 10. EDT y Gantt
-
-- Fabián usa Cloud/GCP como arquitectura seleccionada del piloto. Su ejecución está condicionada a los gates de cierre definidos.
-- La cobertura de CA-E01--CA-E10 está documentada en `outputs/tables/cobertura_criterios_eticos_edt.csv`.
-
-## 11. Decisiones pendientes
-
-1. Autorización/análisis legal y gobierno de datos aplicables, sin declarar cumplimiento legal definitivo.
-2. Cumplimiento verificable de CA-E01 a CA-E10, controles técnicos, de seguridad y aceptación de riesgos.
-3. Cotizaciones y sizing final antes de contratación.
-4. Validación clínica y local antes de cualquier uso; los umbrales clínicos no se inventan en este informe.
+Los informes EP3 corregido y Actividad 3.2.2 son las referencias recibidas; el primero fija el alcance y costo de diez semanas. Los modelos financieros, alternativas de arquitectura institucional y compromisos de operación anteriores se consideran retirados. Los entregables EA1/EA2 se conservan como antecedentes académicos; sus propuestas no son evidencia de implementación.

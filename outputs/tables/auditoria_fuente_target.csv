@@ -1,0 +1,20 @@
+elemento,valor,interpretacion
+archivo_local,C:\Users\cesar\OneDrive\Desktop\DuocUC\3erYear\GestionDeProyectoDeDatos\eva1\data\raw\heart.csv,Fuente utilizada por el proyecto.
+sha256_local,ddb2996b2f4db2e00aad13f4518200179ff69f79093838e3c21ffa672ebec0f1,Huella del archivo auditado.
+filas_locales,1025,Número de filas antes de deduplicar.
+duplicados_exactos,723,Copias exactas sobre las 14 columnas.
+filas_unicas,302,Observaciones distintas tras deduplicación exacta.
+target_conteos_original,"{""0"": 499, ""1"": 526}",Conteos por código de etiqueta.
+target_conteos_unicos,"{""0"": 138, ""1"": 164}",Conteos tras deduplicación exacta.
+combinaciones_predictoras_con_etiquetas_conflictivas,0,Grupos de predictores idénticos con target distinto.
+fuente_publicada,johnsmith88/heart-disease-dataset,Dataset de Kaggle declarado por el proyecto.
+version_kaggle_consultada,2,Versión devuelta por la API de Kaggle al ejecutar esta auditoría.
+coincidencia_tabular_exacta_con_kaggle,True,"Comparación de valores, columnas y orden tras leer ambos CSV."
+definicion_target_del_proveedor,Kaggle declara target=0 sin enfermedad y target=1 con enfermedad.,Declaración del proveedor; no es validación clínica independiente.
+huella_csv_fuente,ddb2996b2f4db2e00aad13f4518200179ff69f79093838e3c21ffa672ebec0f1,Huella del archivo descargado de Kaggle durante la auditoría.
+dominio_cp,0|1|2|3,"la ficha UCI describe cuatro categorías, pero no se trazó la recodificación de esta copia"
+dominio_slope,0|1|2,los códigos observados no se reconciliaron registro a registro con UCI
+dominio_ca,0|1|2|3|4,heart.csv observa 0--4 frente al dominio UCI descrito 0--3
+dominio_thal,0|1|2|3,heart.csv observa 0--3 y la ficha Kaggle describe 0--2
+validacion_externa,no disponible,"El repositorio no contiene una cohorte independiente, autorizada y compatible."
+alcance_etiqueta,positivo=target 1 codificado,Se sigue la ficha del proveedor; equivalencia clínica y población de origen no verificadas independientemente.

@@ -1,66 +1,15 @@
 \section{Recomendaciones}
 
-\subsection{Evaluación financiera consolidada}
-
-La evaluación financiera realizada compara Cloud, Local e Híbrida con los mismos supuestos de horizonte, piloto, usuarios, volumen, actualización, mantenimiento de modelo y continuidad. Cloud incorpora configuración, seguridad, despliegue, Cloud Run, Cloud SQL, Storage, red, monitoreo, soporte, RRHH y cómputo temporal; no supone entrenamiento 24/7 ni Vertex AI obligatorio. Local incorpora CAPEX de infraestructura, hardening, electricidad, mantenimiento, seguridad, respaldo, soporte y RRHH. Híbrida suma infraestructura local mínima, costos Cloud e integración, conectividad, monitoreo de ambos ambientes y operación dual. El TCO oficial Cloud es \$10.815.487 CLP a 36 meses y Cloud/GCP es la arquitectura integral recomendada para el piloto, bajo las condiciones de aceptación definidas.
-
-La sensibilidad mínima debe variar registros anuales (2.500 y 10.000 frente al escenario base de 5.000), reentrenamientos (4 frente a 2 por año), usuarios cuando corresponda y el componente dominante de costo de cada arquitectura.
-
-\subsection{Fórmula y reglas de costeo}
-
-La estructura común es \(\mathrm{TCO}_{36\,meses}=\) CAPEX o costos iniciales + implementación + suma de OPEX recurrente del horizonte + costos periódicos + RRHH + contingencia justificada. Cada partida debe respetar su periodicidad real para evitar multiplicaciones incorrectas o doble conteo.
-
-Cloud debe dimensionarse para 20, 25 y 30 usuarios; 5, 6 y 8 usuarios concurrentes; 10.000 registros históricos más el crecimiento definido; batch diario; y los RTO/RPO comunes. Local debe soportar al menos el escenario del año 3 sin una sustitución completa por el crecimiento base. Híbrida debe incluir el costo y el impacto de seguridad y sincronización entre ambos ambientes.
-
-\subsection{Integración con planificación, riesgos y ética}
-
-La EDT y carta Gantt ya se orientan a entregables: inicio y alcance, datos, preparación, análisis y modelo, validación técnica y ética, infraestructura o piloto, documentación y cierre. Deben conservar respaldo, monitoreo, recuperación y mantenimiento como trabajo gestionable, y separar la duración de implementación de los 36 meses financieros. Cloud/GCP es la arquitectura seleccionada para el piloto, pero su ejecución no comienza sin los gates éticos CA-E01 a CA-E10, legales, técnicos, de seguridad, de riesgos y de validación local.
-
-La matriz de riesgos debe consolidar los riesgos técnicos expuestos en la Sección~\ref{sec:discusion} con los riesgos financieros, éticos, legales y de planificación. Para la integración ética, debe mantenerse que el sistema no reemplaza al profesional, que el dataset actual es un prototipo y que Cloud e Híbrida tratan datos sensibles fuera del entorno local. Cloud/GCP se recomienda por la evaluación integral documentada, no sólo por precio; Híbrida es la contingencia si Cloud no obtiene la aprobación legal, institucional o de gobierno de datos, y Local no se recomienda para este piloto por mayor TCO y carga operacional.
-
-\subsection{Trazabilidad de responsabilidades y matriz de riesgos}
-
-Ignacio consolidó la evaluación financiera; Fabián incorporó la planificación EDT/Gantt; Vicente mantiene la consolidación y aceptación de riesgos; y César documentó la evidencia de dataset y ética. Los handoffs ya ejecutados se conservan exclusivamente como trazabilidad histórica. El TCO oficial quedó establecido en \$10.815.487 CLP y R10 adopta P$\times$I = 2$\times$3 = 6 (Crítico); el riesgo residual no está definido.
-
-\begin{description}[style=nextline]
-  \item[Transversal] Calidad de datos, duplicados, cambios de esquema, datos retrasados, fallos del pipeline, drift, degradación del modelo, baja explicabilidad y fallo de backup.
-  \item[Cloud] Dependencia de GCP, pérdida de conectividad, costos variables, error IAM, exposición de datos, indisponibilidad del proveedor y lock-in.
-  \item[Local] Ransomware, software desactualizado, fallo de servidor o UPS, backup comprometido, falta de personal especializado, escalabilidad lenta y mala segmentación.
-  \item[Híbrida] Fallo de sincronización, inconsistencia entre entornos, exposición durante transferencia, mayor complejidad, dependencia de Internet para inferencia y doble operación.
-  \item[Continuidad] RTO superior a 8 horas, RPO superior a 24 horas, restauración fallida y pérdida de datos analíticos.
-  \item[Mantenimiento ML] Reentrenar con datos defectuosos, nueva versión peor, incremento de sesgos, pérdida de trazabilidad o publicación sin aprobación.
-\end{description}
-
-\subsection{Matriz de trazabilidad de decisiones}
-
-\begin{description}[style=nextline]
-  \item[Apoyo preventivo] Se fundamenta en el caso y EA1; se usa para ética y para delimitar el alcance de planificación.
-  \item[Tres alternativas con mismo alcance] Se fundamenta en el Plan Maestro; permite comparación financiera y análisis de riesgos equivalentes.
-  \item[GCP como referencia Cloud] Se fundamenta en la decisión de diseño, región de Santiago y simplicidad; permite tarifar Cloud y revisar sus riesgos.
-  \item[Stack portable y open source] Se fundamenta en costo-beneficio y comparabilidad; sirve para licencias y planificación de recursos.
-  \item[Sin Vertex AI inicial] Evita sobrearquitectura a la escala actual; define el costo base y los gatillos de escalamiento futuro.
-  \item[Local con seguridad reforzada] Se fundamenta en EA1 y contexto MINSAL; alimenta ciberseguridad, costos de seguridad y continuidad.
-  \item[Híbrida con minimización y pseudonimización] Se fundamenta en privacidad y diseño del caso; alimenta ética, legalidad, riesgos e integración.
-  \item[Marcos de trabajo] PMBOK gobierna y documenta; Scrum organiza el desarrollo; CRISP-DM guía el trabajo técnico de datos.
-  \item[Horizonte de 36 meses] Hace comparables CAPEX y OPEX para el TCO.
-  \item[Piloto controlado] Evita comparar un notebook trivial con una producción ficticia y delimita el alcance de todos los análisis.
-  \item[Crecimiento de usuarios, volumen, batch y reentrenamiento] Entregan bases comunes para sizing, costos, operación, riesgos y validación.
-  \item[99\%, RTO 8 h y RPO 24 h] Definen respaldo, pruebas, planificación y riesgos de continuidad.
-\end{description}
-
-\subsection{Auditoría de aceptación D1 a D6}
-
-La línea base cumple con que las tres alternativas resuelven el mismo problema y alcance; cada herramienta tiene una función y motivo; y la metodología está argumentada, no solo nombrada. La evaluación financiera, la EDT/Gantt y la matriz ética están integradas y sustentan la selección condicionada de Cloud/GCP para el piloto. El informe distingue proyecto conceptual de ejecución real, mantiene fuentes y supuestos trazables y exige autorización legal, gates éticos, controles de seguridad, aceptación de riesgos y validación local antes de ejecutar el piloto.
-
-\subsection{Checklist de integración}
-
 \begin{itemize}
-  \item Mantener D1 a D6 como línea base y comunicar cualquier cambio a finanzas, planificación, riesgos e integración.
-  \item Mantener Cloud/GCP como arquitectura integral recomendada y ejecutar el piloto sólo después de superar los gates éticos CA-E01 a CA-E10, legales, técnicos, de seguridad, de riesgos y de validación local.
-  \item Usar los mismos supuestos para Cloud, Local e Híbrida.
-  \item Distinguir datos reales, referencias externas y supuestos de planificación.
-  \item Respaldar cada cifra de costos con tarifario, cotización o supuesto reproducible.
-  \item Conservar el carácter de apoyo preventivo y no diagnóstico autónomo.
-  \item Sintetizar el informe final EP1 a 4--6 páginas, con letra 11, interlineado simple y estilo APA; este documento maestro puede ser más extenso.
-  \item Mantener Híbrida como contingencia si Cloud no supera la aprobación legal, institucional o de gobierno de datos; no recomendar Local para este piloto por mayor TCO y carga operacional.
+  \item Mantener como alcance vigente las diez semanas y el presupuesto estimado EP3 de \$10.506.069 CLP, separando claramente estimaciones de ejecución observada.
+  \item Preservar los datos originales; repetir entrenamiento y validación sólo mediante los pipelines reproducibles, sin ajustar transformaciones con datos de prueba.
+  \item Reportar la igualdad de ROC-AUC en test entre baseline y XGBoost one-hot, junto con el mayor promedio CV de la logística CPU. No presentar la selección GPU como mejora predictiva.
+  \item Mantener los scores como no calibrados y las cinco filas de ejemplo como sintéticas.
+  \item Antes de cualquier aplicación clínica, verificar target y dominios, obtener datos representativos y autorizados, validar localmente y evaluar subgrupos con tamaño suficiente; acordar métricas y umbrales con responsables clínicos.
+  \item Mantener revisión humana y trazabilidad. No diagnosticar, tratar, priorizar ni automatizar decisiones con este prototipo.
+  \item Conservar las tareas, horas y estados del informe 3.2.2 bajo la etiqueta de ejercicio simulado; no sumarlos al presupuesto ni tratarlos como avance ejecutado sin evidencia independiente.
 \end{itemize}
+
+\subsection{Trazabilidad de responsabilidades y decisiones}
+
+Los entregables D1--D14 y sus responsables se conservan como trazabilidad académica. El informe EP3 corregido es la fuente de referencia para duración y presupuesto; el informe 3.2.2 aporta un ejercicio de monitoreo/control. Los resultados actuales del modelo y la descripción de implementación se documentan en la sección \ref{sec:modelado-resultados} y en \texttt{docs/implementacion\_tecnica\_3\_1\_2.md}.

@@ -3,3 +3,6 @@ numpy
 matplotlib
 jupyter
 ipykernel
+scikit-learn
+joblib
+xgboost>=3.1,<4
