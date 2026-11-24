@@ -1,0 +1,30 @@
+services:
+  model-api:
+    build: .
+    image: heart-disease-prototype:local
+    command: ["uvicorn", "src.inference_api:app", "--host", "0.0.0.0", "--port", "8000"]
+    environment:
+      OMP_NUM_THREADS: "2"
+    expose:
+      - "8000"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=3)"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
+    restart: unless-stopped
+
+  interface:
+    build: .
+    image: heart-disease-prototype:local
+    command: ["streamlit", "run", "app.py", "--server.address=0.0.0.0", "--server.port=8501", "--server.headless=true"]
+    environment:
+      MODEL_API_URL: http://model-api:8000
+      STREAMLIT_BROWSER_GATHER_USAGE_STATS: "false"
+    depends_on:
+      model-api:
+        condition: service_healthy
+    ports:
+      - "8501:8501"
+    restart: unless-stopped

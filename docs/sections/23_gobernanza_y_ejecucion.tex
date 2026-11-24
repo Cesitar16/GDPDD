@@ -17,14 +17,72 @@ La actividad se organiza con los marcos académicos indicados en los informes: P
     Datos & \texttt{heart.csv}, notebook y salidas de auditoría & Analizados; 1.025 filas originales, 302 observaciones únicas \\
     Modelado & Notebook, tablas comparativas y artefacto Joblib & Prototipo XGBoost entrenado con CUDA; comparación documentada \\
     Gráficos & PNG en \texttt{outputs/figures/} & Generados desde el notebook y referenciados en el informe \\
-    Inferencia & \texttt{src/automatizacion\_predicciones.py} y ejemplos sintéticos & Ejecución local por lotes; no servicio desplegado \\
+    Interfaz e inferencia & \texttt{app.py}, \texttt{src/inference\_api.py}, \texttt{compose.yaml} y pipeline Joblib & Demo local con Streamlit y FastAPI; sin despliegue institucional \\
     Entorno & \texttt{pyproject.toml} y \texttt{uv.lock} & Dependencias fijadas para reproducción local \\
     \bottomrule
   \end{tabularx}
 \end{table}
 
+\subsection{Interfaz de demostración y lectura de resultados}
+\label{subsec:evidencia-interfaz-prototipo}
+
+La interfaz local permite ingresar las variables del conjunto de datos mediante controles con etiquetas legibles, analizar un perfil y consultar un resumen del resultado experimental. Las Figuras~\ref{fig:prototipo-grupo-a} y~\ref{fig:prototipo-grupo-b} documentan dos recorridos con perfiles ficticios. En el resumen se explica la correspondencia utilizada por las etiquetas de la fuente (Grupo A / target 0 y Grupo B / target 1) y se advierte que dicha correspondencia no confirma ni descarta enfermedad en una persona. El gráfico de frecuencia cardíaca máxima compara el valor ingresado con el promedio de la muestra del mismo grupo etario; el propio prototipo indica que este promedio no es un rango normal clínico.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.96\textwidth]{figures/evidence/prototipo_ejemplo_grupo_a.png}
+  \caption{Demostración con perfil ficticio cuyo resultado del modelo fue Grupo A. La vista reúne el formulario, la leyenda de etiquetas de la fuente y la comparación descriptiva de frecuencia cardíaca máxima con el promedio muestral por edad.}
+  \label{fig:prototipo-grupo-a}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.96\textwidth]{figures/evidence/prototipo_ejemplo_grupo_b.png}
+  \caption{Demostración con un segundo perfil ficticio cuyo resultado del modelo fue Grupo B. Se presenta con el mismo alcance descriptivo y las mismas advertencias que el ejemplo anterior.}
+  \label{fig:prototipo-grupo-b}
+\end{figure}
+
+La explicación está organizada en dos niveles. La lectura simple resume las señales que más contribuyeron a la salida y su dirección hacia un grupo interno, sin atribuir causalidad clínica (Figura~\ref{fig:prototipo-lectura-simple}). El detalle técnico expone el puntaje matemático interno y las contribuciones SHAP para inspección académica (Figura~\ref{fig:prototipo-detalle-tecnico}). Ese puntaje no está calibrado y no equivale a probabilidad de enfermedad, riesgo individual ni posibilidad de acierto. El porcentaje de acierto mostrado corresponde a una evaluación interna del conjunto de prueba; no estima la certeza para el perfil ingresado.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.96\textwidth]{figures/evidence/prototipo_lectura_simple.png}
+  \caption{Vista de lectura simple: contribuciones relativas de las variables para un perfil ficticio y dirección de cada señal hacia los grupos del modelo.}
+  \label{fig:prototipo-lectura-simple}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.96\textwidth]{figures/evidence/prototipo_detalle_tecnico.png}
+  \caption{Vista de detalle técnico: puntaje no calibrado y tabla de contribuciones SHAP para el perfil ficticio. Se ofrece como explicación del funcionamiento del modelo, no como interpretación clínica.}
+  \label{fig:prototipo-detalle-tecnico}
+\end{figure}
+
+Estas capturas acreditan la existencia y el comportamiento observable de la interfaz local en el alcance académico de demostración. No documentan atención de pacientes, validación clínica, evaluación por profesionales de salud ni despliegue institucional. Los valores y perfiles de las capturas son ejemplos de interfaz y no deben interpretarse como casos clínicos reales.
+
+\subsection{Seguimiento del trabajo en Linear}
+
+La Figura~\ref{fig:linear-seguimiento-ea3} muestra el tablero del proyecto al 24 de noviembre de 2026, con 22 tarjetas en \textit{Backlog}, 5 en \textit{In Progress} y 5 en \textit{Done}. La captura se incorpora como evidencia del uso de Linear para organizar el trabajo del equipo, asignar responsabilidades y visualizar estados. Las asignaciones reflejan la distribución planificada; no acreditan por sí solas la ejecución individual de cada actividad. Al contrastar la planificación con los artefactos locales, la implementación técnica del prototipo fue realizada individualmente por César Rojas.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{figures/evidence/linear_tablero_seguimiento_ea3.png}
+  \caption{Evidencia de organización y seguimiento del equipo en Linear: estados y asignaciones visibles al momento de la captura.}
+  \label{fig:linear-seguimiento-ea3}
+\end{figure}
+
+\subsection{Conciliación entre planificación y trabajo observable}
+
+La revisión cruzada de Linear y del repositorio muestra que los estados del tablero no están completamente conciliados con los productos técnicos disponibles. Las tareas de carga y análisis de datos, preparación, modelado, evaluación, predicciones de ejemplo y automatización cuentan con evidencia en el notebook, los resultados y los scripts del repositorio; sin embargo, varias tarjetas relacionadas continúan en \textit{In Progress} o \textit{Backlog}. En particular, las tarjetas DUO-32 a DUO-38 y DUO-41, asociadas a pasos de la actividad 3.1.2, permanecen en \textit{Backlog} aunque existen artefactos locales correspondientes. Por ello, el estado de una tarjeta se interpreta junto con su evidencia y no como una medida automática del avance técnico total.
+
+Cinco tarjetas aparecen en \textit{Done}; su historial registra cambios de estado el 24 de noviembre de 2026. Las fechas de transición indican cuándo se actualizó el estado en Linear, no necesariamente cuándo se ejecutó o terminó el trabajo. Las tarjetas en \textit{Backlog} tampoco implican por sí solas atraso: algunas corresponden a tareas futuras o a pasos de detalle. Los conteos de tarjetas describen la vista del tablero al corte y no se convierten en porcentaje de avance, porque las tarjetas tienen distinto alcance y algunas desglosan actividades ya representadas en otros entregables.
+
+La descripción del proyecto en Linear califica como tentativas las fechas detalladas de sus tarjetas (2 de noviembre–22 de diciembre de 2026). La línea base académica vigente para este informe es la de EP3: diez semanas, del 5 de octubre al 13 de diciembre de 2026. Por esta diferencia de referencias, las fechas tentativas de Linear no se usan para afirmar por sí solas un atraso o cumplimiento respecto de la línea base. La revisión no identifica un cambio material del alcance técnico; sí identifica una diferencia en la organización prevista, pues la ejecución técnica terminó concentrada individualmente en César Rojas.
+
+No se encontró evidencia local de la copia final del cuaderno en Google Colab/Drive ni de la reflexión grupal de cierre asociada a las tarjetas DUO-39 y DUO-40. Estos elementos se mantienen como pendientes de verificación documental, sin inferir que fueron realizados a partir de otros artefactos. Como acción de control para el cierre, corresponde vincular cada tarjeta con su archivo o entregable comprobable y actualizar su estado a la fecha real de revisión, conservando la distinción entre responsable planificado y ejecutor efectivo. Si no existe registro contemporáneo de una fecha real, no se reconstruye a partir de la fecha en que se cambió el estado en Linear.
+
 \subsection{Elementos que no constan como ejecutados}
 
-No se encontró evidencia en el repositorio de aplicación web, API, base de datos institucional, integración con ficha clínica, carga de datos desde hospital, despliegue cloud, revisión clínica, aprobación institucional, validación con población local, monitoreo en producción o reentrenamiento posterior. Las menciones a esos componentes en entregas académicas antiguas describen propuestas; no deben leerse como avances.
+El repositorio contiene una interfaz web y una API de inferencia para demostración local. No se encontró evidencia de una base de datos institucional, integración con ficha clínica, carga de datos desde un hospital, despliegue clínico o cloud, revisión clínica, aprobación institucional, validación con población local, monitoreo en producción o reentrenamiento posterior. Las menciones a esos componentes en entregas académicas antiguas describen propuestas; no deben leerse como avances.
 
 El informe 3.2.2 incluye una simulación didáctica de seguimiento. Sus estados, horas y cambios no se contabilizan como trabajo ejecutado salvo que exista evidencia independiente en el repositorio. El estado actual se limita a los archivos, resultados y artefactos identificados en esta documentación.
