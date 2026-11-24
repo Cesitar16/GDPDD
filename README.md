@@ -34,4 +34,29 @@ La actividad 3.1.2 incluye un flujo de modelado con XGBoost CUDA y gráficos. En
 
 El modelo es experimental: no está validado clínicamente ni desplegado. Los scores no están calibrados y las cinco filas de ejemplo son sintéticas. El proyecto vigente no incluye operación posterior a diez semanas ni arquitectura productiva Cloud/Local/Híbrida.
 
+## Interfaz interactiva (prototipo)
+
+La interfaz Streamlit permite ingresar los 13 predictores, obtener una predicción del pipeline guardado y revisar las contribuciones SHAP por caso. La API de inferencia se ejecuta en un servicio separado. Con Docker Desktop y Compose activos, inicia ambos servicios desde la raíz del proyecto:
+
+```powershell
+docker compose up --build -d
+```
+
+Abre [http://localhost:8501](http://localhost:8501). La API queda disponible solo dentro de la red de Compose; la interfaz es el único puerto publicado. Para revisar el estado y los logs:
+
+```powershell
+docker compose ps
+docker compose logs -f model-api interface
+```
+
+Para detener los contenedores:
+
+```powershell
+docker compose down
+```
+
+La interfaz ofrece dos botones de perfiles ficticios para ejecutar una demostración sin llenar el formulario. También ofrece una vista profesional de lectura simple y una vista técnica. La primera presenta el reparto relativo de las contribuciones SHAP por perfil y una conclusión en lenguaje directo; la segunda muestra los valores SHAP en log-odds. El score del modelo y el porcentaje de contribución no son probabilidades clínicas. El modelo acertó 59 de 76 casos (77,6 %) en una prueba interna: esa cifra describe el conjunto de prueba y no estima la probabilidad de acierto de un perfil individual.
+
+`model-api` carga `outputs/models/heart_disease_pipeline.joblib`, sirve predicciones y explicaciones SHAP, y cambia el dispositivo de inferencia a CPU para funcionar en Docker sin GPU. Es un prototipo educativo, no una herramienta clínica.
+
 Inicie Jupyter desde la raíz del proyecto para conservar las rutas relativas.
